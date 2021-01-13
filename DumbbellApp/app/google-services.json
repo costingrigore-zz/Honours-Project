@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "153885836587",
+    "firebase_url": "https://dumbbellapp-7ed5c-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "dumbbellapp-7ed5c",
+    "storage_bucket": "dumbbellapp-7ed5c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:153885836587:android:8525cc1b10ed79c459716e",
+        "android_client_info": {
+          "package_name": "com.costingrigore.dumbbellapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "153885836587-rnnii5vhfrdjfiq2fclr3fuuts022dgc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgT0h8ai8iccxogzuSmfHP2eXlLv9QKlg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "153885836587-rnnii5vhfrdjfiq2fclr3fuuts022dgc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
