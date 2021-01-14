@@ -3,6 +3,7 @@ package com.costingrigore.dumbbellapp;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -51,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView=findViewById(R.id.bottomNav);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavmethod);
+        getSupportFragmentManager().beginTransaction().replace(R.id.container,new TrainerFragment()).commit();
+
+
         // Database stuff
         database = FirebaseDatabase.getInstance();
 
@@ -79,8 +83,27 @@ public class MainActivity extends AppCompatActivity {
             BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                    return false;
+                    Fragment fragment = null;
+                    switch (item.getItemId())
+                    {
+                        case R.id.exercises:
+                            fragment = new ExercisesFragment();
+                        break;
+                        case R.id.insights:
+                            fragment = new InsightsFragment();
+                            break;
+                        case R.id.trainer:
+                            fragment = new TrainerFragment();
+                            break;
+                        case R.id.goals:
+                            fragment = new GoalsFragment();
+                            break;
+                        case R.id.profile:
+                            fragment = new ProfileFragment();
+                            break;
+                    }
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                    return true;
                 }
             };
 
