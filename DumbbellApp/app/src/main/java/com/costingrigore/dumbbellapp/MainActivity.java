@@ -7,12 +7,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,7 +27,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = "MainActivity" ;
-
+    private BottomNavigationView bottomNavigationView;
     TextView textView;
     Button btn;
     FirebaseDatabase database;
@@ -46,6 +48,10 @@ public class MainActivity extends AppCompatActivity {
                 openExercisesPage();
             }
         });
+        bottomNavigationView=findViewById(R.id.bottomNav);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavmethod);
+        // Database stuff
         database = FirebaseDatabase.getInstance();
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("exercises");
@@ -68,6 +74,15 @@ public class MainActivity extends AppCompatActivity {
         myRef.child("1").child("type").setValue("strength");
         myRef.child("2").setValue("pain");
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener bottomNavmethod = new
+            BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                    return false;
+                }
+            };
 
     public void openExercisesPage()
     {
