@@ -12,8 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.costingrigore.dumbbellapp.dummy.DummyContent;
-
 import java.util.ArrayList;
 
 /**
@@ -81,7 +79,7 @@ public class ExercisesFragment extends Fragment {
         exercise1.setType("Hyderabad");
         results.add(exercise1);
         Exercise exercise2 = new Exercise();
-        exercise2.setIcon(R.drawable.india);
+        exercise2.setIcon(R.drawable.us);
         exercise2.setName("Rohini Alavala");
         exercise2.setDifficulty("Agricultural Officer");
         exercise2.setType("Guntur");

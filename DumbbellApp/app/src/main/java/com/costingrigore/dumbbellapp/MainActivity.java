@@ -33,10 +33,6 @@ public class MainActivity extends AppCompatActivity {
     Button btn;
     FirebaseDatabase database;
 
-    String[] Countries = {"India", "China", "Australia", "Portugal", "America", "New Zealand"};
-    int[] FlagId = {R.drawable.india, R.drawable.china, R.drawable.australia, R.drawable.portugal, R.drawable.us, R.drawable.nz};
-    String[] mobileArray = {"Android","IPhone","WindowsMobile","Blackberry",
-            "WebOS","Ubuntu","Windows7","Max OS X"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,12 +42,12 @@ public class MainActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openExercisesPage();
             }
         });
         bottomNavigationView=findViewById(R.id.bottomNav);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavmethod);
+        bottomNavigationView.getMenu().findItem(R.id.trainer).setChecked(true);
         getSupportFragmentManager().beginTransaction().replace(R.id.container,new TrainerFragment()).commit();
 
 
@@ -106,11 +102,5 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
             };
-
-    public void openExercisesPage()
-    {
-        Intent intent = new Intent(this, ExercisePage.class);
-        startActivity(intent);
-    }
 }
 
