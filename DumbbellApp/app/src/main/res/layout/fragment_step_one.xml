@@ -12,20 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/titleText"
-            android:layout_width="316dp"
-            android:layout_height="81dp"
-            android:text="We will start by taking some measurements:"
-            android:textSize="30sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.3" />
-
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
+            android:background="#33FFFFFF"
             android:id="@+id/imageView"
             android:layout_width="0dp"
             android:layout_height="81dp"
@@ -35,6 +23,22 @@
             app:layout_constraintHorizontal_bias="0.014"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/titleText"
+            app:layout_constraintVertical_bias="0.3">
+
+        </com.google.android.material.imageview.ShapeableImageView>
+
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="316dp"
+            android:layout_height="81dp"
+            android:textColor="@color/white"
+            android:text="We will start by taking some measurements:"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.3" />
 
         <TextView
@@ -110,12 +114,13 @@
             android:id="@+id/nextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
             android:text="Next"
-            app:layout_constraintEnd_toEndOf="@+id/editTextAge"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/editTextAge"
-            app:layout_constraintTop_toBottomOf="@+id/editTextAge" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias=".9"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias=".8" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

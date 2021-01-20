@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavmethod);
         bottomNavigationView.getMenu().findItem(R.id.trainer).setChecked(true);
-        bottomNavigationView.setVisibility(View.GONE);
+        bottomNavigationView.setVisibility(View.INVISIBLE);
         // Set default fragment when application loads
         getSupportFragmentManager().beginTransaction().replace(R.id.container,new StepOne()).commit();
 
