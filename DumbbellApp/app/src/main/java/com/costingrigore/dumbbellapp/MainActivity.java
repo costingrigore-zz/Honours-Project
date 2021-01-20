@@ -28,7 +28,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = "MainActivity" ;
-    private BottomNavigationView bottomNavigationView;
+    public BottomNavigationView bottomNavigationView;
     TextView textView;
     Button btn;
     FirebaseDatabase database;
@@ -48,7 +48,9 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavmethod);
         bottomNavigationView.getMenu().findItem(R.id.trainer).setChecked(true);
-        getSupportFragmentManager().beginTransaction().replace(R.id.container,new TrainerFragment()).commit();
+        bottomNavigationView.setVisibility(View.GONE);
+        // Set default fragment when application loads
+        getSupportFragmentManager().beginTransaction().replace(R.id.container,new StepOne()).commit();
 
 
         // Database stuff
