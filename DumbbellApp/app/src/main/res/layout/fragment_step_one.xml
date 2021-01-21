@@ -7,121 +7,332 @@
     tools:context=".StepOne">
 
     <!-- TODO: Update blank fragment layout -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/linearLayout"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:isScrollContainer="false">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:background="#33FFFFFF"
-            android:id="@+id/imageView"
-            android:layout_width="0dp"
-            android:layout_height="81dp"
-            android:src="@android:drawable/screen_background_dark_transparent"
-            app:layout_constraintBottom_toBottomOf="@+id/titleText"
-            app:layout_constraintEnd_toEndOf="@+id/titleText"
-            app:layout_constraintHorizontal_bias="0.014"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/titleText"
-            app:layout_constraintVertical_bias="0.3">
-
-        </com.google.android.material.imageview.ShapeableImageView>
-
-        <TextView
-            android:id="@+id/titleText"
-            android:layout_width="316dp"
-            android:layout_height="81dp"
-            android:textColor="@color/white"
-            android:text="We will start by taking some measurements:"
-            android:textSize="30sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.3" />
-
-        <TextView
-            android:id="@+id/heightText"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Height"
-            android:textSize="25dp"
-            app:layout_constraintStart_toStartOf="@+id/titleText"
-            app:layout_constraintTop_toBottomOf="@+id/titleText" />
+            android:orientation="vertical"
+            android:paddingTop="100dp"
+            android:paddingBottom="60dp">
 
-        <EditText
-            android:id="@+id/editTextHeight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginLeft="32dp"
-            android:layout_marginTop="24dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Height"
-            app:layout_constraintStart_toEndOf="@+id/heightText"
-            app:layout_constraintTop_toBottomOf="@+id/titleText" />
+            <TextView
+                android:layout_width="316dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/left_light_round_shape"
+                android:padding="5dp"
+                android:text="We will start by taking some measurements:"
+                android:textColor="@color/white"
+                android:textSize="25dp" />
 
-        <TextView
-            android:id="@+id/weightText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Weight"
-            android:textSize="25dp"
-            app:layout_constraintStart_toStartOf="@+id/heightText"
-            app:layout_constraintTop_toBottomOf="@+id/heightText" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/heightText"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Height"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:textColor="@color/white"
+                    android:paddingLeft="40dp"
+                    android:textSize="20dp" />
 
-        <EditText
-            android:id="@+id/editTextWeight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginLeft="28dp"
-            android:layout_marginTop="12dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Weight"
-            app:layout_constraintStart_toEndOf="@+id/weightText"
-            app:layout_constraintTop_toBottomOf="@+id/editTextHeight" />
+                <EditText
+                    android:id="@+id/editTextHeight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="5"
+                    android:inputType="textPersonName"
+                    android:text="ft"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="100dp"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/weightText"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Weight"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:textColor="@color/white"
+                    android:paddingLeft="40dp"
+                    android:textSize="20dp" />
 
-        <EditText
-            android:id="@+id/editTextAge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:layout_marginLeft="60dp"
-            android:layout_marginTop="12dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Age"
-            app:layout_constraintStart_toEndOf="@+id/ageText"
-            app:layout_constraintTop_toBottomOf="@+id/editTextWeight" />
+                <EditText
+                    android:id="@+id/editTextWeight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="5"
+                    android:inputType="textPersonName"
+                    android:text="kg"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="100dp"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:orientation="horizontal"
+                android:paddingBottom="40dp">
+                <TextView
+                    android:id="@+id/ageText"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="Age"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:textColor="@color/white"
+                    android:paddingLeft="40dp"
+                    android:textSize="20dp" />
 
-        <TextView
-            android:id="@+id/ageText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Age"
-            android:textSize="25dp"
-            app:layout_constraintStart_toStartOf="@+id/weightText"
-            app:layout_constraintTop_toBottomOf="@+id/weightText" />
-
-        <Button
-            android:id="@+id/nextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Next"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias=".9"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias=".8" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <EditText
+                    android:id="@+id/editTextAge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="5"
+                    android:inputType="textPersonName"
+                    android:text="years"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="100dp"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+            <TextView
+                android:layout_width="316dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/left_light_round_shape"
+                android:padding="5dp"
+                android:text="What is your level of experience with fitness?"
+                android:textColor="@color/white"
+                android:textSize="25dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="40dp"
+                android:paddingBottom="40dp">
+                <CheckBox
+                    android:id="@+id/beginner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Beginner"
+                    android:layout_marginLeft="100dp"
+                    android:button="@drawable/checkbox"
+                    android:buttonTint="@color/white"
+                    android:padding="20dp"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    />
+                <CheckBox
+                    android:id="@+id/intermediate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Intermediate"
+                    android:layout_marginLeft="100dp"
+                    android:button="@drawable/checkbox"
+                    android:buttonTint="@color/white"
+                    android:padding="20dp"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    />
+                <CheckBox
+                    android:id="@+id/advanced"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="100dp"
+                    android:button="@drawable/checkbox"
+                    android:buttonTint="@color/white"
+                    android:padding="20dp"
+                    android:text="Advanced"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    />
+                <CheckBox
+                    android:id="@+id/professional"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="100dp"
+                    android:button="@drawable/checkbox"
+                    android:buttonTint="@color/white"
+                    android:padding="20dp"
+                    android:text="Professional"
+                    android:textColor="@color/white"
+                    android:textSize="20dp" />
+            </LinearLayout>
+            <TextView
+                android:layout_width="316dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/left_light_round_shape"
+                android:padding="5dp"
+                android:text="What are your goals for using this application?"
+                android:textColor="@color/white"
+                android:textSize="25dp"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="40dp"
+                android:paddingBottom="40dp">
+                <CheckBox
+                    android:id="@+id/gain_strength"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Gain strength"
+                    android:layout_marginLeft="100dp"
+                    android:button="@drawable/checkbox"
+                    android:buttonTint="@color/white"
+                    android:padding="20dp"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    />
+                <CheckBox
+                    android:id="@+id/lose_weight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lose weight"
+                    android:layout_marginLeft="100dp"
+                    android:button="@drawable/checkbox"
+                    android:buttonTint="@color/white"
+                    android:padding="20dp"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    />
+                <CheckBox
+                    android:id="@+id/be_fit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="100dp"
+                    android:button="@drawable/checkbox"
+                    android:buttonTint="@color/white"
+                    android:padding="20dp"
+                    android:text="Be fit"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    />
+            </LinearLayout>
+            <TextView
+                android:layout_width="316dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/left_light_round_shape"
+                android:padding="5dp"
+                android:text="How many times per week would you like to exercise?"
+                android:textColor="@color/white"
+                android:textSize="25dp"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="40dp"
+                android:paddingBottom="40dp">
+                <CheckBox
+                    android:id="@+id/monday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Monday"
+                    android:layout_marginLeft="100dp"
+                    android:button="@drawable/checkbox"
+                    android:buttonTint="@color/white"
+                    android:padding="20dp"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    />
+                <CheckBox
+                    android:id="@+id/tuesday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tuesday"
+                    android:layout_marginLeft="100dp"
+                    android:button="@drawable/checkbox"
+                    android:buttonTint="@color/white"
+                    android:padding="20dp"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    />
+                <CheckBox
+                    android:id="@+id/wednesday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="100dp"
+                    android:button="@drawable/checkbox"
+                    android:buttonTint="@color/white"
+                    android:padding="20dp"
+                    android:text="Wednesday"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    />
+                <CheckBox
+                    android:id="@+id/thursday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Thursday"
+                    android:layout_marginLeft="100dp"
+                    android:button="@drawable/checkbox"
+                    android:buttonTint="@color/white"
+                    android:padding="20dp"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    />
+                <CheckBox
+                    android:id="@+id/friday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Friday"
+                    android:layout_marginLeft="100dp"
+                    android:button="@drawable/checkbox"
+                    android:buttonTint="@color/white"
+                    android:padding="20dp"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    />
+                <CheckBox
+                    android:id="@+id/saturday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="100dp"
+                    android:button="@drawable/checkbox"
+                    android:buttonTint="@color/white"
+                    android:padding="20dp"
+                    android:text="Saturday"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    />
+                <CheckBox
+                    android:id="@+id/sunday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="100dp"
+                    android:button="@drawable/checkbox"
+                    android:buttonTint="@color/white"
+                    android:padding="20dp"
+                    android:text="Sunday"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    />
+            </LinearLayout>
+            <Button
+                android:id="@+id/nextButton"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:background="@drawable/round_button"
+                android:padding="5dp"
+                android:text="Next"
+                android:textSize="20dp"
+                android:layout_gravity="right"
+                app:backgroundTint="#FFFFFF"/>
+        </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>
