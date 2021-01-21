@@ -1,29 +1,21 @@
 package com.costingrigore.dumbbellapp;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,17 +30,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         textView = findViewById(R.id.textView2);
-        btn = findViewById(R.id.btn);
-        btn.setOnClickListener(new View.OnClickListener() {
+        //btn = findViewById(R.id.btn);
+        /**btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
             }
-        });
+        });*/
         bottomNavigationView=findViewById(R.id.bottomNav);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavmethod);
         bottomNavigationView.getMenu().findItem(R.id.trainer).setChecked(true);
-        bottomNavigationView.setVisibility(View.GONE);
+        bottomNavigationView.setVisibility(View.INVISIBLE);
         // Set default fragment when application loads
         getSupportFragmentManager().beginTransaction().replace(R.id.container,new StepOne()).commit();
 
