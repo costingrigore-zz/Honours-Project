@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -33,6 +35,20 @@ public class StepOne extends Fragment {
     EditText editTextHeight;
     EditText editTextAge;
     Button nextButton;
+    CheckBox beginner;
+    CheckBox intermediate;
+    CheckBox advanced;
+    CheckBox professional;
+    CheckBox gain_strength;
+    CheckBox lose_weight;
+    CheckBox be_fit;
+    CheckBox monday;
+    CheckBox tuesday;
+    CheckBox wednesday;
+    CheckBox thursday;
+    CheckBox friday;
+    CheckBox saturday;
+    CheckBox sunday;
     public StepOne() {
         // Required empty public constructor
     }
@@ -68,6 +84,94 @@ public class StepOne extends Fragment {
         editTextHeight = (EditText) view.findViewById(R.id.editTextHeight);
         editTextAge = (EditText) view.findViewById(R.id.editTextAge);
         nextButton = (Button) view.findViewById(R.id.nextButton);
+        beginner = (CheckBox) view.findViewById(R.id.beginner);
+        intermediate = (CheckBox) view.findViewById(R.id.intermediate);
+        advanced = (CheckBox) view.findViewById(R.id.advanced);
+        professional = (CheckBox) view.findViewById(R.id.professional);
+        gain_strength = (CheckBox) view.findViewById(R.id.gain_strength);
+        lose_weight = (CheckBox) view.findViewById(R.id.lose_weight);
+        be_fit = (CheckBox) view.findViewById(R.id.be_fit);
+        monday = (CheckBox) view.findViewById(R.id.monday);
+        tuesday = (CheckBox) view.findViewById(R.id.tuesday);
+        wednesday = (CheckBox) view.findViewById(R.id.wednesday);
+        thursday = (CheckBox) view.findViewById(R.id.thursday);
+        friday = (CheckBox) view.findViewById(R.id.friday);
+        saturday = (CheckBox) view.findViewById(R.id.saturday);
+        sunday = (CheckBox) view.findViewById(R.id.sunday);
+        beginner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (beginner.isChecked()) {
+                    beginner.setChecked(true);
+                    intermediate.setChecked(false);
+                    advanced.setChecked(false);
+                    professional.setChecked(false);
+                }
+            }
+        });
+        intermediate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (intermediate.isChecked()) {
+                    beginner.setChecked(false);
+                    intermediate.setChecked(true);
+                    advanced.setChecked(false);
+                    professional.setChecked(false);
+                }
+            }
+        });
+        advanced.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (advanced.isChecked()) {
+                    beginner.setChecked(false);
+                    intermediate.setChecked(false);
+                    advanced.setChecked(true);
+                    professional.setChecked(false);
+                }
+            }
+        });
+        professional.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (professional.isChecked()) {
+                    beginner.setChecked(false);
+                    intermediate.setChecked(false);
+                    advanced.setChecked(false);
+                    professional.setChecked(true);
+                }
+            }
+        });
+        gain_strength.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (gain_strength.isChecked()) {
+                    gain_strength.setChecked(true);
+                    lose_weight.setChecked(false);
+                    be_fit.setChecked(false);
+                }
+            }
+        });
+        lose_weight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (lose_weight.isChecked()) {
+                    gain_strength.setChecked(false);
+                    lose_weight.setChecked(true);
+                    be_fit.setChecked(false);
+                }
+            }
+        });
+        be_fit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (be_fit.isChecked()) {
+                    gain_strength.setChecked(false);
+                    lose_weight.setChecked(false);
+                    be_fit.setChecked(true);
+                }
+            }
+        });
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,8 +193,8 @@ public class StepOne extends Fragment {
 
     private void WriteData(View view, String weight, String height, String age) throws IOException {
         try {
-            FileOutputStream fileout= view.getContext().openFileOutput("user_data.txt", view.getContext().MODE_PRIVATE);
-            OutputStreamWriter outputWriter=new OutputStreamWriter(fileout);
+            FileOutputStream fileOut= view.getContext().openFileOutput("user_data.txt", view.getContext().MODE_PRIVATE);
+            OutputStreamWriter outputWriter=new OutputStreamWriter(fileOut);
             outputWriter.write("Personal Data;");
             outputWriter.write(weight + ";" + height +";" + age + ";");
             outputWriter.close();
