@@ -80,10 +80,8 @@ public class StepOne extends Fragment {
                     e.printStackTrace();
                 }
                 final FragmentTransaction ft = getFragmentManager().beginTransaction();
-                Fragment fragment = new TrainerFragment();
-                ft.replace(R.id.container, fragment, "Trainer Fragment").commit();
-                BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.bottomNav);
-                bottomNavigationView.setVisibility(View.VISIBLE);
+                Fragment fragment = new StepTwo();
+                ft.replace(R.id.container, fragment, "Step Two").commit();
             }
         });
         return view;
