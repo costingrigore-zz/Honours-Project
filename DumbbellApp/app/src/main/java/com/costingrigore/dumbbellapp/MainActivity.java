@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         // Database stuff
         database = FirebaseDatabase.getInstance();
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("exercises");
+        DatabaseReference databaseReference = database.getReference("exercises");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
