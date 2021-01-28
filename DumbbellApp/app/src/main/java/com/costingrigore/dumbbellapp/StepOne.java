@@ -193,21 +193,30 @@ public class StepOne extends Fragment {
                 String age = editTextAge.getText().toString();
                 ArrayList<String> daysToExercise = CheckDays();
 
+                // Saving user personal ID to local file and saving user personal data to FireBase
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
-
-                int x = 1 + (int) (Math.random() * 10000);
-                DatabaseReference databaseReference = database.getReference("user1");
-                databaseReference.child("levelOfExperience").setValue(levelOfExperience);
-                databaseReference.child("purpose").setValue(purposeForUseOfApplication);
+                // Creating random
+                Random random = new Random();
+                // Creating random number between 0 and 99999
+                int x = random.nextInt(100000);
+                // Personal ID consists of the current time in millis plus the random integer
+                String personalID = System.currentTimeMillis() + String.valueOf(x);
+                DatabaseReference databaseReference = database.getReference("users");
+                databaseReference.child(personalID).child("weight").setValue(weight);
+                databaseReference.child(personalID).child("height").setValue(height);
+                databaseReference.child(personalID).child("age").setValue(age);
+                databaseReference.child(personalID).child("levelOfExperience").setValue(levelOfExperience);
+                databaseReference.child(personalID).child("purpose").setValue(purposeForUseOfApplication);
                 for(int i = 0; i < daysToExercise.size(); i++)
                 {
-                    databaseReference.child("days").child("day " + i).setValue(daysToExercise.get(i));
+                    databaseReference.child(personalID).child("days").child("day " + i).setValue(daysToExercise.get(i));
                 }
-                /*try {
-                    WriteData(view, weight, height, age);
+
+                try {
+                    WriteData(view, personalID);
                 } catch (IOException e) {
                     e.printStackTrace();
-                }*/
+                }
                 final FragmentTransaction ft = getFragmentManager().beginTransaction();
                 Fragment fragment = new StepTwo();
                 ft.replace(R.id.container, fragment, "Step Two").commit();
@@ -250,12 +259,12 @@ public class StepOne extends Fragment {
         return daysToExercise;
     }
 
-    private void WriteData(View view, String weight, String height, String age) throws IOException {
+    private void WriteData(View view, String personalID) throws IOException {
         try {
             FileOutputStream fileOut= view.getContext().openFileOutput("user_data.txt", view.getContext().MODE_PRIVATE);
             OutputStreamWriter outputWriter=new OutputStreamWriter(fileOut);
-            outputWriter.write("Personal Data;");
-            outputWriter.write(weight + ";" + height +";" + age + ";");
+            outputWriter.write("Personal ID;");
+            outputWriter.write(personalID);
             outputWriter.close();
         }
         catch (Exception e){
@@ -270,14 +279,16 @@ public class StepOne extends Fragment {
 
             char[] inputBuffer = new char[100];
             String s = "";
+            String[] strArray = new String[100];
             int charRead;
 
             while ((charRead = InputRead.read(inputBuffer)) > 0) {
                 // char to string conversion
                 String readstring = String.copyValueOf(inputBuffer, 0, charRead);
-                s += readstring;
+                strArray = readstring.split(";");
             }
             InputRead.close();
+            s = strArray[1];
             weightText.setText(s);
         } catch (Exception e) {
             e.printStackTrace();
