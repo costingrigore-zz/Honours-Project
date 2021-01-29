@@ -9,6 +9,7 @@ public class Exercise{
     public String name;
     public String difficulty;
     public String type;
+    public String body_part;
 
     public Integer getIcon() {
         return exerciseID;
@@ -33,6 +34,12 @@ public class Exercise{
     }
     public void setType(String type) {
         this.type = type;
+    }
+    public String getBody_part() {
+        return body_part;
+    }
+    public void setBody_part(String body_part) {
+        this.body_part = body_part;
     }
 
 }
