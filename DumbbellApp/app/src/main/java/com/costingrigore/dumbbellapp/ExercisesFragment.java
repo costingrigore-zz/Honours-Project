@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewDebug;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,7 +32,7 @@ public class ExercisesFragment extends Fragment {
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
-    ArrayList<Exercise> exercises = new ArrayList<>();
+    FirebaseDatabase database;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -52,6 +54,7 @@ public class ExercisesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        database = FirebaseDatabase.getInstance();
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
@@ -62,59 +65,65 @@ public class ExercisesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_exercises_list, container, false);
-
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
+            LinearLayoutManager llm = new LinearLayoutManager(context);
+            llm.setOrientation(LinearLayoutManager.VERTICAL);
             RecyclerView recyclerView = (RecyclerView) view;
+            recyclerView.setLayoutManager(llm);
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            getListData();
-            recyclerView.setAdapter(new MyExerciseRecyclerViewAdapter(exercises));
+            // Firebase initialisation
+            final ArrayList<Exercise> exercises = new ArrayList<>();
+            final MyExerciseRecyclerViewAdapter adapter = new MyExerciseRecyclerViewAdapter(exercises);
+            recyclerView.setAdapter(adapter);
+            DatabaseReference databaseReference = database.getReference("exercises");
+            databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    // for cardio
+                    String exercise_type = "";
+                    String body_part = "";
+                    String difficulty = "";
+                    for ( DataSnapshot snapshot_type : dataSnapshot.getChildren()) {
+                        exercise_type = snapshot_type.getKey();
+                        for (DataSnapshot snapshot_body_part : snapshot_type.getChildren()) {
+                            body_part = snapshot_body_part.getKey();
+                            for (DataSnapshot snapshot_difficulty : snapshot_body_part.getChildren()) {
+                                difficulty = snapshot_difficulty.getKey();
+                                for (DataSnapshot snapshot_exercise_id : snapshot_difficulty.getChildren()) {
+                                    for (DataSnapshot snapshot_exercise_name : snapshot_exercise_id.getChildren()) {
+
+                                        String name = snapshot_exercise_name.getValue(String.class);
+                                        Exercise exercise1 = new Exercise();
+                                        String fnm = name; //  this is image file name
+                                        String PACKAGE_NAME = getContext().getPackageName();
+                                        int imgId = getResources().getIdentifier(PACKAGE_NAME+":drawable/"+fnm , null, null);
+                                        exercise1.setIcon(imgId);
+                                        exercise1.setName(name);
+                                        exercise1.setDifficulty(difficulty);
+                                        exercise1.setType(exercise_type);
+                                        exercise1.setBody_part(body_part);
+                                        exercises.add(exercise1);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    adapter.notifyDataSetChanged();
+
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) { }
+
+            });
+
         }
         return view;
-    }
-
-    private void getListData() {
-
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference databaseReference = database.getReference("exercises");
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                // for cardio
-                String name = snapshot.child("cardio").child("lower_body").child("easy").child("1").child("name").getValue(String.class);
-                Exercise exercise1 = new Exercise();
-                //int id = getResources().getIdentifier("com.my.app:drawable/" + name, null, null);
-                exercise1.setIcon(R.drawable.us);
-                exercise1.setName(name);
-                exercise1.setDifficulty("easy");
-                exercise1.setType("cardio");
-                exercise1.setBody_part("lower_body");
-                exercises.add(exercise1);
-                //String name = snapshot.child("cardio").child("lower_body").child("easy").child("2").child("name").getValue(String.class);
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        Exercise exercise2 = new Exercise();
-        exercise2.setIcon(R.drawable.us);
-        exercise2.setName("Rohini Alavala");
-        exercise2.setDifficulty("Agricultural Officer");
-        exercise2.setType("Guntur");
-        exercises.add(exercise2);
-        Exercise exercise3 = new Exercise();
-        exercise3.setIcon(R.drawable.india);
-        exercise3.setName("Trishika Dasari");
-        exercise3.setDifficulty("Charted Accountant");
-        exercise3.setType("Guntur");
-        exercises.add(exercise3);
     }
 }

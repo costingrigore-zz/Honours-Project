@@ -3,70 +3,101 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/exerciseID"
-            android:layout_width="183dp"
-            android:layout_height="129dp"
-            android:layout_margin="@dimen/text_margin"
-            android:layout_marginStart="4dp"
-            android:layout_marginLeft="4dp"
-            android:adjustViewBounds="true"
-            android:contentDescription="TODO"
-            android:scaleType="fitCenter"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.047"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/type"
             android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin"
-            android:layout_marginBottom="20dp"
-            android:textAppearance="?attr/textAppearanceListItem"
-            app:layout_constraintBottom_toTopOf="@+id/difficulty"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/name"
-            app:layout_constraintVertical_bias="0.194" />
+            android:layout_height="150dp"
+            android:layout_margin="10dp"
+            android:scaleType="fitCenter"/>
 
-        <TextView
-            android:id="@+id/difficulty"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin"
-            android:textAppearance="?attr/textAppearanceListItem"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/type"
-            app:layout_constraintVertical_bias="0.383" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin"
-            android:layout_marginBottom="20dp"
-            android:textAppearance="?attr/textAppearanceListItem"
-            app:layout_constraintBottom_toTopOf="@+id/type"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.009" />
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="horizontal">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="fill_parent"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/text_margin"
+                            android:text="Name:"
+                            android:textAppearance="?attr/textAppearanceListItem" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/text_margin"
+                            android:text="Difficulty:"
+                            android:textAppearance="?attr/textAppearanceListItem" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="fill_parent"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/text_margin"
+                            android:textAppearance="?attr/textAppearanceListItem" />
+
+                        <TextView
+                            android:id="@+id/difficulty"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/text_margin"
+                            android:textAppearance="?attr/textAppearanceListItem" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="fill_parent"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/text_margin"
+                            android:text="Type:"
+                            android:textAppearance="?attr/textAppearanceListItem" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/text_margin"
+                            android:text="Body part:"
+                            android:textAppearance="?attr/textAppearanceListItem" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="fill_parent"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/type"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/text_margin"
+                            android:textAppearance="?attr/textAppearanceListItem" />
+
+                        <TextView
+                            android:id="@+id/body_part"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/text_margin"
+                            android:textAppearance="?attr/textAppearanceListItem" />
+                    </LinearLayout>
+                </LinearLayout>
+            </HorizontalScrollView>
+        </RelativeLayout>
 
 </LinearLayout>

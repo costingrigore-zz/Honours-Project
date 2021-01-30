@@ -38,6 +38,7 @@ public class MyExerciseRecyclerViewAdapter extends RecyclerView.Adapter<MyExerci
         holder.mNameView.setText(mValues.get(position).name);
         holder.mDifficultyView.setText(mValues.get(position).difficulty);
         holder.mTypeView.setText(mValues.get(position).type);
+        holder.mBodyPartView.setText(mValues.get(position).body_part);
     }
 
     @Override
@@ -51,6 +52,7 @@ public class MyExerciseRecyclerViewAdapter extends RecyclerView.Adapter<MyExerci
         public final TextView mNameView;
         public final TextView mDifficultyView;
         public final TextView mTypeView;
+        public final TextView mBodyPartView;
         public Exercise mItem;
 
         public ViewHolder(View view) {
@@ -60,6 +62,7 @@ public class MyExerciseRecyclerViewAdapter extends RecyclerView.Adapter<MyExerci
             mNameView = (TextView) view.findViewById(R.id.name);
             mDifficultyView = (TextView) view.findViewById(R.id.difficulty);
             mTypeView = (TextView) view.findViewById(R.id.type);
+            mBodyPartView = (TextView) view.findViewById(R.id.body_part);
         }
 
     }
