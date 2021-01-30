@@ -15,12 +15,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -49,6 +53,8 @@ public class StepOne extends Fragment {
     CheckBox friday;
     CheckBox saturday;
     CheckBox sunday;
+    private String levelOfExperience;
+    private String purposeForUseOfApplication;
     public StepOne() {
         // Required empty public constructor
     }
@@ -106,6 +112,7 @@ public class StepOne extends Fragment {
                     intermediate.setChecked(false);
                     advanced.setChecked(false);
                     professional.setChecked(false);
+                    levelOfExperience = "Beginner";
                 }
             }
         });
@@ -117,6 +124,7 @@ public class StepOne extends Fragment {
                     intermediate.setChecked(true);
                     advanced.setChecked(false);
                     professional.setChecked(false);
+                    levelOfExperience = "Intermediate";
                 }
             }
         });
@@ -128,6 +136,7 @@ public class StepOne extends Fragment {
                     intermediate.setChecked(false);
                     advanced.setChecked(true);
                     professional.setChecked(false);
+                    levelOfExperience = "Advanced";
                 }
             }
         });
@@ -139,6 +148,7 @@ public class StepOne extends Fragment {
                     intermediate.setChecked(false);
                     advanced.setChecked(false);
                     professional.setChecked(true);
+                    levelOfExperience = "Professional";
                 }
             }
         });
@@ -149,6 +159,7 @@ public class StepOne extends Fragment {
                     gain_strength.setChecked(true);
                     lose_weight.setChecked(false);
                     be_fit.setChecked(false);
+                    purposeForUseOfApplication = "Gain strength";
                 }
             }
         });
@@ -159,6 +170,7 @@ public class StepOne extends Fragment {
                     gain_strength.setChecked(false);
                     lose_weight.setChecked(true);
                     be_fit.setChecked(false);
+                    purposeForUseOfApplication = "Lose weight";
                 }
             }
         });
@@ -169,6 +181,7 @@ public class StepOne extends Fragment {
                     gain_strength.setChecked(false);
                     lose_weight.setChecked(false);
                     be_fit.setChecked(true);
+                    purposeForUseOfApplication = "Be fit";
                 }
             }
         });
@@ -178,8 +191,29 @@ public class StepOne extends Fragment {
                 String weight = editTextWeight.getText().toString();
                 String height = editTextHeight.getText().toString();
                 String age = editTextAge.getText().toString();
+                ArrayList<String> daysToExercise = CheckDays();
+
+                // Saving user personal ID to local file and saving user personal data to FireBase
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                // Creating random
+                Random random = new Random();
+                // Creating random number between 0 and 99999
+                int x = random.nextInt(100000);
+                // Personal ID consists of the current time in millis plus the random integer
+                String personalID = System.currentTimeMillis() + String.valueOf(x);
+                DatabaseReference databaseReference = database.getReference("users");
+                databaseReference.child(personalID).child("weight").setValue(weight);
+                databaseReference.child(personalID).child("height").setValue(height);
+                databaseReference.child(personalID).child("age").setValue(age);
+                databaseReference.child(personalID).child("levelOfExperience").setValue(levelOfExperience);
+                databaseReference.child(personalID).child("purpose").setValue(purposeForUseOfApplication);
+                for(int i = 0; i < daysToExercise.size(); i++)
+                {
+                    databaseReference.child(personalID).child("days").child("day " + i).setValue(daysToExercise.get(i));
+                }
+
                 try {
-                    WriteData(view, weight, height, age);
+                    WriteData(view, personalID);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -191,12 +225,46 @@ public class StepOne extends Fragment {
         return view;
     }
 
-    private void WriteData(View view, String weight, String height, String age) throws IOException {
+    private ArrayList<String> CheckDays()
+    {
+        ArrayList<String> daysToExercise = new ArrayList<>();
+        if(monday.isChecked())
+        {
+            daysToExercise.add("monday");
+        }
+        if(tuesday.isChecked())
+        {
+            daysToExercise.add("tuesday");
+        }
+        if(wednesday.isChecked())
+        {
+            daysToExercise.add("wednesday");
+        }
+        if(thursday.isChecked())
+        {
+            daysToExercise.add("thursday");
+        }
+        if(friday.isChecked())
+        {
+            daysToExercise.add("friday");
+        }
+        if(saturday.isChecked())
+        {
+            daysToExercise.add("saturday");
+        }
+        if(sunday.isChecked())
+        {
+            daysToExercise.add("sunday");
+        }
+        return daysToExercise;
+    }
+
+    private void WriteData(View view, String personalID) throws IOException {
         try {
             FileOutputStream fileOut= view.getContext().openFileOutput("user_data.txt", view.getContext().MODE_PRIVATE);
             OutputStreamWriter outputWriter=new OutputStreamWriter(fileOut);
-            outputWriter.write("Personal Data;");
-            outputWriter.write(weight + ";" + height +";" + age + ";");
+            outputWriter.write("Personal ID;");
+            outputWriter.write(personalID);
             outputWriter.close();
         }
         catch (Exception e){
@@ -211,14 +279,16 @@ public class StepOne extends Fragment {
 
             char[] inputBuffer = new char[100];
             String s = "";
+            String[] strArray = new String[100];
             int charRead;
 
             while ((charRead = InputRead.read(inputBuffer)) > 0) {
                 // char to string conversion
                 String readstring = String.copyValueOf(inputBuffer, 0, charRead);
-                s += readstring;
+                strArray = readstring.split(";");
             }
             InputRead.close();
+            s = strArray[1];
             weightText.setText(s);
         } catch (Exception e) {
             e.printStackTrace();

@@ -48,25 +48,19 @@ public class MainActivity extends AppCompatActivity {
         // Database stuff
         database = FirebaseDatabase.getInstance();
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("exercises");
+        DatabaseReference databaseReference = database.getReference("exercises");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String name = snapshot.child("1").child("name").getValue(String.class);
                 textView.setText(name);
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
 
-        DatabaseReference myRef = database.getReference("exercises");
-        myRef.child("1").child("name").setValue("pullups");
-        myRef.child("1").child("difficulty").setValue("easy");
-        myRef.child("1").child("type").setValue("strength");
-        myRef.child("2").setValue("pain");
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener bottomNavmethod = new
