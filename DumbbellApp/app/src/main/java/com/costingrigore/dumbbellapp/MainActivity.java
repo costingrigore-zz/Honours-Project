@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        textView = findViewById(R.id.textView2);
         //btn = findViewById(R.id.btn);
         /**btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String name = snapshot.child("1").child("name").getValue(String.class);
-                textView.setText(name);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
