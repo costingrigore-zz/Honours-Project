@@ -8,16 +8,22 @@
     android:paddingBottom="10dp"
     android:layout_marginTop="30dp"
     android:layout_marginBottom="10dp"
-    android:background="@drawable/left_dark_round_shape"
-    android:orientation="horizontal">
-
-    <ImageView
-        android:id="@+id/exerciseID"
+    android:background="@drawable/card_exercise"
+    android:backgroundTint="#80292929"
+    android:orientation="horizontal"
+    >
+    <androidx.cardview.widget.CardView
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_margin="10dp"
-        android:scaleType="fitCenter"/>
-
+        app:cardCornerRadius="20dp">
+        <ImageView
+            android:id="@+id/exerciseID"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:scaleType="fitCenter"
+            />
+    </androidx.cardview.widget.CardView>
     <LinearLayout
         android:layout_width="120dp"
         android:layout_height="fill_parent"
@@ -27,24 +33,28 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:text="Name:"
+            android:textColor="@color/default_text"
             android:textAppearance="?attr/textAppearanceListItem" />
         <TextView
             android:id="@+id/name"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:textColor="@color/default_text"
             android:textAppearance="?attr/textAppearanceListItem" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:text="Difficulty:"
+            android:textColor="@color/default_text"
             android:textAppearance="?attr/textAppearanceListItem" />
         <TextView
             android:id="@+id/difficulty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:textColor="@color/default_text"
             android:textAppearance="?attr/textAppearanceListItem" />
     </LinearLayout>
     <LinearLayout
@@ -56,12 +66,14 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:text="Type:"
+            android:textColor="@color/default_text"
             android:textAppearance="?attr/textAppearanceListItem" />
         <TextView
             android:id="@+id/type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:textColor="@color/default_text"
             android:textAppearance="?attr/textAppearanceListItem" />
 
         <TextView
@@ -69,12 +81,14 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:text="Body part:"
+            android:textColor="@color/default_text"
             android:textAppearance="?attr/textAppearanceListItem" />
         <TextView
             android:id="@+id/body_part"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:textColor="@color/default_text"
             android:textAppearance="?attr/textAppearanceListItem" />
     </LinearLayout>
 </LinearLayout>
