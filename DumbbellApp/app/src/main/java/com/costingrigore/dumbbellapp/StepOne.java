@@ -272,26 +272,5 @@ public class StepOne extends Fragment {
         }
     }
 
-    public void ReadData(View view) {
-        try {
-            FileInputStream fileIn = view.getContext().openFileInput("user_data.txt");
-            InputStreamReader InputRead = new InputStreamReader(fileIn);
 
-            char[] inputBuffer = new char[100];
-            String s = "";
-            String[] strArray = new String[100];
-            int charRead;
-
-            while ((charRead = InputRead.read(inputBuffer)) > 0) {
-                // char to string conversion
-                String readstring = String.copyValueOf(inputBuffer, 0, charRead);
-                strArray = readstring.split(";");
-            }
-            InputRead.close();
-            s = strArray[1];
-            weightText.setText(s);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

@@ -17,6 +17,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = "MainActivity" ;
@@ -24,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     TextView textView;
     Button btn;
     FirebaseDatabase database;
+    boolean registered = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,25 +43,16 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavmethod);
         bottomNavigationView.getMenu().findItem(R.id.trainer).setChecked(true);
-        bottomNavigationView.setVisibility(View.INVISIBLE);
-        // Set default fragment when application loads
-        getSupportFragmentManager().beginTransaction().replace(R.id.container,new StepOne()).commit();
-
-
-        // Database stuff
-        database = FirebaseDatabase.getInstance();
-
-        DatabaseReference databaseReference = database.getReference("exercises");
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String name = snapshot.child("1").child("name").getValue(String.class);
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+        ReadData(this);
+        if(!registered){
+            bottomNavigationView.setVisibility(View.INVISIBLE);
+            // Set default fragment when application loads
+            getSupportFragmentManager().beginTransaction().replace(R.id.container,new StepOne()).commit();
+        }
+        else{
+            bottomNavigationView.setVisibility(View.VISIBLE);
+            getSupportFragmentManager().beginTransaction().replace(R.id.container,new TrainerFragment()).commit();
+        }
 
     }
 
@@ -88,6 +83,31 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
             };
+    public void ReadData(MainActivity view) {
+        try {
+            FileInputStream fileIn = view.openFileInput("user_data.txt");
+            InputStreamReader InputRead = new InputStreamReader(fileIn);
 
+            char[] inputBuffer = new char[100];
+            String s = "";
+            String[] strArray = new String[100];
+            int charRead;
+
+            while ((charRead = InputRead.read(inputBuffer)) > 0) {
+                // char to string conversion
+                String readstring = String.copyValueOf(inputBuffer, 0, charRead);
+                strArray = readstring.split(";");
+            }
+            InputRead.close();
+            s = strArray[1];
+            if (!s.equals("")) {
+                System.out.println("profile " + s);
+                registered = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            registered = false;
+        }
+    }
 }
 

@@ -3,101 +3,92 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
+    android:layout_height="220dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:layout_marginTop="30dp"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/card_exercise"
+    android:backgroundTint="#80292929"
+    android:orientation="horizontal"
+    >
+    <androidx.cardview.widget.CardView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="20dp">
         <ImageView
             android:id="@+id/exerciseID"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:layout_margin="10dp"
-            android:scaleType="fitCenter"/>
-
-        <RelativeLayout
+            android:scaleType="fitCenter"
+            />
+    </androidx.cardview.widget.CardView>
+    <LinearLayout
+        android:layout_width="120dp"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Name:"
+            android:textColor="@color/default_text"
+            android:textAppearance="?attr/textAppearanceListItem" />
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColor="@color/default_text"
+            android:textAppearance="?attr/textAppearanceListItem" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Difficulty:"
+            android:textColor="@color/default_text"
+            android:textAppearance="?attr/textAppearanceListItem" />
+        <TextView
+            android:id="@+id/difficulty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColor="@color/default_text"
+            android:textAppearance="?attr/textAppearanceListItem" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="120dp"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Type:"
+            android:textColor="@color/default_text"
+            android:textAppearance="?attr/textAppearanceListItem" />
+        <TextView
+            android:id="@+id/type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColor="@color/default_text"
+            android:textAppearance="?attr/textAppearanceListItem" />
 
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scrollbars="horizontal">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="fill_parent"
-                    android:orientation="horizontal">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="fill_parent"
-                        android:orientation="vertical">
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/text_margin"
-                            android:text="Name:"
-                            android:textAppearance="?attr/textAppearanceListItem" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/text_margin"
-                            android:text="Difficulty:"
-                            android:textAppearance="?attr/textAppearanceListItem" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="fill_parent"
-                        android:orientation="vertical">
-                        <TextView
-                            android:id="@+id/name"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/text_margin"
-                            android:textAppearance="?attr/textAppearanceListItem" />
-
-                        <TextView
-                            android:id="@+id/difficulty"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/text_margin"
-                            android:textAppearance="?attr/textAppearanceListItem" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="fill_parent"
-                        android:orientation="vertical">
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/text_margin"
-                            android:text="Type:"
-                            android:textAppearance="?attr/textAppearanceListItem" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/text_margin"
-                            android:text="Body part:"
-                            android:textAppearance="?attr/textAppearanceListItem" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="fill_parent"
-                        android:orientation="vertical">
-                        <TextView
-                            android:id="@+id/type"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/text_margin"
-                            android:textAppearance="?attr/textAppearanceListItem" />
-
-                        <TextView
-                            android:id="@+id/body_part"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/text_margin"
-                            android:textAppearance="?attr/textAppearanceListItem" />
-                    </LinearLayout>
-                </LinearLayout>
-            </HorizontalScrollView>
-        </RelativeLayout>
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Body part:"
+            android:textColor="@color/default_text"
+            android:textAppearance="?attr/textAppearanceListItem" />
+        <TextView
+            android:id="@+id/body_part"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColor="@color/default_text"
+            android:textAppearance="?attr/textAppearanceListItem" />
+    </LinearLayout>
 </LinearLayout>
