@@ -80,8 +80,6 @@ public class ExercisesFragment extends Fragment {
             }
             // Firebase initialisation
             final ArrayList<Exercise> exercises = new ArrayList<>();
-            final MyExerciseRecyclerViewAdapter adapter = new MyExerciseRecyclerViewAdapter(exercises);
-            recyclerView.setAdapter(adapter);
             DatabaseReference databaseReference = database.getReference("exercises");
             databaseReference.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -105,9 +103,13 @@ public class ExercisesFragment extends Fragment {
                                         String PACKAGE_NAME = getContext().getPackageName();
                                         int imgId = getResources().getIdentifier(PACKAGE_NAME+":drawable/"+fnm , null, null);
                                         exercise1.setIcon(imgId);
+                                        name = replace(name);
                                         exercise1.setName(name);
+                                        difficulty = replace(difficulty);
                                         exercise1.setDifficulty(difficulty);
+                                        exercise_type = replace(exercise_type);
                                         exercise1.setType(exercise_type);
+                                        body_part = replace(body_part);
                                         exercise1.setBody_part(body_part);
                                         exercises.add(exercise1);
                                     }
@@ -115,7 +117,11 @@ public class ExercisesFragment extends Fragment {
                             }
                         }
                     }
-                    adapter.notifyDataSetChanged();
+                    if(!exercises.isEmpty()){
+                        final MyExerciseRecyclerViewAdapter adapter = new MyExerciseRecyclerViewAdapter(exercises);
+                        recyclerView.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
+                    }
 
                 }
                 @Override
@@ -126,4 +132,30 @@ public class ExercisesFragment extends Fragment {
         }
         return view;
     }
+
+
+    public static String replace(String input) {
+        String spacesReplaced = replace('_', ' ', input);
+        String finalName = spacesReplaced.substring(0, 1).toUpperCase() + spacesReplaced.substring(1);
+        return finalName;
+    }
+
+    public static String replace(char oldDelim, char newDelim, String input) {
+        boolean wasOldDelim = false;
+        int o = 0;
+        char[] buf = input.toCharArray();
+        for (int i = 0; i < buf.length; i++) {
+            assert(o <= i);
+            if (buf[i] == oldDelim) {
+                if (wasOldDelim) { continue; }
+                wasOldDelim = true;
+                buf[o++] = newDelim;
+            } else {
+                wasOldDelim = false;
+                buf[o++] = buf[i];
+            }
+        }
+        return new String(buf, 0, o);
+    }
+
 }
