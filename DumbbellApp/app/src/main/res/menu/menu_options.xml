@@ -4,27 +4,27 @@
 
     <item
         android:id="@+id/exercises"
-        android:icon="@drawable/ic_run"
+        android:icon="@drawable/bottom_navigation_exercises_selector"
         android:title="@string/exercises"
         />
     <item
         android:id="@+id/insights"
-        android:icon="@drawable/ic_chart"
+        android:icon="@drawable/bottom_navigation_insights_selector"
         android:title="@string/insights"
         />
     <item
         android:id="@+id/trainer"
-        android:icon="@drawable/ic_timer"
+        android:icon="@drawable/bottom_navigation_trainer_selector"
         android:title="@string/trainer"
         />
     <item
         android:id="@+id/goals"
-        android:icon="@drawable/ic_star"
+        android:icon="@drawable/bottom_navigation_goals_selector"
         android:title="@string/goals"
         />
     <item
         android:id="@+id/profile"
-        android:icon="@drawable/ic_profile"
+        android:icon="@drawable/bottom_navigation_profile_selector"
         android:title="@string/profile"
         />
 </menu>
