@@ -1,18 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/purple_700"
-    tools:context=".ProfileFragment">
+    android:background="@drawable/gradient"
+    tools:context=".ProfileFragment"
+    android:paddingBottom="30dp">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Profile"
-        android:textColor="@color/white"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:isScrollContainer="false">
 
-</RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="70dp"
+            android:paddingBottom="60dp">
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/left_light_round_shape"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="10dp"
+                android:text="Profile"
+                android:textColor="@color/default_text"
+                android:textSize="20dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="20dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="10"
+                >
+                <LinearLayout
+
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="4.75"
+                    android:orientation="vertical"
+                    android:padding="20dp"
+                    android:background="@drawable/left_dark_round_shape">
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:text="Height"
+                        android:textColor="@color/default_text"
+                        android:paddingBottom="30dp"
+                        android:textSize="20dp" />
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:text="Weight"
+                        android:textColor="@color/default_text"
+                        android:paddingBottom="30dp"
+                        android:textSize="20dp" />
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:text="Age"
+                        android:textColor="@color/default_text"
+                        android:paddingBottom="30dp"
+                        android:textSize="20dp" />
+                    <TextView
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:text="Level of experience"
+                        android:textColor="@color/default_text"
+                        android:paddingBottom="30dp"
+                        android:textSize="20dp" />
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:text="Goal"
+                        android:textColor="@color/default_text"
+                        android:paddingBottom="30dp"
+                        android:textSize="20dp" />
+                    <TextView
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:text="Days of the week"
+                        android:textColor="@color/default_text"
+                        android:paddingBottom="30dp"
+                        android:textSize="20dp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight=".5"/>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="4.75"
+                    android:orientation="vertical"
+                    android:background="@drawable/right_dark_round_shape"
+                    android:padding="20dp"
+                    android:gravity="right"
+                    >
+                    <TextView
+                        android:id="@+id/heightText"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:text="Height"
+                        android:textColor="@color/default_text"
+                        android:paddingBottom="30dp"
+                        android:gravity="right"
+                        android:textSize="20dp" />
+                    <TextView
+                        android:id="@+id/weightText"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:text="Weight"
+                        android:textColor="@color/default_text"
+                        android:paddingBottom="30dp"
+                        android:gravity="right"
+                        android:textSize="20dp" />
+                    <TextView
+                        android:id="@+id/ageText"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:text="Age"
+                        android:textColor="@color/default_text"
+                        android:paddingBottom="30dp"
+                        android:gravity="right"
+                        android:textSize="20dp" />
+                    <TextView
+                        android:id="@+id/level_of_experience_text"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:text="Level of experience"
+                        android:textColor="@color/default_text"
+                        android:paddingBottom="30dp"
+                        android:gravity="right"
+                        android:textSize="20dp" />
+                    <TextView
+                        android:id="@+id/goal_text"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:text="Goal"
+                        android:textColor="@color/default_text"
+                        android:paddingBottom="30dp"
+                        android:gravity="right"
+                        android:textSize="20dp" />
+                    <TextView
+                        android:id="@+id/days_of_the_week_text"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:text="Days of the week"
+                        android:textColor="@color/default_text"
+                        android:paddingBottom="30dp"
+                        android:gravity="right"
+                        android:textSize="20dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</FrameLayout>

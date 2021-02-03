@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView=findViewById(R.id.bottomNav);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavmethod);
+        //bottomNavigationView.setItemIconTintList(null);
         bottomNavigationView.getMenu().findItem(R.id.trainer).setChecked(true);
         ReadData(this);
         if(!registered){
