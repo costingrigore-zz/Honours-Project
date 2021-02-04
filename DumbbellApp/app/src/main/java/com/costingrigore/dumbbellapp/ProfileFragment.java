@@ -279,6 +279,7 @@ public class ProfileFragment extends Fragment {
         dialog = dialogBuilder.create();
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.show();
+        dialog.getWindow().setLayout(dialog.getWindow().getAttributes().width,2000);
 
         submit_button.setOnClickListener(new View.OnClickListener() {
             @Override

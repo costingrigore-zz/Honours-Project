@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:minHeight="1000dp"
+    android:weightSum="100"
+    android:orientation="vertical"
     android:background="@drawable/card_exercise"
     android:backgroundTint="#FF9800"
     tools:context=".StepOne">
@@ -11,8 +14,10 @@
     <!-- TODO: Update blank fragment layout -->
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="90"
         android:fillViewport="true"
+        android:overScrollMode="never"
         android:isScrollContainer="false">
 
         <LinearLayout
@@ -22,20 +27,17 @@
             android:paddingTop="20dp"
             android:paddingBottom="60dp">
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:orientation="horizontal">
                 <TextView
-                    android:id="@+id/heightText"
-                    android:layout_width="120dp"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:text="Height"
                     android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
                     android:textColor="@color/white"
-                    android:paddingLeft="40dp"
                     android:textSize="20dp" />
 
                 <EditText
@@ -44,24 +46,31 @@
                     android:layout_height="wrap_content"
                     android:ems="5"
                     android:inputType="textPersonName"
+                    android:text=""
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="50dp"
+                    android:textColor="@color/white" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="ft"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="100dp"
-                    android:textColor="@color/white" />
+                    android:layout_marginLeft="20dp"
+                    android:textColor="@color/white"
+                    android:paddingLeft="40dp"
+                    android:textSize="20dp" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:orientation="horizontal">
                 <TextView
-                    android:id="@+id/weightText"
-                    android:layout_width="120dp"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:text="Weight"
                     android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
                     android:textColor="@color/white"
-                    android:paddingLeft="40dp"
                     android:textSize="20dp" />
 
                 <EditText
@@ -70,10 +79,19 @@
                     android:layout_height="wrap_content"
                     android:ems="5"
                     android:inputType="textPersonName"
+                    android:text=""
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="50dp"
+                    android:textColor="@color/white" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="kg"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="100dp"
-                    android:textColor="@color/white" />
+                    android:layout_marginLeft="20dp"
+                    android:textColor="@color/white"
+                    android:paddingLeft="40dp"
+                    android:textSize="20dp" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -81,14 +99,12 @@
                 android:orientation="horizontal"
                 android:paddingBottom="40dp">
                 <TextView
-                    android:id="@+id/ageText"
-                    android:layout_width="120dp"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:text="Age"
                     android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
                     android:textColor="@color/white"
-                    android:paddingLeft="40dp"
                     android:textSize="20dp" />
 
                 <EditText
@@ -97,10 +113,19 @@
                     android:layout_height="wrap_content"
                     android:ems="5"
                     android:inputType="textPersonName"
+                    android:text=""
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="50dp"
+                    android:textColor="@color/white" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="years"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="100dp"
-                    android:textColor="@color/white" />
+                    android:layout_marginLeft="20dp"
+                    android:textColor="@color/white"
+                    android:paddingLeft="40dp"
+                    android:textSize="20dp" />
             </LinearLayout>
             <TextView
                 android:layout_width="316dp"
@@ -110,7 +135,7 @@
                 android:paddingBottom="10dp"
                 android:paddingLeft="20dp"
                 android:paddingRight="10dp"
-                android:text="What is your level of experience with fitness?"
+                android:text="Level of experience with fitness:"
                 android:textColor="@color/white"
                 android:textSize="20dp" />
             <LinearLayout
@@ -175,7 +200,7 @@
                 android:paddingBottom="10dp"
                 android:paddingLeft="20dp"
                 android:paddingRight="10dp"
-                android:text="What are your goals for using this application?"
+                android:text="Goal:"
                 android:textColor="@color/white"
                 android:textSize="20dp"
                 />
@@ -230,7 +255,7 @@
                 android:paddingBottom="10dp"
                 android:paddingLeft="20dp"
                 android:paddingRight="10dp"
-                android:text="How many times per week would you like to exercise?"
+                android:text="Days to exercise:"
                 android:textColor="@color/white"
                 android:textSize="20dp"
                 />
@@ -328,30 +353,31 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="20dp"/>
-            <Button
-                android:id="@+id/submit_button"
-                android:layout_width="150dp"
-                android:layout_height="50dp"
-                android:background="@drawable/round_button"
-                android:padding="5dp"
-                android:text="Submit"
-                android:textSize="20dp"
-                android:layout_gravity="center"
-                app:backgroundTint="#FFFFFF"/>
-            <Button
-                android:id="@+id/close_button"
-                android:layout_width="150dp"
-                android:layout_height="50dp"
-                android:background="@drawable/round_button"
-                android:padding="5dp"
-                android:text="Close"
-                android:textSize="20dp"
-                android:layout_gravity="center"
-                app:backgroundTint="#FFFFFF"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="20dp"/>
         </LinearLayout>
     </ScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:layout_paddingBottom="20dp"
+        android:gravity="center">
+        <Button
+            android:id="@+id/submit_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/save_button"
+            android:textSize="20dp"
+            />
+        <Button
+            android:id="@+id/close_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/close_button"
+            android:textSize="20dp"
+            />
+    </LinearLayout>
 
 </LinearLayout>
