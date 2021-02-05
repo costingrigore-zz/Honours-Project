@@ -104,12 +104,6 @@ public class ProfileFragment extends Fragment {
                     days.add(day);
                 }
                 editProfile = (Button) view.findViewById(R.id.edit_profile);
-                editProfile.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ChangePersonalDetails(view);
-                    }
-                });
                 ageTextV = (TextView) view.findViewById(R.id.ageText);
                 weightTextV = (TextView) view.findViewById(R.id.weightText);
                 heightTextV = (TextView) view.findViewById(R.id.heightText);
@@ -139,6 +133,13 @@ public class ProfileFragment extends Fragment {
                 }
                 String str = sb.toString();
                 daysTextV.setText(str);
+                // Edit button behaviour
+                editProfile.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ChangePersonalDetails(view, weight, height, age, loeString, goal, daysArray);
+                    }
+                });
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -172,7 +173,7 @@ public class ProfileFragment extends Fragment {
         }
     }
 
-    public void ChangePersonalDetails(View view){
+    public void ChangePersonalDetails(View view, String weight, String height, String age, String loeString, String goal, String[] daysArray){
         dialogBuilder = new AlertDialog.Builder(view.getContext());
         final View editPersonalData = getLayoutInflater().inflate(R.layout.profile_popup, null);
         weight_popup = (EditText) editPersonalData.findViewById(R.id.weight_popup);
@@ -194,6 +195,68 @@ public class ProfileFragment extends Fragment {
         friday = (CheckBox) editPersonalData.findViewById(R.id.friday);
         saturday = (CheckBox) editPersonalData.findViewById(R.id.saturday);
         sunday = (CheckBox) editPersonalData.findViewById(R.id.sunday);
+        weight_popup.setText(weight);
+        height_popup.setText(height);
+        age_popup.setText(age);
+        if(loeString.equals("Beginner")){
+            beginner.setChecked(true);
+            levelOfExperience = "Beginner";
+        }
+        else if(loeString.equals("Intermediate")){
+            intermediate.setChecked(true);
+            levelOfExperience = "Intermediate";
+        }
+        else if(loeString.equals("Advanced")){
+            advanced.setChecked(true);
+            levelOfExperience = "Advanced";
+        }
+        else if(loeString.equals("Professional")){
+            professional.setChecked(true);
+            levelOfExperience = "Advanced";
+        }
+        if(goal.equals("Gain strength")){
+            gain_strength.setChecked(true);
+            purposeForUseOfApplication = "Gain strength";
+        }
+        else if(goal.equals("Lose weight")){
+            lose_weight.setChecked(true);
+            purposeForUseOfApplication = "Lose weight";
+        }
+        else if(goal.equals("Be fit")){
+            be_fit.setChecked(true);
+            purposeForUseOfApplication = "Be fit";
+        }
+        for(int i = 0; i < daysArray.length; i++)
+        {
+            if(daysArray[i].equals("monday"))
+            {
+                monday.setChecked(true);
+            }
+            else if(daysArray[i].equals("tuesday"))
+            {
+                tuesday.setChecked(true);
+            }
+            else if(daysArray[i].equals("wednesday"))
+            {
+                wednesday.setChecked(true);
+            }
+            else if(daysArray[i].equals("thursday"))
+            {
+                thursday.setChecked(true);
+            }
+            else if(daysArray[i].equals("friday"))
+            {
+                friday.setChecked(true);
+            }
+            else if(daysArray[i].equals("saturday"))
+            {
+                saturday.setChecked(true);
+            }
+            else if(daysArray[i].equals("sunday"))
+            {
+                sunday.setChecked(true);
+            }
+        }
         beginner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -284,7 +347,21 @@ public class ProfileFragment extends Fragment {
         submit_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // define save button
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                String personalID = GetPersonalID(view);
+                ArrayList<String> daysToExercise = CheckDays();
+                DatabaseReference databaseReference = database.getReference("users");
+                databaseReference.child(personalID).child("weight").setValue(weight_popup.getText().toString());
+                databaseReference.child(personalID).child("height").setValue(height_popup.getText().toString());
+                databaseReference.child(personalID).child("age").setValue(age_popup.getText().toString());
+                databaseReference.child(personalID).child("levelOfExperience").setValue(levelOfExperience);
+                databaseReference.child(personalID).child("purpose").setValue(purposeForUseOfApplication);
+                databaseReference.child(personalID).child("days").removeValue();
+                for(int i = 0; i < daysToExercise.size(); i++)
+                {
+                    databaseReference.child(personalID).child("days").child("day " + i).setValue(daysToExercise.get(i));
+                }
+                dialog.dismiss();
             }
         });
         close_button.setOnClickListener(new View.OnClickListener() {
@@ -294,5 +371,38 @@ public class ProfileFragment extends Fragment {
                 dialog.dismiss();
             }
         });
+    }
+    private ArrayList<String> CheckDays()
+    {
+        ArrayList<String> daysToExercise = new ArrayList<>();
+        if(monday.isChecked())
+        {
+            daysToExercise.add("monday");
+        }
+        if(tuesday.isChecked())
+        {
+            daysToExercise.add("tuesday");
+        }
+        if(wednesday.isChecked())
+        {
+            daysToExercise.add("wednesday");
+        }
+        if(thursday.isChecked())
+        {
+            daysToExercise.add("thursday");
+        }
+        if(friday.isChecked())
+        {
+            daysToExercise.add("friday");
+        }
+        if(saturday.isChecked())
+        {
+            daysToExercise.add("saturday");
+        }
+        if(sunday.isChecked())
+        {
+            daysToExercise.add("sunday");
+        }
+        return daysToExercise;
     }
 }
