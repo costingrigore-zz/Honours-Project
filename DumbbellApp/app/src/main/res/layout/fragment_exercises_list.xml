@@ -9,4 +9,5 @@
     android:paddingBottom="55dp"
     app:layoutManager="LinearLayoutManager"
     tools:context=".ExercisesFragment"
-    tools:listitem="@layout/fragment_exercises" />
+    tools:listitem="@layout/fragment_exercises" >
+</androidx.recyclerview.widget.RecyclerView>

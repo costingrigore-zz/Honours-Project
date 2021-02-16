@@ -1,19 +1,13 @@
 package com.costingrigore.dumbbellapp;
 
 import android.content.Context;
-import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,63 +18,12 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Random;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link TrainerFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class TrainerFragment extends Fragment {
-
-    TextView textView;
-    Button button;
-    String name;
-    private int mColumnCount = 1;
-
-    public TrainerFragment() {
-        // Required empty public constructor
-    }
-
-    // TODO: Rename and change types and number of parameters
-    public static TrainerFragment newInstance() {
-        TrainerFragment fragment = new TrainerFragment();
-        return fragment;
-    }
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater,
-                             ViewGroup container,
-                             Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_trainer, container, false);
-        button = (Button) view.findViewById(R.id.button);
-        WorkoutRoutineCreationAlgorithm WRCA = new WorkoutRoutineCreationAlgorithm(levelOfExperience,goal,dayType,view);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                WRCA.ProcessUserPersonalData();
-                WRCA.GetPersonalisedCardioExercises();
-            }
-        });
-
-
-/**        WorkoutRoutineCreationAlgorithm WRCA = new WorkoutRoutineCreationAlgorithm("Intermediate","Be fit","upper_body", view);
-        WRCA.ProcessUserPersonalData();
-        ArrayList<Exercise> cardioExercises = WRCA.GetPersonalisedCardioExercises();
-**/
-        return view;
-    }
+public class WorkoutRoutineCreationAlgorithm {
 
     private String levelOfExperience = "Intermediate";
     private String goal = "Be fit";
     private String dayType = "upper_body";
-
-
     private View view;
-
-}
-/**
     FirebaseDatabase database;
     private int beginnerID = 0;
     private int intermediateID = 1;
@@ -90,6 +33,7 @@ public class TrainerFragment extends Fragment {
     private int beFitID = 0;
     private int loseWeightID = 1;
     private int gainStrengthID = 2;
+    private int mColumnCount = 1;
 
 
     public ArrayList<Exercise> cardioExercises = new ArrayList<>();
@@ -134,12 +78,12 @@ public class TrainerFragment extends Fragment {
                     {10, 10, 15, 20}
             };
 
-  /**  public WorkoutRoutineCreationAlgorithm(String levelOfExperience, String goal, String dayType, View view) {
-        this.levelOfExperience = levelOfExperience;
-        this.goal = goal;
-        this.dayType = dayType;
-        this.view = view;
-    }
+     public WorkoutRoutineCreationAlgorithm(String levelOfExperience, String goal, String dayType, View view) {
+         this.levelOfExperience = levelOfExperience;
+         this.goal = goal;
+         this.dayType = dayType;
+         this.view = view;
+     }
 
     public void ProcessUserPersonalData(){
         int levelOfExperienceID = 0;
@@ -182,10 +126,8 @@ public class TrainerFragment extends Fragment {
 
     public void GetPersonalisedCardioExercises(){
         Context context = view.getContext();
-        LinearLayoutManager llm = new LinearLayoutManager(context);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list);
-        recyclerView.setLayoutManager(llm);
+
         if (mColumnCount <= 1) {
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
         } else {
@@ -246,10 +188,6 @@ public class TrainerFragment extends Fragment {
                     }
                     if(exerciseDifficultyState.equals("easy"))
                     {
-                        //Random random1 = new Random();
-                        //int randomInteger = random1.nextInt(easyExercises.size());
-                        //String indexValue = easyExercises.get(randomInteger).toString();
-                        //String name = dataSnapshot.child("easy").child(indexValue).child("name").getValue(String.class);
                         Random random1 = new Random();
                         int randomInteger = random1.nextInt(easyExercisesIDs.size());
                         String indexValue = easyExercisesIDs.get(randomInteger).toString();
@@ -292,33 +230,12 @@ public class TrainerFragment extends Fragment {
                     }
                 }
                 System.out.println("Big potato1" + cardioExercises.size());
-                textView = (TextView) view.findViewById(R.id.name);
-                textView.setText(cardioExercises.get(3).name);
-                /**for (DataSnapshot snapshot_difficulty : dataSnapshot.getChildren()) {
-                 difficulty = snapshot_difficulty.getKey();
-                 for (DataSnapshot snapshot_exercise_id : snapshot_difficulty.getChildren()) {
-                 for (DataSnapshot snapshot_exercise_name : snapshot_exercise_id.getChildren()) {
 
-                 String name = snapshot_exercise_name.getValue(String.class);
-                 Exercise exercise1 = new Exercise();
-                 String imageFileName = name; //  this is image file name
-                 String PACKAGE_NAME = view.getContext().getPackageName();
-                 int imgId = view.getResources().getIdentifier(PACKAGE_NAME + ":drawable/" + imageFileName, null, null);
-                 exercise1.setIcon(imgId);
-                 name = replace(name);
-                 exercise1.setName(name);
-                 difficulty = replace(difficulty);
-                 exercise1.setDifficulty(difficulty);
-                 exercise_type = replace(exercise_type);
-                 exercise1.setType(exercise_type);
-                 body_part = replace(body_part);
-                 exercise1.setBody_part(body_part);
-                 personalisedCoreExercises.add(exercise1);
-                 }
-                 }
-                 }
                 if(!cardioExercises.isEmpty()){
                     final MyExerciseRecyclerViewAdapter adapter = new MyExerciseRecyclerViewAdapter(cardioExercises);
+                    LinearLayoutManager horizontalLayoutManagaer
+                            = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+                    recyclerView.setLayoutManager(horizontalLayoutManagaer);
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 }
@@ -376,4 +293,5 @@ public class TrainerFragment extends Fragment {
         }
         return new String(buf, 0, o);
     }
-}**/
+
+}
