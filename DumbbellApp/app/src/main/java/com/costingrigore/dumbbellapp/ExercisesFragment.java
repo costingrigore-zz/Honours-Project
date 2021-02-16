@@ -65,7 +65,6 @@ public class ExercisesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_exercises_list, container, false);
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();

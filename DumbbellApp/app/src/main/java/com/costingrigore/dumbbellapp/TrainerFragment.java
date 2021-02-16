@@ -21,8 +21,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
+
+import static android.view.View.GONE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,52 +39,9 @@ public class TrainerFragment extends Fragment {
     Button button;
     String name;
     private int mColumnCount = 1;
-
-    public TrainerFragment() {
-        // Required empty public constructor
-    }
-
-    // TODO: Rename and change types and number of parameters
-    public static TrainerFragment newInstance() {
-        TrainerFragment fragment = new TrainerFragment();
-        return fragment;
-    }
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater,
-                             ViewGroup container,
-                             Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_trainer, container, false);
-        button = (Button) view.findViewById(R.id.button);
-        WorkoutRoutineCreationAlgorithm WRCA = new WorkoutRoutineCreationAlgorithm(levelOfExperience,goal,dayType,view);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                WRCA.ProcessUserPersonalData();
-                WRCA.GetPersonalisedCardioExercises();
-            }
-        });
-
-
-/**        WorkoutRoutineCreationAlgorithm WRCA = new WorkoutRoutineCreationAlgorithm("Intermediate","Be fit","upper_body", view);
-        WRCA.ProcessUserPersonalData();
-        ArrayList<Exercise> cardioExercises = WRCA.GetPersonalisedCardioExercises();
-**/
-        return view;
-    }
-
     private String levelOfExperience = "Intermediate";
     private String goal = "Be fit";
-    private String dayType = "upper_body";
-
-
     private View view;
-
-}
-/**
     FirebaseDatabase database;
     private int beginnerID = 0;
     private int intermediateID = 1;
@@ -97,9 +58,17 @@ public class TrainerFragment extends Fragment {
     public ArrayList<Exercise> coreExercises= new ArrayList<>();
     public ArrayList<Exercise> stretchingExercises= new ArrayList<>();
 
+    RecyclerView cardioExercisesRecyclerView = null;
+    MyExerciseRecyclerViewAdapter cardioExercisesAdapter;
+    RecyclerView weightTrainingExercisesRecyclerView = null;
+    MyExerciseRecyclerViewAdapter weightTrainingExercisesAdapter;
+    RecyclerView coreExercisesRecyclerView = null;
+    MyExerciseRecyclerViewAdapter coreExercisesAdapter;
+
     int cardioAmountOfExercises;
     int weightTrainingAmountOfExercises;
     int coreAmountOfExercises;
+    int currentAmountOfExercises;
 
     public ArrayList<Exercise> getCardioExercises() {
         return cardioExercises;
@@ -134,11 +103,78 @@ public class TrainerFragment extends Fragment {
                     {10, 10, 15, 20}
             };
 
-  /**  public WorkoutRoutineCreationAlgorithm(String levelOfExperience, String goal, String dayType, View view) {
-        this.levelOfExperience = levelOfExperience;
-        this.goal = goal;
-        this.dayType = dayType;
-        this.view = view;
+    public TrainerFragment() {
+        // Required empty public constructor
+    }
+
+    // TODO: Rename and change types and number of parameters
+    public static TrainerFragment newInstance() {
+        TrainerFragment fragment = new TrainerFragment();
+        return fragment;
+    }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        database = FirebaseDatabase.getInstance();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater,
+                             ViewGroup container,
+                             Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_trainer, container, false);
+        button = (Button) view.findViewById(R.id.button);
+        ProcessUserPersonalData();
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                button.setVisibility(GONE);
+            }
+        });
+
+        cardioExercisesRecyclerView = (RecyclerView) view.findViewById(R.id.list);
+        if (mColumnCount <= 1) {
+            cardioExercisesRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        } else {
+            cardioExercisesRecyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), mColumnCount));
+        }
+        LinearLayoutManager horizontalLayoutManager1
+                = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
+        cardioExercisesRecyclerView.setLayoutManager(horizontalLayoutManager1);
+        cardioExercisesAdapter = new MyExerciseRecyclerViewAdapter(cardioExercises);
+        cardioExercisesRecyclerView.setAdapter(cardioExercisesAdapter);
+
+
+        weightTrainingExercisesRecyclerView = (RecyclerView) view.findViewById(R.id.list2);
+        if (mColumnCount <= 1) {
+            weightTrainingExercisesRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        } else {
+            weightTrainingExercisesRecyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), mColumnCount));
+        }
+        LinearLayoutManager horizontalLayoutManager2
+                = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
+        weightTrainingExercisesRecyclerView.setLayoutManager(horizontalLayoutManager2);
+        weightTrainingExercisesAdapter = new MyExerciseRecyclerViewAdapter(weightTrainingExercises);
+        weightTrainingExercisesRecyclerView.setAdapter(weightTrainingExercisesAdapter);
+
+
+        coreExercisesRecyclerView = (RecyclerView) view.findViewById(R.id.list3);
+        if (mColumnCount <= 1) {
+            coreExercisesRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        } else {
+            coreExercisesRecyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), mColumnCount));
+        }
+        LinearLayoutManager horizontalLayoutManager3
+                = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
+        coreExercisesRecyclerView.setLayoutManager(horizontalLayoutManager3);
+        coreExercisesAdapter = new MyExerciseRecyclerViewAdapter(coreExercises);
+        coreExercisesRecyclerView.setAdapter(coreExercisesAdapter);
+
+        GetPersonalisedExercises("cardio","total_body");
+        GetPersonalisedExercises("strength","upper_body");
+        GetPersonalisedExercises("strength","core");
+        return view;
     }
 
     public void ProcessUserPersonalData(){
@@ -175,30 +211,30 @@ public class TrainerFragment extends Fragment {
         cardioAmountOfExercises = cardioTime - (cardioTime / 5);
         weightTrainingAmountOfExercises = weightTrainingTime - (weightTrainingTime / 5);
         coreAmountOfExercises = coreTime - (coreTime / 5);
-        //weightTrainingExercises = GetPersonalisedWeightTrainingExercises(weightTrainingAmountOfExercises);
-        //coreExercises = GetPersonalisedCoreExercises(coreAmountOfExercises);
-
     }
 
-    public void GetPersonalisedCardioExercises(){
-        Context context = view.getContext();
-        LinearLayoutManager llm = new LinearLayoutManager(context);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list);
-        recyclerView.setLayoutManager(llm);
-        if (mColumnCount <= 1) {
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        } else {
-            recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+
+
+    public void GetPersonalisedExercises(String exercise_type, String body_part){
+        DatabaseReference databaseReference = database.getReference("exercises").child(exercise_type).child(body_part);
+        currentAmountOfExercises = 0;
+        System.out.println("curr: " +cardioAmountOfExercises + ", "+ weightTrainingAmountOfExercises+ ", "+ coreAmountOfExercises);
+        if(exercise_type.equals("cardio"))
+        {
+            currentAmountOfExercises = cardioAmountOfExercises;
         }
-        database = FirebaseDatabase.getInstance();
-        DatabaseReference databaseReference = database.getReference("exercises").child("cardio").child("total_body");
+        else if(exercise_type.equals("strength") && !body_part.equals("core"))
+        {
+            currentAmountOfExercises = weightTrainingAmountOfExercises;
+        }
+        else if(body_part.equals("core") && exercise_type.equals("strength"))
+        {
+            currentAmountOfExercises = coreAmountOfExercises;
+        }
+        int finalCurrentAmountOfExercises = currentAmountOfExercises;
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // for cardio
-                String exercise_type = "cardio";
-                String body_part = "total_body";
                 String exerciseDifficultyState = "easy";
                 ArrayList<Integer> easyExercisesIDs = new ArrayList<Integer>();
                 easyExercisesIDs.add(1);
@@ -218,7 +254,7 @@ public class TrainerFragment extends Fragment {
                 difficultExercisesIDs.add(3);
                 difficultExercisesIDs.add(4);
                 difficultExercisesIDs.add(5);
-                for(int i = 0; i< cardioAmountOfExercises; i++)
+                for(int i = 0; i< finalCurrentAmountOfExercises; i++)
                 {
                     if(easyExercisesIDs.isEmpty())
                     {
@@ -246,10 +282,6 @@ public class TrainerFragment extends Fragment {
                     }
                     if(exerciseDifficultyState.equals("easy"))
                     {
-                        //Random random1 = new Random();
-                        //int randomInteger = random1.nextInt(easyExercises.size());
-                        //String indexValue = easyExercises.get(randomInteger).toString();
-                        //String name = dataSnapshot.child("easy").child(indexValue).child("name").getValue(String.class);
                         Random random1 = new Random();
                         int randomInteger = random1.nextInt(easyExercisesIDs.size());
                         String indexValue = easyExercisesIDs.get(randomInteger).toString();
@@ -259,7 +291,18 @@ public class TrainerFragment extends Fragment {
                         easyExercisesIDs.remove(randomInteger);
                         exerciseDifficultyState = "medium";
                         Exercise exercise = SetExerciseFields(name, exerciseDifficultyState,exercise_type,body_part);
-                        cardioExercises.add(exercise);
+                        if(exercise_type.equals("cardio"))
+                        {
+                            cardioExercises.add(exercise);
+                        }
+                        else if(exercise_type.equals("strength") && !body_part.equals("core"))
+                        {
+                            weightTrainingExercises.add(exercise);
+                        }
+                        else if(body_part.equals("core") && exercise_type.equals("strength"))
+                        {
+                            coreExercises.add(exercise);
+                        }
                     }
                     else if(exerciseDifficultyState.equals("medium"))
                     {
@@ -272,7 +315,18 @@ public class TrainerFragment extends Fragment {
                         System.out.println("medium exercise: " + name);
                         exerciseDifficultyState = "difficult";
                         Exercise exercise = SetExerciseFields(name, exerciseDifficultyState,exercise_type,body_part);
-                        cardioExercises.add(exercise);
+                        if(exercise_type.equals("cardio"))
+                        {
+                            cardioExercises.add(exercise);
+                        }
+                        else if(exercise_type.equals("strength") && !body_part.equals("core"))
+                        {
+                            weightTrainingExercises.add(exercise);
+                        }
+                        else if(body_part.equals("core") && exercise_type.equals("strength"))
+                        {
+                            coreExercises.add(exercise);
+                        }
                     }
                     else if(exerciseDifficultyState.equals("difficult"))
                     {
@@ -288,39 +342,19 @@ public class TrainerFragment extends Fragment {
                         //System.out.println("diffy exercise: " + name);
                         exerciseDifficultyState = "easy";
                         Exercise exercise = SetExerciseFields(name, exerciseDifficultyState,exercise_type,body_part);
-                        cardioExercises.add(exercise);
+                        if(exercise_type.equals("cardio"))
+                        {
+                            cardioExercises.add(exercise);
+                        }
+                        else if(exercise_type.equals("strength") && !body_part.equals("core"))
+                        {
+                            weightTrainingExercises.add(exercise);
+                        }
+                        else if(body_part.equals("core") && exercise_type.equals("strength"))
+                        {
+                            coreExercises.add(exercise);
+                        }
                     }
-                }
-                System.out.println("Big potato1" + cardioExercises.size());
-                textView = (TextView) view.findViewById(R.id.name);
-                textView.setText(cardioExercises.get(3).name);
-                /**for (DataSnapshot snapshot_difficulty : dataSnapshot.getChildren()) {
-                 difficulty = snapshot_difficulty.getKey();
-                 for (DataSnapshot snapshot_exercise_id : snapshot_difficulty.getChildren()) {
-                 for (DataSnapshot snapshot_exercise_name : snapshot_exercise_id.getChildren()) {
-
-                 String name = snapshot_exercise_name.getValue(String.class);
-                 Exercise exercise1 = new Exercise();
-                 String imageFileName = name; //  this is image file name
-                 String PACKAGE_NAME = view.getContext().getPackageName();
-                 int imgId = view.getResources().getIdentifier(PACKAGE_NAME + ":drawable/" + imageFileName, null, null);
-                 exercise1.setIcon(imgId);
-                 name = replace(name);
-                 exercise1.setName(name);
-                 difficulty = replace(difficulty);
-                 exercise1.setDifficulty(difficulty);
-                 exercise_type = replace(exercise_type);
-                 exercise1.setType(exercise_type);
-                 body_part = replace(body_part);
-                 exercise1.setBody_part(body_part);
-                 personalisedCoreExercises.add(exercise1);
-                 }
-                 }
-                 }
-                if(!cardioExercises.isEmpty()){
-                    final MyExerciseRecyclerViewAdapter adapter = new MyExerciseRecyclerViewAdapter(cardioExercises);
-                    recyclerView.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
                 }
             }
             @Override
@@ -328,16 +362,15 @@ public class TrainerFragment extends Fragment {
 
             }
         });
-    }
-    public ArrayList<Exercise> GetPersonalisedWeightTrainingExercises(int weightTrainingAmountOfExercises){
-        ArrayList<Exercise> personalisedWeightTrainingExercises = new ArrayList<Exercise>();
-
-        return personalisedWeightTrainingExercises;
-    }
-    public ArrayList<Exercise> GetPersonalisedCoreExercises(int coreAmountOfExercises){
-        ArrayList<Exercise> personalisedCoreExercises = new ArrayList<Exercise>();
-
-        return personalisedCoreExercises;
+        if(exercise_type.equals("cardio")){
+            cardioExercisesAdapter.notifyDataSetChanged();
+        }
+        if(exercise_type.equals("strength") && !body_part.equals("core")){
+            weightTrainingExercisesAdapter.notifyDataSetChanged();
+        }
+        if(body_part.equals("core") && exercise_type.equals("strength")){
+            coreExercisesAdapter.notifyDataSetChanged();
+        }
     }
 
     public Exercise SetExerciseFields(String name, String difficulty, String type, String body_part){
@@ -376,4 +409,4 @@ public class TrainerFragment extends Fragment {
         }
         return new String(buf, 0, o);
     }
-}**/
+}
