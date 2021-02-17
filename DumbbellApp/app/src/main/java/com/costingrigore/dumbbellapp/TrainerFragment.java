@@ -59,15 +59,18 @@ public class TrainerFragment extends Fragment {
     public ArrayList<Exercise> stretchingExercises= new ArrayList<>();
 
     RecyclerView cardioExercisesRecyclerView = null;
-    MyExerciseRecyclerViewAdapter cardioExercisesAdapter;
+    MyTrainerExerciseRecyclerViewAdapter cardioExercisesAdapter;
     RecyclerView weightTrainingExercisesRecyclerView = null;
-    MyExerciseRecyclerViewAdapter weightTrainingExercisesAdapter;
+    MyTrainerExerciseRecyclerViewAdapter weightTrainingExercisesAdapter;
     RecyclerView coreExercisesRecyclerView = null;
-    MyExerciseRecyclerViewAdapter coreExercisesAdapter;
+    MyTrainerExerciseRecyclerViewAdapter coreExercisesAdapter;
+    RecyclerView stretchingExercisesRecyclerView = null;
+    MyTrainerExerciseRecyclerViewAdapter stretchingExercisesAdapter;
 
     int cardioAmountOfExercises;
     int weightTrainingAmountOfExercises;
     int coreAmountOfExercises;
+    int stretchingAmountOfExercises;
     int currentAmountOfExercises;
 
     public ArrayList<Exercise> getCardioExercises() {
@@ -102,6 +105,7 @@ public class TrainerFragment extends Fragment {
                     {5, 5, 10, 10},
                     {10, 10, 15, 20}
             };
+    private int stretchingTimeValue = 8;
 
     public TrainerFragment() {
         // Required empty public constructor
@@ -142,7 +146,7 @@ public class TrainerFragment extends Fragment {
         LinearLayoutManager horizontalLayoutManager1
                 = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
         cardioExercisesRecyclerView.setLayoutManager(horizontalLayoutManager1);
-        cardioExercisesAdapter = new MyExerciseRecyclerViewAdapter(cardioExercises);
+        cardioExercisesAdapter = new MyTrainerExerciseRecyclerViewAdapter(cardioExercises);
         cardioExercisesRecyclerView.setAdapter(cardioExercisesAdapter);
 
 
@@ -155,7 +159,7 @@ public class TrainerFragment extends Fragment {
         LinearLayoutManager horizontalLayoutManager2
                 = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
         weightTrainingExercisesRecyclerView.setLayoutManager(horizontalLayoutManager2);
-        weightTrainingExercisesAdapter = new MyExerciseRecyclerViewAdapter(weightTrainingExercises);
+        weightTrainingExercisesAdapter = new MyTrainerExerciseRecyclerViewAdapter(weightTrainingExercises);
         weightTrainingExercisesRecyclerView.setAdapter(weightTrainingExercisesAdapter);
 
 
@@ -168,12 +172,25 @@ public class TrainerFragment extends Fragment {
         LinearLayoutManager horizontalLayoutManager3
                 = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
         coreExercisesRecyclerView.setLayoutManager(horizontalLayoutManager3);
-        coreExercisesAdapter = new MyExerciseRecyclerViewAdapter(coreExercises);
+        coreExercisesAdapter = new MyTrainerExerciseRecyclerViewAdapter(coreExercises);
         coreExercisesRecyclerView.setAdapter(coreExercisesAdapter);
+
+        stretchingExercisesRecyclerView = (RecyclerView) view.findViewById(R.id.list4);
+        if (mColumnCount <= 1) {
+            stretchingExercisesRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        } else {
+            stretchingExercisesRecyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), mColumnCount));
+        }
+        LinearLayoutManager horizontalLayoutManager4
+                = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
+        stretchingExercisesRecyclerView.setLayoutManager(horizontalLayoutManager4);
+        stretchingExercisesAdapter = new MyTrainerExerciseRecyclerViewAdapter(stretchingExercises);
+        stretchingExercisesRecyclerView.setAdapter(stretchingExercisesAdapter);
 
         GetPersonalisedExercises("cardio","total_body");
         GetPersonalisedExercises("strength","upper_body");
         GetPersonalisedExercises("strength","core");
+        GetPersonalisedExercises("flexibility","total_body");
         return view;
     }
 
@@ -211,6 +228,7 @@ public class TrainerFragment extends Fragment {
         cardioAmountOfExercises = cardioTime - (cardioTime / 5);
         weightTrainingAmountOfExercises = weightTrainingTime - (weightTrainingTime / 5);
         coreAmountOfExercises = coreTime - (coreTime / 5);
+        stretchingAmountOfExercises = stretchingTimeValue;
     }
 
 
@@ -230,6 +248,10 @@ public class TrainerFragment extends Fragment {
         else if(body_part.equals("core") && exercise_type.equals("strength"))
         {
             currentAmountOfExercises = coreAmountOfExercises;
+        }
+        else if(body_part.equals("total_body") && exercise_type.equals("flexibility"))
+        {
+            currentAmountOfExercises = stretchingAmountOfExercises;
         }
         int finalCurrentAmountOfExercises = currentAmountOfExercises;
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -303,6 +325,10 @@ public class TrainerFragment extends Fragment {
                         {
                             coreExercises.add(exercise);
                         }
+                        else if(exercise_type.equals("flexibility"))
+                        {
+                            stretchingExercises.add(exercise);
+                        }
                     }
                     else if(exerciseDifficultyState.equals("medium"))
                     {
@@ -326,6 +352,10 @@ public class TrainerFragment extends Fragment {
                         else if(body_part.equals("core") && exercise_type.equals("strength"))
                         {
                             coreExercises.add(exercise);
+                        }
+                        else if(exercise_type.equals("flexibility"))
+                        {
+                            stretchingExercises.add(exercise);
                         }
                     }
                     else if(exerciseDifficultyState.equals("difficult"))
@@ -354,6 +384,10 @@ public class TrainerFragment extends Fragment {
                         {
                             coreExercises.add(exercise);
                         }
+                        else if(exercise_type.equals("flexibility"))
+                        {
+                            stretchingExercises.add(exercise);
+                        }
                     }
                 }
             }
@@ -370,6 +404,9 @@ public class TrainerFragment extends Fragment {
         }
         if(body_part.equals("core") && exercise_type.equals("strength")){
             coreExercisesAdapter.notifyDataSetChanged();
+        }
+        if(exercise_type.equals("flexibility")){
+            stretchingExercisesAdapter.notifyDataSetChanged();
         }
     }
 

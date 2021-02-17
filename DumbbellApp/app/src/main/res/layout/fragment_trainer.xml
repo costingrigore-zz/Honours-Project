@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FF9800"
+    android:layout_marginBottom="50dp"
     android:orientation="vertical"
     tools:context=".TrainerFragment">
 
@@ -27,27 +28,34 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/list"
                 android:layout_width="match_parent"
-                android:layout_height="320dp"
+                android:layout_height="wrap_content"
                 app:layoutManager="LinearLayoutManager"
-                tools:listitem="@layout/fragment_exercises">
+                tools:listitem="@layout/fragment_trainer_exercises">
 
             </androidx.recyclerview.widget.RecyclerView>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/list2"
                 android:layout_width="match_parent"
-                android:layout_height="320dp"
+                android:layout_height="wrap_content"
                 app:layoutManager="LinearLayoutManager"
-                tools:listitem="@layout/fragment_exercises">
+                tools:listitem="@layout/fragment_trainer_exercises">
 
             </androidx.recyclerview.widget.RecyclerView>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/list3"
                 android:layout_width="match_parent"
-                android:layout_height="320dp"
+                android:layout_height="wrap_content"
                 app:layoutManager="LinearLayoutManager"
-                tools:listitem="@layout/fragment_exercises" />
+                tools:listitem="@layout/fragment_trainer_exercises" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/list4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="LinearLayoutManager"
+                tools:listitem="@layout/fragment_trainer_exercises" />
 
             <TextView
                 android:id="@+id/name"
