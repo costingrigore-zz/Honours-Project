@@ -1,13 +1,16 @@
 package com.costingrigore.dumbbellapp;
 
-import android.content.Context;
-import android.view.View;
-import android.widget.TextView;
-
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -18,11 +21,14 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class WorkoutRoutineCreationAlgorithm {
+import static android.view.View.GONE;
 
+public class WorkoutActivity extends AppCompatActivity {
+
+    Button button;
+    private int mColumnCount = 1;
     private String levelOfExperience = "Intermediate";
     private String goal = "Be fit";
-    private View view;
     FirebaseDatabase database;
     private int beginnerID = 0;
     private int intermediateID = 1;
@@ -32,7 +38,6 @@ public class WorkoutRoutineCreationAlgorithm {
     private int beFitID = 0;
     private int loseWeightID = 1;
     private int gainStrengthID = 2;
-    private int mColumnCount = 1;
 
 
     public ArrayList<Exercise> cardioExercises = new ArrayList<>();
@@ -40,9 +45,19 @@ public class WorkoutRoutineCreationAlgorithm {
     public ArrayList<Exercise> coreExercises= new ArrayList<>();
     public ArrayList<Exercise> stretchingExercises= new ArrayList<>();
 
+    RecyclerView cardioExercisesRecyclerView = null;
+    MyTrainerExerciseRecyclerViewAdapter cardioExercisesAdapter;
+    RecyclerView weightTrainingExercisesRecyclerView = null;
+    MyTrainerExerciseRecyclerViewAdapter weightTrainingExercisesAdapter;
+    RecyclerView coreExercisesRecyclerView = null;
+    MyTrainerExerciseRecyclerViewAdapter coreExercisesAdapter;
+    RecyclerView stretchingExercisesRecyclerView = null;
+    MyTrainerExerciseRecyclerViewAdapter stretchingExercisesAdapter;
+
     int cardioAmountOfExercises;
     int weightTrainingAmountOfExercises;
     int coreAmountOfExercises;
+    int stretchingAmountOfExercises;
     int currentAmountOfExercises;
 
     public ArrayList<Exercise> getCardioExercises() {
@@ -77,12 +92,69 @@ public class WorkoutRoutineCreationAlgorithm {
                     {5, 5, 10, 10},
                     {10, 10, 15, 20}
             };
+    private int stretchingTimeValue = 8;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_workout);
+        database = FirebaseDatabase.getInstance();
+        button = (Button) this.findViewById(R.id.button);
+        ProcessUserPersonalData();
+        cardioExercisesRecyclerView = (RecyclerView) this.findViewById(R.id.list);
+        if (mColumnCount <= 1) {
+            cardioExercisesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        } else {
+            cardioExercisesRecyclerView.setLayoutManager(new GridLayoutManager(this, mColumnCount));
+        }
+        LinearLayoutManager horizontalLayoutManager1
+                = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        cardioExercisesRecyclerView.setLayoutManager(horizontalLayoutManager1);
+        cardioExercisesAdapter = new MyTrainerExerciseRecyclerViewAdapter(cardioExercises);
+        cardioExercisesRecyclerView.setAdapter(cardioExercisesAdapter);
 
-     public WorkoutRoutineCreationAlgorithm(String levelOfExperience, String goal, View view) {
-         this.levelOfExperience = levelOfExperience;
-         this.goal = goal;
-         this.view = view;
-     }
+
+        weightTrainingExercisesRecyclerView = (RecyclerView) this.findViewById(R.id.list2);
+        if (mColumnCount <= 1) {
+            weightTrainingExercisesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        } else {
+            weightTrainingExercisesRecyclerView.setLayoutManager(new GridLayoutManager(this, mColumnCount));
+        }
+        LinearLayoutManager horizontalLayoutManager2
+                = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        weightTrainingExercisesRecyclerView.setLayoutManager(horizontalLayoutManager2);
+        weightTrainingExercisesAdapter = new MyTrainerExerciseRecyclerViewAdapter(weightTrainingExercises);
+        weightTrainingExercisesRecyclerView.setAdapter(weightTrainingExercisesAdapter);
+
+
+        coreExercisesRecyclerView = (RecyclerView) this.findViewById(R.id.list3);
+        if (mColumnCount <= 1) {
+            coreExercisesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        } else {
+            coreExercisesRecyclerView.setLayoutManager(new GridLayoutManager(this, mColumnCount));
+        }
+        LinearLayoutManager horizontalLayoutManager3
+                = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        coreExercisesRecyclerView.setLayoutManager(horizontalLayoutManager3);
+        coreExercisesAdapter = new MyTrainerExerciseRecyclerViewAdapter(coreExercises);
+        coreExercisesRecyclerView.setAdapter(coreExercisesAdapter);
+
+        stretchingExercisesRecyclerView = (RecyclerView) this.findViewById(R.id.list4);
+        if (mColumnCount <= 1) {
+            stretchingExercisesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        } else {
+            stretchingExercisesRecyclerView.setLayoutManager(new GridLayoutManager(this, mColumnCount));
+        }
+        LinearLayoutManager horizontalLayoutManager4
+                = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        stretchingExercisesRecyclerView.setLayoutManager(horizontalLayoutManager4);
+        stretchingExercisesAdapter = new MyTrainerExerciseRecyclerViewAdapter(stretchingExercises);
+        stretchingExercisesRecyclerView.setAdapter(stretchingExercisesAdapter);
+        GetPersonalisedExercises("cardio","total_body");
+        GetPersonalisedExercises("strength","upper_body");
+        GetPersonalisedExercises("strength","core");
+        GetPersonalisedExercises("flexibility","total_body");
+
+    }
 
     public void ProcessUserPersonalData(){
         int levelOfExperienceID = 0;
@@ -118,33 +190,28 @@ public class WorkoutRoutineCreationAlgorithm {
         cardioAmountOfExercises = cardioTime - (cardioTime / 5);
         weightTrainingAmountOfExercises = weightTrainingTime - (weightTrainingTime / 5);
         coreAmountOfExercises = coreTime - (coreTime / 5);
+        stretchingAmountOfExercises = stretchingTimeValue;
     }
 
-
-
     public void GetPersonalisedExercises(String exercise_type, String body_part){
-        Context context = view.getContext();
-        RecyclerView recyclerView = null;
-        MyExerciseRecyclerViewAdapter adapter;
-        database = FirebaseDatabase.getInstance();
-        ArrayList<Exercise> exercises = new ArrayList<>();
-        DatabaseReference databaseReference = null;
-        int currentAmountOfExercises = 0;
+        DatabaseReference databaseReference = database.getReference("exercises").child(exercise_type).child(body_part);
+        currentAmountOfExercises = 0;
         System.out.println("curr: " +cardioAmountOfExercises + ", "+ weightTrainingAmountOfExercises+ ", "+ coreAmountOfExercises);
         if(exercise_type.equals("cardio"))
         {
-            databaseReference = database.getReference("exercises").child("cardio").child(body_part);
             currentAmountOfExercises = cardioAmountOfExercises;
         }
         else if(exercise_type.equals("strength") && !body_part.equals("core"))
         {
-            databaseReference = database.getReference("exercises").child("strength").child(body_part);
             currentAmountOfExercises = weightTrainingAmountOfExercises;
         }
         else if(body_part.equals("core") && exercise_type.equals("strength"))
         {
-            databaseReference = database.getReference("exercises").child("strength").child(body_part);
             currentAmountOfExercises = coreAmountOfExercises;
+        }
+        else if(body_part.equals("total_body") && exercise_type.equals("flexibility"))
+        {
+            currentAmountOfExercises = stretchingAmountOfExercises;
         }
         int finalCurrentAmountOfExercises = currentAmountOfExercises;
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -218,6 +285,10 @@ public class WorkoutRoutineCreationAlgorithm {
                         {
                             coreExercises.add(exercise);
                         }
+                        else if(exercise_type.equals("flexibility"))
+                        {
+                            stretchingExercises.add(exercise);
+                        }
                     }
                     else if(exerciseDifficultyState.equals("medium"))
                     {
@@ -241,6 +312,10 @@ public class WorkoutRoutineCreationAlgorithm {
                         else if(body_part.equals("core") && exercise_type.equals("strength"))
                         {
                             coreExercises.add(exercise);
+                        }
+                        else if(exercise_type.equals("flexibility"))
+                        {
+                            stretchingExercises.add(exercise);
                         }
                     }
                     else if(exerciseDifficultyState.equals("difficult"))
@@ -269,7 +344,23 @@ public class WorkoutRoutineCreationAlgorithm {
                         {
                             coreExercises.add(exercise);
                         }
+                        else if(exercise_type.equals("flexibility"))
+                        {
+                            stretchingExercises.add(exercise);
+                        }
                     }
+                }
+                if(exercise_type.equals("cardio")){
+                    cardioExercisesAdapter.notifyDataSetChanged();
+                }
+                if(exercise_type.equals("strength") && !body_part.equals("core")){
+                    weightTrainingExercisesAdapter.notifyDataSetChanged();
+                }
+                if(body_part.equals("core") && exercise_type.equals("strength")){
+                    coreExercisesAdapter.notifyDataSetChanged();
+                }
+                if(exercise_type.equals("flexibility")){
+                    stretchingExercisesAdapter.notifyDataSetChanged();
                 }
             }
             @Override
@@ -277,55 +368,14 @@ public class WorkoutRoutineCreationAlgorithm {
 
             }
         });
-        if(exercise_type.equals("cardio")){
-            recyclerView = (RecyclerView) view.findViewById(R.id.list);
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            adapter = new MyExerciseRecyclerViewAdapter(cardioExercises);
-            LinearLayoutManager horizontalLayoutManagaer
-                    = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
-            recyclerView.setLayoutManager(horizontalLayoutManagaer);
-            recyclerView.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
-        }
-        if(exercise_type.equals("strength") && !body_part.equals("core")){
-            recyclerView = (RecyclerView) view.findViewById(R.id.list2);
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            adapter = new MyExerciseRecyclerViewAdapter(weightTrainingExercises);
-            LinearLayoutManager horizontalLayoutManagaer
-                    = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
-            recyclerView.setLayoutManager(horizontalLayoutManagaer);
-            recyclerView.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
-        }
-        if(body_part.equals("core") && exercise_type.equals("strength")){
-            recyclerView = (RecyclerView) view.findViewById(R.id.list3);
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            adapter = new MyExerciseRecyclerViewAdapter(coreExercises);
-            LinearLayoutManager horizontalLayoutManagaer
-                    = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
-            recyclerView.setLayoutManager(horizontalLayoutManagaer);
-            recyclerView.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
-        }
+
     }
 
     public Exercise SetExerciseFields(String name, String difficulty, String type, String body_part){
         Exercise exercise = new Exercise();
         String imageFileName = name; //  this is image file name
-        String PACKAGE_NAME = view.getContext().getPackageName();
-        int imgId = view.getResources().getIdentifier(PACKAGE_NAME + ":drawable/" + imageFileName, null, null);
+        String PACKAGE_NAME = this.getPackageName();
+        int imgId = this.getResources().getIdentifier(PACKAGE_NAME + ":drawable/" + imageFileName, null, null);
         exercise.setIcon(imgId);
         exercise.setName(replace(name));
         exercise.setDifficulty(replace(difficulty));
@@ -357,5 +407,4 @@ public class WorkoutRoutineCreationAlgorithm {
         }
         return new String(buf, 0, o);
     }
-
 }

@@ -15,60 +15,37 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/initial_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Welcome to the Trainer page, here is where the magic happens.
+\n
+\n Based on your level of experience and your goal we have prepared personalised workout routines just for you.
+\n
+\n Press 'Start' once you are ready"
+                    android:textSize="25dp"
+                    android:textColor="@color/white"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:gravity="center_horizontal" />
 
-            <Button
-                android:id="@+id/button"
-                android:layout_width="200dp"
-                android:layout_height="100dp"
-                android:text="Button" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layoutManager="LinearLayoutManager"
-                tools:listitem="@layout/fragment_trainer_exercises">
-
-            </androidx.recyclerview.widget.RecyclerView>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/list2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layoutManager="LinearLayoutManager"
-                tools:listitem="@layout/fragment_trainer_exercises">
-
-            </androidx.recyclerview.widget.RecyclerView>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/list3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layoutManager="LinearLayoutManager"
-                tools:listitem="@layout/fragment_trainer_exercises" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/list4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layoutManager="LinearLayoutManager"
-                tools:listitem="@layout/fragment_trainer_exercises" />
-
-            <TextView
-                android:id="@+id/name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:text="Trainer"
-                android:textColor="@color/white" />
-
+                <Button
+                    android:id="@+id/button"
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="50dp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/round_button"
+                    android:text="Start" />
         </LinearLayout>
     </ScrollView>
-
     <!-- TODO: Update blank fragment layout -->
 
 </LinearLayout>
