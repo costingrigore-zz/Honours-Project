@@ -7,16 +7,24 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.NumberPicker;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -25,7 +33,10 @@ import static android.view.View.GONE;
 
 public class WorkoutActivity extends AppCompatActivity {
 
-    Button button;
+    Button startWorkoutButton;
+    Button nextExercise;
+    TextView countText;
+    public int counter;
     private int mColumnCount = 1;
     private String levelOfExperience = "Intermediate";
     private String goal = "Be fit";
@@ -93,12 +104,74 @@ public class WorkoutActivity extends AppCompatActivity {
                     {10, 10, 15, 20}
             };
     private int stretchingTimeValue = 8;
+
+    CheckBox cardioSetsAndRepsCB;
+    LinearLayout cardioSetsAndRepsLayout;
+    NumberPicker cardioSets;
+    NumberPicker cardioReps;
+    CheckBox cardioTimeCB;
+    LinearLayout cardioTimeLayout;
+    NumberPicker cardioTime;
+    boolean cardioUsesTime = true;
+    int maxCardioSets = 10;
+    int maxCardioReps = 60;
+    int maxCardioTime = 10;
+
+    CheckBox wtSetsAndRepsCB;
+    LinearLayout wtSetsAndRepsLayout;
+    NumberPicker wtSets;
+    NumberPicker wtReps;
+    CheckBox wtTimeCB;
+    LinearLayout wtTimeLayout;
+    NumberPicker wtTime;
+    boolean wtUsesTime = true;
+    int maxWtSets = 10;
+    int maxWtReps = 60;
+    int maxWtTime = 10;
+
+    CheckBox coreSetsAndRepsCB;
+    LinearLayout coreSetsAndRepsLayout;
+    NumberPicker coreSets;
+    NumberPicker coreReps;
+    CheckBox coreTimeCB;
+    LinearLayout coreTimeLayout;
+    NumberPicker coreTime;
+    boolean coreUsesTime = true;
+    int maxCoreSets = 10;
+    int maxCoreReps = 60;
+    int maxCoreTime = 10;
+
+    int cardioSetsNumber;
+    int cardioRepsNumber;
+    int cardioTimeNumber;
+    int wtSetsNumber;
+    int wtRepsNumber;
+    int wtTimeNumber;
+    int coreSetsNumber;
+    int coreRepsNumber;
+    int coreTimeNumber;
+
+    LinearLayout initialLayout;
+    LinearLayout workoutLayout;
+    ImageView exerciseImage;
+    TextView exerciseName;
+    LinearLayout exerciseSetsAndRepetitionsLayout;
+    TextView exerciseSets;
+    TextView exerciseReps;
+    LinearLayout exerciseTimeLayout;
+    TextView exerciseTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout);
+
+        /** Workout Routine Creation Algorithm's fields set up
+         *
+         *
+         *
+         * **/
         database = FirebaseDatabase.getInstance();
-        button = (Button) this.findViewById(R.id.button);
         ProcessUserPersonalData();
         cardioExercisesRecyclerView = (RecyclerView) this.findViewById(R.id.list);
         if (mColumnCount <= 1) {
@@ -154,6 +227,258 @@ public class WorkoutActivity extends AppCompatActivity {
         GetPersonalisedExercises("strength","core");
         GetPersonalisedExercises("flexibility","total_body");
 
+        /** Setting up checkboxes and Number picker fields to retrieve repetitions, sets and time fro the user
+         *
+         *
+         *
+         **/
+        cardioSetsAndRepsCB = (CheckBox) this.findViewById(R.id.cardioSetsandRepsCB);
+        cardioSetsAndRepsLayout = (LinearLayout) this.findViewById(R.id.cardioSetsAndRepsLayout);
+        cardioSets = (NumberPicker) this.findViewById(R.id.cardioSets);
+        cardioSets.setMinValue(1);
+        cardioSets.setMaxValue(maxCardioSets);
+        cardioReps = (NumberPicker) this.findViewById(R.id.cardioReps);
+        cardioReps.setMinValue(1);
+        cardioReps.setMaxValue(maxCardioReps);
+        cardioTimeCB = (CheckBox) this.findViewById(R.id.cardioTimeCB);
+        cardioTimeLayout = (LinearLayout) this.findViewById(R.id.cardioTimeLayout);
+        cardioTime = (NumberPicker) this.findViewById(R.id.cardioTime);
+        cardioTime.setMinValue(1);
+        cardioTime.setMaxValue(maxCardioTime);
+
+        wtSetsAndRepsCB = (CheckBox) this.findViewById(R.id.wtSetsandRepsCB);
+        wtSetsAndRepsLayout = (LinearLayout) this.findViewById(R.id.wtSetsAndRepsLayout);
+        wtSets = (NumberPicker) this.findViewById(R.id.wtSets);
+        wtSets.setMinValue(1);
+        wtSets.setMaxValue(maxWtSets);
+        wtReps = (NumberPicker) this.findViewById(R.id.wtReps);
+        wtReps.setMinValue(1);
+        wtReps.setMaxValue(maxWtReps);
+        wtTimeCB = (CheckBox) this.findViewById(R.id.wtTimeCB);
+        wtTimeLayout = (LinearLayout) this.findViewById(R.id.wtTimeLayout);
+        wtTime = (NumberPicker) this.findViewById(R.id.wtTime);
+        wtTime.setMinValue(1);
+        wtTime.setMaxValue(maxWtTime);
+
+        coreSetsAndRepsCB = (CheckBox) this.findViewById(R.id.coreSetsandRepsCB);
+        coreSetsAndRepsLayout = (LinearLayout) this.findViewById(R.id.coreSetsAndRepsLayout);
+        coreSets = (NumberPicker) this.findViewById(R.id.coreSets);
+        coreSets.setMinValue(1);
+        coreSets.setMaxValue(maxCoreSets);
+        coreReps = (NumberPicker) this.findViewById(R.id.coreReps);
+        coreReps.setMinValue(1);
+        coreReps.setMaxValue(maxCoreReps);
+        coreTimeCB = (CheckBox) this.findViewById(R.id.coreTimeCB);
+        coreTimeLayout = (LinearLayout) this.findViewById(R.id.coreTimeLayout);
+        coreTime = (NumberPicker) this.findViewById(R.id.coreTime);
+        coreTime.setMinValue(1);
+        coreTime.setMaxValue(maxCoreTime);
+
+        cardioSetsAndRepsCB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (cardioSetsAndRepsCB.isChecked()) {
+                    cardioSetsAndRepsCB.setChecked(true);
+                    cardioTimeCB.setChecked(false);
+                    cardioUsesTime = false;
+                    cardioSetsAndRepsLayout.setVisibility(View.VISIBLE);
+                    cardioTimeLayout.setVisibility(GONE);
+                }
+            }
+        });
+        cardioTimeCB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (cardioTimeCB.isChecked()) {
+                    cardioTimeCB.setChecked(true);
+                    cardioSetsAndRepsCB.setChecked(false);
+                    cardioUsesTime = true;
+                    cardioTimeLayout.setVisibility(View.VISIBLE);
+                    cardioSetsAndRepsLayout.setVisibility(GONE);
+                }
+            }
+        });
+
+        wtSetsAndRepsCB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (wtSetsAndRepsCB.isChecked()) {
+                    wtSetsAndRepsCB.setChecked(true);
+                    wtTimeCB.setChecked(false);
+                    wtUsesTime = false;
+                    wtSetsAndRepsLayout.setVisibility(View.VISIBLE);
+                    wtTimeLayout.setVisibility(GONE);
+                }
+            }
+        });
+        wtTimeCB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (wtTimeCB.isChecked()) {
+                    wtTimeCB.setChecked(true);
+                    wtSetsAndRepsCB.setChecked(false);
+                    wtUsesTime = true;
+                    wtTimeLayout.setVisibility(View.VISIBLE);
+                    wtSetsAndRepsLayout.setVisibility(GONE);
+                }
+            }
+        });
+
+        coreSetsAndRepsCB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (coreSetsAndRepsCB.isChecked()) {
+                    coreSetsAndRepsCB.setChecked(true);
+                    coreTimeCB.setChecked(false);
+                    coreUsesTime = false;
+                    coreSetsAndRepsLayout.setVisibility(View.VISIBLE);
+                    coreTimeLayout.setVisibility(GONE);
+                }
+            }
+        });
+        coreTimeCB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (coreTimeCB.isChecked()) {
+                    coreTimeCB.setChecked(true);
+                    coreSetsAndRepsCB.setChecked(false);
+                    coreUsesTime = true;
+                    coreTimeLayout.setVisibility(View.VISIBLE);
+                    coreSetsAndRepsLayout.setVisibility(GONE);
+                }
+            }
+        });
+
+        cardioSets.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                cardioSetsNumber = cardioSets.getValue();
+            }
+        });
+        cardioReps.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                cardioRepsNumber = cardioReps.getValue();
+            }
+        });
+        cardioTime.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                cardioTimeNumber = cardioTime.getValue();
+            }
+        });
+
+        wtSets.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                wtSetsNumber = wtSets.getValue();
+            }
+        });
+        wtReps.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                wtRepsNumber = wtReps.getValue();
+            }
+        });
+        wtTime.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                wtTimeNumber = wtTime.getValue();
+            }
+        });
+
+        coreSets.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                coreSetsNumber = coreSets.getValue();
+            }
+        });
+        coreReps.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                coreRepsNumber = coreReps.getValue();
+            }
+        });
+        coreTime.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                coreTimeNumber = coreTime.getValue();
+            }
+        });
+
+
+        initialLayout = (LinearLayout) this.findViewById(R.id.initial_layout);
+        workoutLayout = (LinearLayout) this.findViewById(R.id.workout_layout);
+        exerciseImage = (ImageView) this.findViewById(R.id.exerciseID);
+        exerciseName = (TextView) this.findViewById(R.id.exercise_name);
+        exerciseSetsAndRepetitionsLayout = (LinearLayout) this.findViewById(R.id.exercise_sets_and_reps_layout);
+        exerciseSets = (TextView) this.findViewById(R.id.exercise_sets);
+        exerciseReps = (TextView) this.findViewById(R.id.exercise_reps);
+        exerciseTimeLayout = (LinearLayout) this.findViewById(R.id.exercise_time_layout);
+        exerciseTime = (TextView) this.findViewById(R.id.exercise_time);
+
+        startWorkoutButton = (Button) this.findViewById(R.id.startWorkoutButton);
+        nextExercise = (Button) this.findViewById(R.id.nextButton);
+        String currentComponent = "Cardio";
+        startWorkoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initialLayout.setVisibility(GONE);
+                workoutLayout.setVisibility(View.VISIBLE);
+                ShowExercise(cardioExercises.get(0));
+                if(cardioUsesTime)
+                {
+                    exerciseTimeLayout.setVisibility(View.VISIBLE);
+                    exerciseSetsAndRepetitionsLayout.setVisibility(GONE);
+                    exerciseTime.setText(String.valueOf(cardioTimeNumber));
+                }
+                else{
+                    exerciseTimeLayout.setVisibility(GONE);
+                    exerciseSetsAndRepetitionsLayout.setVisibility(View.VISIBLE);
+                    exerciseSets.setText(String.valueOf(cardioSetsNumber));
+                    exerciseReps.setText(String.valueOf(cardioRepsNumber));
+                }
+            }
+        });
+        nextExercise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
+                ShowExercise(cardioExercises.get(0));
+                if(cardioUsesTime)
+                {
+                    exerciseTimeLayout.setVisibility(View.VISIBLE);
+                    exerciseSetsAndRepetitionsLayout.setVisibility(GONE);
+                    exerciseTime.setText(String.valueOf(cardioTimeNumber));
+                }
+                else{
+                    exerciseTimeLayout.setVisibility(GONE);
+                    exerciseSetsAndRepetitionsLayout.setVisibility(View.VISIBLE);
+                    exerciseSets.setText(String.valueOf(cardioSetsNumber));
+                    exerciseReps.setText(String.valueOf(cardioRepsNumber));
+                }
+            }
+        });
+    }
+
+    private void ShowExercise(Exercise exercise)
+    {
+        exerciseImage.setImageResource(exercise.getIcon());
+        exerciseName.setText(exercise.name);
+    }
+
+    private  void StartCountDown(){
+        new CountDownTimer(50000,1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                countText.setText(String.valueOf(counter));
+                counter++;
+            }
+            @Override
+            public void onFinish() {
+                countText.setText("Finished");
+            }
+        }.start();
     }
 
     public void ProcessUserPersonalData(){

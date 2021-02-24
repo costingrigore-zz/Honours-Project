@@ -5,50 +5,792 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-android:background="#FF9800"
+android:background="@drawable/gradient"
 android:orientation="vertical"
 tools:context=".WorkoutActivity">
 
 <ScrollView
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    >
     <LinearLayout
-        android:id="@+id/initial_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="40dp"
+        android:paddingBottom="60dp"
         android:orientation="vertical">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/list"
+        <LinearLayout
+            android:id="@+id/initial_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layoutManager="LinearLayoutManager"
-            tools:listitem="@layout/fragment_trainer_exercises">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="visible"
+            tools:visibility="visible">
+            <TextView
+                android:layout_width="316dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/left_light_round_shape"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
+                android:text="Component 1: Warm-up"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
 
-        </androidx.recyclerview.widget.RecyclerView>
+            <TextView
+                android:layout_width="316dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/right_dark_round_shape"
+                android:gravity="right"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
+                android:text="For this stage we recommend to warm up for 10 minutes, to do that you could:
+    \n - Go for a quick walk
+    \n - Go for a run
+    \n - Practise your dancing skills"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+            <!-- Cardio exercises-->
+            <TextView
+                android:layout_width="316dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/left_light_round_shape"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
+                android:text="Component 2: Cardio
+    \n
+    \nHow would you like to measure your cardio exercises?"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/list2"
+            <CheckBox
+                android:id="@+id/cardioSetsandRepsCB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:button="@drawable/checkbox"
+                android:buttonTint="@color/white"
+                android:padding="20dp"
+                android:text="Use sets and repetitions"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+
+            <LinearLayout
+                android:id="@+id/cardioSetsAndRepsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="100">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="25"
+                        android:background="@drawable/left_light_round_shape"
+                        android:paddingLeft="20dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="10dp"
+                        android:text="Sets"
+                        android:textColor="@color/white"
+                        android:textSize="20dp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="25"
+                        android:background="@drawable/right_light_round_shape"
+                        android:gravity="center"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp">
+
+                        <NumberPicker
+                            android:id="@+id/cardioSets"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:outlineSpotShadowColor="@color/white"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:layout_weight="25"
+                        android:background="@drawable/left_light_round_shape"
+                        android:gravity="center"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp">
+
+                        <NumberPicker
+                            android:id="@+id/cardioReps"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:outlineSpotShadowColor="@color/white"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="25"
+                        android:background="@drawable/right_light_round_shape"
+                        android:paddingLeft="20dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="10dp"
+                        android:text="Repetitions"
+                        android:textColor="@color/white"
+                        android:textSize="20dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/cardioTimeCB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:button="@drawable/checkbox"
+                android:buttonTint="@color/white"
+                android:padding="20dp"
+                android:text="Use minutes."
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+
+            <LinearLayout
+                android:id="@+id/cardioTimeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="100">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="50"
+                        android:background="@drawable/left_light_round_shape"
+                        android:paddingLeft="20dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="10dp"
+                        android:text="Minutes"
+                        android:textColor="@color/white"
+                        android:textSize="20dp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="50"
+                        android:background="@drawable/right_light_round_shape"
+                        android:gravity="center"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp">
+
+                        <NumberPicker
+                            android:id="@+id/cardioTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:outlineSpotShadowColor="@color/white"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="316dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/right_dark_round_shape"
+                android:gravity="right"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
+                android:text="These are the exercises that you will do for your cardio stage. Each exercise will last one minute, with a 30 seconds break"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="LinearLayoutManager"
+                tools:listitem="@layout/fragment_trainer_exercises"></androidx.recyclerview.widget.RecyclerView>
+
+            <!-- Weight training exercises -->
+            <TextView
+                android:layout_width="316dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/left_light_round_shape"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
+                android:text="Component 3: Weight Training
+    \n
+    \nHow would you like to measure your weight training exercises?"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+
+            <CheckBox
+                android:id="@+id/wtSetsandRepsCB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:button="@drawable/checkbox"
+                android:buttonTint="@color/white"
+                android:padding="20dp"
+                android:text="Use sets and repetitions"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+
+            <LinearLayout
+                android:id="@+id/wtSetsAndRepsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="100">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="25"
+                        android:background="@drawable/left_light_round_shape"
+                        android:paddingLeft="20dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="10dp"
+                        android:text="Sets"
+                        android:textColor="@color/white"
+                        android:textSize="20dp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="25"
+                        android:background="@drawable/right_light_round_shape"
+                        android:gravity="center"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp">
+
+                        <NumberPicker
+                            android:id="@+id/wtSets"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:outlineSpotShadowColor="@color/white"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:layout_weight="25"
+                        android:background="@drawable/left_light_round_shape"
+                        android:gravity="center"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp">
+
+                        <NumberPicker
+                            android:id="@+id/wtReps"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:outlineSpotShadowColor="@color/white"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="25"
+                        android:background="@drawable/right_light_round_shape"
+                        android:paddingLeft="20dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="10dp"
+                        android:text="Repetitions"
+                        android:textColor="@color/white"
+                        android:textSize="20dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/wtTimeCB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:button="@drawable/checkbox"
+                android:buttonTint="@color/white"
+                android:padding="20dp"
+                android:text="Use minutes."
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+
+            <LinearLayout
+                android:id="@+id/wtTimeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="100">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="50"
+                        android:background="@drawable/left_light_round_shape"
+                        android:paddingLeft="20dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="10dp"
+                        android:text="Minutes"
+                        android:textColor="@color/white"
+                        android:textSize="20dp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="50"
+                        android:background="@drawable/right_light_round_shape"
+                        android:gravity="center"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp">
+
+                        <NumberPicker
+                            android:id="@+id/wtTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:outlineSpotShadowColor="@color/white"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/list2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="LinearLayoutManager"
+                tools:listitem="@layout/fragment_trainer_exercises"></androidx.recyclerview.widget.RecyclerView>
+
+            <!-- Core exercises-->
+            <TextView
+                android:layout_width="316dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/left_light_round_shape"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
+                android:text="Component 4: Core
+    \n
+    \nHow would you like to measure your core exercises?"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+
+            <CheckBox
+                android:id="@+id/coreSetsandRepsCB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:button="@drawable/checkbox"
+                android:buttonTint="@color/white"
+                android:padding="20dp"
+                android:text="Use sets and repetitions"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+
+            <LinearLayout
+                android:id="@+id/coreSetsAndRepsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="100">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="25"
+                        android:background="@drawable/left_light_round_shape"
+                        android:paddingLeft="20dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="10dp"
+                        android:text="Sets"
+                        android:textColor="@color/white"
+                        android:textSize="20dp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="25"
+                        android:background="@drawable/right_light_round_shape"
+                        android:gravity="center"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp">
+
+                        <NumberPicker
+                            android:id="@+id/coreSets"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:outlineSpotShadowColor="@color/white"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:layout_weight="25"
+                        android:background="@drawable/left_light_round_shape"
+                        android:gravity="center"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp">
+
+                        <NumberPicker
+                            android:id="@+id/coreReps"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:outlineSpotShadowColor="@color/white"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="25"
+                        android:background="@drawable/right_light_round_shape"
+                        android:paddingLeft="20dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="10dp"
+                        android:text="Repetitions"
+                        android:textColor="@color/white"
+                        android:textSize="20dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/coreTimeCB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:button="@drawable/checkbox"
+                android:buttonTint="@color/white"
+                android:padding="20dp"
+                android:text="Use minutes."
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+
+            <LinearLayout
+                android:id="@+id/coreTimeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="100">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="50"
+                        android:background="@drawable/left_light_round_shape"
+                        android:paddingLeft="20dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="10dp"
+                        android:text="Minutes"
+                        android:textColor="@color/white"
+                        android:textSize="20dp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="50"
+                        android:background="@drawable/right_light_round_shape"
+                        android:gravity="center"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp">
+
+                        <NumberPicker
+                            android:id="@+id/coreTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:outlineSpotShadowColor="@color/white"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/list3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="LinearLayoutManager"
+                tools:listitem="@layout/fragment_trainer_exercises" />
+
+            <!-- Stretching exercises-->
+            <TextView
+                android:layout_width="316dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/left_light_round_shape"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
+                android:text="Component 5: Stretching"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/list4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="LinearLayoutManager"
+                tools:listitem="@layout/fragment_trainer_exercises" />
+
+            <Button
+                android:id="@+id/startWorkoutButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_button"
+                android:padding="10dp"
+                android:layout_margin="10dp"
+                android:text="Start Workout"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:layout_gravity="center"
+                app:backgroundTint="#FFFFFF"/>
+        </LinearLayout>
+
+
+
+
+        <LinearLayout
+            android:id="@+id/workout_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layoutManager="LinearLayoutManager"
-            tools:listitem="@layout/fragment_trainer_exercises">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    app:cardCornerRadius="20dp">
 
-        </androidx.recyclerview.widget.RecyclerView>
+                    <ImageView
+                        android:id="@+id/exerciseID"
+                        android:layout_width="380dp"
+                        android:layout_height="380dp"
+                        android:scaleType="fitCenter" />
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/list3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layoutManager="LinearLayoutManager"
-            tools:listitem="@layout/fragment_trainer_exercises" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Name:"
+                android:textAppearance="?attr/textAppearanceListItem"
+                android:textColor="@color/default_text"
+                android:textSize="36sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/exercise_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:textColor="@color/default_text"
+                android:textSize="36sp"
+                android:textAppearance="?attr/textAppearanceListItem" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/list4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layoutManager="LinearLayoutManager"
-            tools:listitem="@layout/fragment_trainer_exercises" />
+            <LinearLayout
+                android:id="@+id/exercise_sets_and_reps_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="100">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_weight="50"
+                        android:text="Sets:"
+                        android:textAppearance="?attr/textAppearanceListItem"
+                        android:textColor="@color/default_text"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/exercise_sets"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_weight="50"
+                        android:textAppearance="?attr/textAppearanceListItem"
+                        android:textColor="@color/default_text"
+                        android:textSize="30sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="100">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_weight="50"
+                        android:text="Repetitions:"
+                        android:textAppearance="?attr/textAppearanceListItem"
+                        android:textColor="@color/default_text"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/exercise_reps"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_weight="50"
+                        android:textAppearance="?attr/textAppearanceListItem"
+                        android:textColor="@color/default_text"
+                        android:textSize="30sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/exercise_time_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="100">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_weight="50"
+                        android:text="Time:"
+                        android:textAppearance="?attr/textAppearanceListItem"
+                        android:textColor="@color/default_text"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/exercise_time"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_weight="50"
+                        android:textAppearance="?attr/textAppearanceListItem"
+                        android:textColor="@color/default_text"
+                        android:textSize="30sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>
 
