@@ -141,18 +141,20 @@ public class WorkoutActivity extends AppCompatActivity {
     int maxCoreReps = 60;
     int maxCoreTime = 10;
 
-    int cardioSetsNumber;
-    int cardioRepsNumber;
-    int cardioTimeNumber;
-    int wtSetsNumber;
-    int wtRepsNumber;
-    int wtTimeNumber;
-    int coreSetsNumber;
-    int coreRepsNumber;
-    int coreTimeNumber;
+    int cardioSetsNumber = 1;
+    int cardioRepsNumber = 1;
+    int cardioTimeNumber = 1;
+    int wtSetsNumber = 1;
+    int wtRepsNumber = 1;
+    int wtTimeNumber = 1;
+    int coreSetsNumber = 1;
+    int coreRepsNumber = 1;
+    int coreTimeNumber = 1;
 
     LinearLayout initialLayout;
     LinearLayout workoutLayout;
+    TextView componentTitle;
+    TextView exerciseCount;
     ImageView exerciseImage;
     TextView exerciseName;
     LinearLayout exerciseSetsAndRepetitionsLayout;
@@ -160,6 +162,10 @@ public class WorkoutActivity extends AppCompatActivity {
     TextView exerciseReps;
     LinearLayout exerciseTimeLayout;
     TextView exerciseTime;
+
+    int currentExercise = 0;
+    String currentComponent = "Component 2: Cardio";
+    String exerciseCountString = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -409,6 +415,8 @@ public class WorkoutActivity extends AppCompatActivity {
 
         initialLayout = (LinearLayout) this.findViewById(R.id.initial_layout);
         workoutLayout = (LinearLayout) this.findViewById(R.id.workout_layout);
+        componentTitle = (TextView) this.findViewById(R.id.component_title);
+        exerciseCount = (TextView) this.findViewById(R.id.exercise_count);
         exerciseImage = (ImageView) this.findViewById(R.id.exerciseID);
         exerciseName = (TextView) this.findViewById(R.id.exercise_name);
         exerciseSetsAndRepetitionsLayout = (LinearLayout) this.findViewById(R.id.exercise_sets_and_reps_layout);
@@ -419,13 +427,13 @@ public class WorkoutActivity extends AppCompatActivity {
 
         startWorkoutButton = (Button) this.findViewById(R.id.startWorkoutButton);
         nextExercise = (Button) this.findViewById(R.id.nextButton);
-        String currentComponent = "Cardio";
         startWorkoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 initialLayout.setVisibility(GONE);
                 workoutLayout.setVisibility(View.VISIBLE);
-                ShowExercise(cardioExercises.get(0));
+                componentTitle.setText(currentComponent);
+                ShowExercise(cardioExercises.get(currentExercise));
                 if(cardioUsesTime)
                 {
                     exerciseTimeLayout.setVisibility(View.VISIBLE);
@@ -438,27 +446,118 @@ public class WorkoutActivity extends AppCompatActivity {
                     exerciseSets.setText(String.valueOf(cardioSetsNumber));
                     exerciseReps.setText(String.valueOf(cardioRepsNumber));
                 }
+                exerciseCountString = "Exercise: " + String.valueOf(currentExercise + 1) + "/" + String.valueOf(cardioExercises.size());
+                exerciseCount.setText(exerciseCountString);
+                currentExercise++;
             }
         });
         nextExercise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
-                ShowExercise(cardioExercises.get(0));
-                if(cardioUsesTime)
+
+                if(currentComponent.equals("Component 2: Cardio"))
                 {
+                    componentTitle.setText(currentComponent);
+                    exerciseCountString = "Exercise: " + String.valueOf(currentExercise + 1) + "/" + String.valueOf(cardioExercises.size());
+                    exerciseCount.setText(exerciseCountString);
+                    if((currentExercise < (cardioExercises.size()))){
+                        ShowExercise(cardioExercises.get(currentExercise));
+                        currentExercise++;
+                    }
+                    else if(currentExercise == (cardioExercises.size()))
+                    {
+                        currentComponent = "Component 3: Weight Training";
+                        currentExercise = 0;
+                    }
+                    if(cardioUsesTime)
+                    {
+                        exerciseTimeLayout.setVisibility(View.VISIBLE);
+                        exerciseSetsAndRepetitionsLayout.setVisibility(GONE);
+                        exerciseTime.setText(String.valueOf(cardioTimeNumber));
+                    }
+                    else{
+                        exerciseTimeLayout.setVisibility(GONE);
+                        exerciseSetsAndRepetitionsLayout.setVisibility(View.VISIBLE);
+                        exerciseSets.setText(String.valueOf(cardioSetsNumber));
+                        exerciseReps.setText(String.valueOf(cardioRepsNumber));
+                    }
+                }
+                if(currentComponent.equals("Component 3: Weight Training"))
+                {
+                    componentTitle.setText(currentComponent);
+                    exerciseCountString = "Exercise: " + String.valueOf(currentExercise + 1) + "/" + String.valueOf(weightTrainingExercises.size());
+                    exerciseCount.setText(exerciseCountString);
+                    if((currentExercise < (weightTrainingExercises.size()))){
+                        ShowExercise(weightTrainingExercises.get(currentExercise));
+                        currentExercise++;
+                    }
+                    else if(currentExercise == (weightTrainingExercises.size()))
+                    {
+                        currentExercise = 0;
+                        currentComponent = "Component 4: Core";
+                    }
+                    if(wtUsesTime)
+                    {
+                        exerciseTimeLayout.setVisibility(View.VISIBLE);
+                        exerciseSetsAndRepetitionsLayout.setVisibility(GONE);
+                        exerciseTime.setText(String.valueOf(wtTimeNumber));
+                    }
+                    else{
+                        exerciseTimeLayout.setVisibility(GONE);
+                        exerciseSetsAndRepetitionsLayout.setVisibility(View.VISIBLE);
+                        exerciseSets.setText(String.valueOf(wtSetsNumber));
+                        exerciseReps.setText(String.valueOf(wtRepsNumber));
+                    }
+                }
+                if(currentComponent.equals("Component 4: Core"))
+                {
+                    componentTitle.setText(currentComponent);
+                    exerciseCountString = "Exercise: " + String.valueOf(currentExercise + 1) + "/" + String.valueOf(coreExercises.size());
+                    exerciseCount.setText(exerciseCountString);
+                    if((currentExercise < (coreExercises.size()))){
+                        ShowExercise(coreExercises.get(currentExercise));
+                        currentExercise++;
+                    }
+                    else if(currentExercise == (coreExercises.size()))
+                    {
+                        currentExercise = 0;
+                        currentComponent = "Component 5: Stretching";
+                    }
+                    if(coreUsesTime)
+                    {
+                        exerciseTimeLayout.setVisibility(View.VISIBLE);
+                        exerciseSetsAndRepetitionsLayout.setVisibility(GONE);
+                        exerciseTime.setText(String.valueOf(coreTimeNumber));
+                    }
+                    else{
+                        exerciseTimeLayout.setVisibility(GONE);
+                        exerciseSetsAndRepetitionsLayout.setVisibility(View.VISIBLE);
+                        exerciseSets.setText(String.valueOf(coreSetsNumber));
+                        exerciseReps.setText(String.valueOf(coreRepsNumber));
+                    }
+                }
+                if(currentComponent.equals("Component 5: Stretching"))
+                {
+
+                    componentTitle.setText(currentComponent);
+                    exerciseCountString = "Exercise: " + String.valueOf(currentExercise + 1) + "/" + String.valueOf(stretchingExercises.size());
+                    exerciseCount.setText(exerciseCountString);
+                    if((currentExercise < (stretchingExercises.size()))){
+                        ShowExercise(stretchingExercises.get(currentExercise));
+                        currentExercise++;
+                    }
+                    else if(currentExercise == (stretchingExercises.size()))
+                    {
+                        currentExercise = 0;
+                        // do stuff here
+                    }
                     exerciseTimeLayout.setVisibility(View.VISIBLE);
                     exerciseSetsAndRepetitionsLayout.setVisibility(GONE);
-                    exerciseTime.setText(String.valueOf(cardioTimeNumber));
-                }
-                else{
-                    exerciseTimeLayout.setVisibility(GONE);
-                    exerciseSetsAndRepetitionsLayout.setVisibility(View.VISIBLE);
-                    exerciseSets.setText(String.valueOf(cardioSetsNumber));
-                    exerciseReps.setText(String.valueOf(cardioRepsNumber));
+                    exerciseTime.setText(String.valueOf(1));
                 }
             }
         });
+
     }
 
     private void ShowExercise(Exercise exercise)
