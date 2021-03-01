@@ -55,6 +55,8 @@ public class TrainerFragment extends Fragment {
     CheckBox difficultCB;
     String workoutBodyArea = "total_body";
     String workoutDifficulty = "easy";
+    String workoutGoal = "Be fit";
+    String workoutExperience = "Beginner";
     public TrainerFragment() {
         // Required empty public constructor
     }
@@ -68,8 +70,14 @@ public class TrainerFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
+
     public void openNewActivity(){
         Intent intent = new Intent(view.getContext(), WorkoutActivity.class);
+        intent.putExtra("Body Area", workoutBodyArea);
+        intent.putExtra("Difficulty", workoutDifficulty);
+        intent.putExtra("Level of experience", workoutExperience);
+        intent.putExtra("Goal", workoutGoal);
         startActivity(intent);
     }
 
@@ -99,6 +107,8 @@ public class TrainerFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<String> days = new ArrayList<>();
+                workoutExperience = snapshot.child("levelOfExperience").getValue(String.class);
+                workoutGoal = snapshot.child("purpose").getValue(String.class);
                 for (DataSnapshot snapshot_day : snapshot.child("days").getChildren()) {
                     String day = snapshot_day.getValue(String.class);
                     days.add(day);

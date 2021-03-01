@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
@@ -40,6 +41,8 @@ public class WorkoutActivity extends AppCompatActivity {
     private int mColumnCount = 1;
     private String levelOfExperience = "Intermediate";
     private String goal = "Be fit";
+    private String workoutBodyArea;
+    private String workoutDifficulty;
     FirebaseDatabase database;
     private int beginnerID = 0;
     private int intermediateID = 1;
@@ -171,6 +174,11 @@ public class WorkoutActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout);
+        Intent intent = getIntent();
+        workoutBodyArea = intent.getStringExtra("Body Area");
+        workoutDifficulty = intent.getStringExtra("Difficulty");
+        levelOfExperience = intent.getStringExtra("Level of experience");
+        goal = intent.getStringExtra("Goal");
 
         /** Workout Routine Creation Algorithm's fields set up
          *
@@ -228,10 +236,34 @@ public class WorkoutActivity extends AppCompatActivity {
         stretchingExercisesRecyclerView.setLayoutManager(horizontalLayoutManager4);
         stretchingExercisesAdapter = new MyTrainerExerciseRecyclerViewAdapter(stretchingExercises);
         stretchingExercisesRecyclerView.setAdapter(stretchingExercisesAdapter);
-        GetPersonalisedExercises("cardio","total_body");
-        GetPersonalisedExercises("strength","upper_body");
-        GetPersonalisedExercises("strength","core");
-        GetPersonalisedExercises("flexibility","total_body");
+        int[] amountEasyExercisesArray = {2,1,1};
+        int[] amountMediumExercisesArray = {1,2,1};
+        int[] amountDifficultExercisesArray = {1,1,2};
+        int amountEasyExercises = 0;
+        int amountMediumExercises = 0;
+        int amountDifficultExercises = 0;
+        if(workoutDifficulty.equals("easy"))
+        {
+            amountEasyExercises = amountEasyExercisesArray[0];
+            amountMediumExercises = amountMediumExercisesArray[0];
+            amountDifficultExercises = amountDifficultExercisesArray[0];
+        }
+        if(workoutDifficulty.equals("medium"))
+        {
+            amountEasyExercises = amountEasyExercisesArray[1];
+            amountMediumExercises = amountMediumExercisesArray[1];
+            amountDifficultExercises = amountDifficultExercisesArray[1];
+        }
+        if(workoutDifficulty.equals("difficult"))
+        {
+            amountEasyExercises = amountEasyExercisesArray[2];
+            amountMediumExercises = amountMediumExercisesArray[2];
+            amountDifficultExercises = amountDifficultExercisesArray[2];
+        }
+        GetPersonalisedExercises("cardio","total_body", amountEasyExercises, amountMediumExercises, amountDifficultExercises);
+        GetPersonalisedExercises("strength",workoutBodyArea, amountEasyExercises, amountMediumExercises, amountDifficultExercises);
+        GetPersonalisedExercises("strength","core", amountEasyExercises, amountMediumExercises, amountDifficultExercises);
+        GetPersonalisedExercises("flexibility","total_body", amountEasyExercises, amountMediumExercises, amountDifficultExercises);
 
         /** Setting up checkboxes and Number picker fields to retrieve repetitions, sets and time fro the user
          *
@@ -617,7 +649,7 @@ public class WorkoutActivity extends AppCompatActivity {
         stretchingAmountOfExercises = stretchingTimeValue;
     }
 
-    public void GetPersonalisedExercises(String exercise_type, String body_part){
+    public void GetPersonalisedExercises(String exercise_type, String body_part, int workoutAmountOfEasyExercises, int workoutAmountOfMediumExercises, int workoutAmountOfDifficultExercises){
         DatabaseReference databaseReference = database.getReference("exercises").child(exercise_type).child(body_part);
         currentAmountOfExercises = 0;
         System.out.println("curr: " +cardioAmountOfExercises + ", "+ weightTrainingAmountOfExercises+ ", "+ coreAmountOfExercises);
@@ -638,10 +670,12 @@ public class WorkoutActivity extends AppCompatActivity {
             currentAmountOfExercises = stretchingAmountOfExercises;
         }
         int finalCurrentAmountOfExercises = currentAmountOfExercises;
+        int amountOfEasyExercises = workoutAmountOfEasyExercises * (finalCurrentAmountOfExercises / 4);
+        int amountOfMediumExercises = workoutAmountOfMediumExercises * (finalCurrentAmountOfExercises / 4);
+        int amountOfDifficultExercises = workoutAmountOfDifficultExercises * (finalCurrentAmountOfExercises / 4);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String exerciseDifficultyState = "easy";
                 ArrayList<Integer> easyExercisesIDs = new ArrayList<Integer>();
                 easyExercisesIDs.add(1);
                 easyExercisesIDs.add(2);
@@ -660,34 +694,15 @@ public class WorkoutActivity extends AppCompatActivity {
                 difficultExercisesIDs.add(3);
                 difficultExercisesIDs.add(4);
                 difficultExercisesIDs.add(5);
-                for(int i = 0; i< finalCurrentAmountOfExercises; i++)
-                {
-                    if(easyExercisesIDs.isEmpty())
-                    {
-                        easyExercisesIDs.add(1);
-                        easyExercisesIDs.add(2);
-                        easyExercisesIDs.add(3);
-                        easyExercisesIDs.add(4);
-                        easyExercisesIDs.add(5);
-                    }
-                    else if(mediumExercisesIDs.isEmpty())
-                    {
-                        mediumExercisesIDs.add(1);
-                        mediumExercisesIDs.add(2);
-                        mediumExercisesIDs.add(3);
-                        mediumExercisesIDs.add(4);
-                        mediumExercisesIDs.add(5);
-                    }
-                    else if(difficultExercisesIDs.isEmpty())
-                    {
-                        difficultExercisesIDs.add(1);
-                        difficultExercisesIDs.add(2);
-                        difficultExercisesIDs.add(3);
-                        difficultExercisesIDs.add(4);
-                        difficultExercisesIDs.add(5);
-                    }
-                    if(exerciseDifficultyState.equals("easy"))
-                    {
+                    for(int j = 0; j < amountOfEasyExercises; j++){
+                        if(easyExercisesIDs.isEmpty())
+                        {
+                            easyExercisesIDs.add(1);
+                            easyExercisesIDs.add(2);
+                            easyExercisesIDs.add(3);
+                            easyExercisesIDs.add(4);
+                            easyExercisesIDs.add(5);
+                        }
                         Random random1 = new Random();
                         int randomInteger = random1.nextInt(easyExercisesIDs.size());
                         String indexValue = easyExercisesIDs.get(randomInteger).toString();
@@ -695,8 +710,7 @@ public class WorkoutActivity extends AppCompatActivity {
                         //String name = dataSnapshot.child("easy").child("1").child("name").getValue(String.class);
                         System.out.println("eazy exercise: " + name);
                         easyExercisesIDs.remove(randomInteger);
-                        exerciseDifficultyState = "medium";
-                        Exercise exercise = SetExerciseFields(name, exerciseDifficultyState,exercise_type,body_part);
+                        Exercise exercise = SetExerciseFields(name, "easy" ,exercise_type,body_part);
                         if(exercise_type.equals("cardio"))
                         {
                             cardioExercises.add(exercise);
@@ -714,8 +728,20 @@ public class WorkoutActivity extends AppCompatActivity {
                             stretchingExercises.add(exercise);
                         }
                     }
-                    else if(exerciseDifficultyState.equals("medium"))
-                    {
+                    for(int p = 0; p < amountOfMediumExercises; p++){
+                        if(exercise_type.equals("strength") && body_part.equals("total_body"))
+                        {
+                            break;
+                        }
+                        if(mediumExercisesIDs.isEmpty())
+                        {
+                            mediumExercisesIDs.add(1);
+                            mediumExercisesIDs.add(2);
+                            mediumExercisesIDs.add(3);
+                            mediumExercisesIDs.add(4);
+                            mediumExercisesIDs.add(5);
+                        }
+
                         Random random2 = new Random();
                         int randomInteger = random2.nextInt(mediumExercisesIDs.size());
                         String indexValue = mediumExercisesIDs.get(randomInteger).toString();
@@ -723,8 +749,7 @@ public class WorkoutActivity extends AppCompatActivity {
                         //String name = dataSnapshot.child("easy").child("2").child("name").getValue(String.class);
                         mediumExercisesIDs.remove(randomInteger);
                         System.out.println("medium exercise: " + name);
-                        exerciseDifficultyState = "difficult";
-                        Exercise exercise = SetExerciseFields(name, exerciseDifficultyState,exercise_type,body_part);
+                        Exercise exercise = SetExerciseFields(name, "medium",exercise_type,body_part);
                         if(exercise_type.equals("cardio"))
                         {
                             cardioExercises.add(exercise);
@@ -742,8 +767,19 @@ public class WorkoutActivity extends AppCompatActivity {
                             stretchingExercises.add(exercise);
                         }
                     }
-                    else if(exerciseDifficultyState.equals("difficult"))
-                    {
+                    for(int q = 0; q < amountOfDifficultExercises; q++){
+                        if(exercise_type.equals("strength") && body_part.equals("total_body"))
+                        {
+                            break;
+                        }
+                        if(difficultExercisesIDs.isEmpty())
+                        {
+                            difficultExercisesIDs.add(1);
+                            difficultExercisesIDs.add(2);
+                            difficultExercisesIDs.add(3);
+                            difficultExercisesIDs.add(4);
+                            difficultExercisesIDs.add(5);
+                        }
                         Random random3 = new Random();
                         //System.out.println("Index value    " + difficultExercisesIDs.size());
                         int randomInteger = random3.nextInt(difficultExercisesIDs.size());
@@ -754,8 +790,7 @@ public class WorkoutActivity extends AppCompatActivity {
                         //String name = dataSnapshot.child("easy").child("3").child("name").getValue(String.class);
                         difficultExercisesIDs.remove(randomInteger);
                         //System.out.println("diffy exercise: " + name);
-                        exerciseDifficultyState = "easy";
-                        Exercise exercise = SetExerciseFields(name, exerciseDifficultyState,exercise_type,body_part);
+                        Exercise exercise = SetExerciseFields(name,"difficult",exercise_type,body_part);
                         if(exercise_type.equals("cardio"))
                         {
                             cardioExercises.add(exercise);
@@ -773,7 +808,7 @@ public class WorkoutActivity extends AppCompatActivity {
                             stretchingExercises.add(exercise);
                         }
                     }
-                }
+
                 if(exercise_type.equals("cardio")){
                     cardioExercisesAdapter.notifyDataSetChanged();
                 }
