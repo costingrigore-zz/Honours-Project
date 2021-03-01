@@ -33,6 +33,7 @@ public class ExercisesFragment extends Fragment {
     // TODO: Customize parameters
     private int mColumnCount = 1;
     FirebaseDatabase database;
+    MyExerciseRecyclerViewAdapter adapter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -66,11 +67,11 @@ public class ExercisesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_exercises_list, container, false);
         // Set the adapter
-        if (view instanceof RecyclerView) {
+
             Context context = view.getContext();
             LinearLayoutManager llm = new LinearLayoutManager(context);
             llm.setOrientation(LinearLayoutManager.VERTICAL);
-            RecyclerView recyclerView = (RecyclerView) view;
+            RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list);
             recyclerView.setLayoutManager(llm);
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -117,7 +118,7 @@ public class ExercisesFragment extends Fragment {
                         }
                     }
                     if(!exercises.isEmpty()){
-                        final MyExerciseRecyclerViewAdapter adapter = new MyExerciseRecyclerViewAdapter(exercises);
+                        adapter = new MyExerciseRecyclerViewAdapter(exercises);
                         recyclerView.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
                     }
@@ -127,8 +128,6 @@ public class ExercisesFragment extends Fragment {
                 public void onCancelled(@NonNull DatabaseError error) { }
 
             });
-
-        }
         return view;
     }
 

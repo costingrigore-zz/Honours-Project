@@ -230,31 +230,31 @@ public class StepOne extends Fragment {
         ArrayList<String> daysToExercise = new ArrayList<>();
         if(monday.isChecked())
         {
-            daysToExercise.add("monday");
+            daysToExercise.add("Monday");
         }
         if(tuesday.isChecked())
         {
-            daysToExercise.add("tuesday");
+            daysToExercise.add("Tuesday");
         }
         if(wednesday.isChecked())
         {
-            daysToExercise.add("wednesday");
+            daysToExercise.add("Wednesday");
         }
         if(thursday.isChecked())
         {
-            daysToExercise.add("thursday");
+            daysToExercise.add("Thursday");
         }
         if(friday.isChecked())
         {
-            daysToExercise.add("friday");
+            daysToExercise.add("Friday");
         }
         if(saturday.isChecked())
         {
-            daysToExercise.add("saturday");
+            daysToExercise.add("Saturday");
         }
         if(sunday.isChecked())
         {
-            daysToExercise.add("sunday");
+            daysToExercise.add("Sunday");
         }
         return daysToExercise;
     }

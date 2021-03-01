@@ -42,7 +42,7 @@ public class ProfileFragment extends Fragment {
     TextView goalTextV;
     TextView daysTextV;
     Button editProfile;
-
+    FirebaseDatabase database;
 
     // Pop-up window
     private String levelOfExperience;
@@ -86,7 +86,6 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
-        FirebaseDatabase database;
         database = FirebaseDatabase.getInstance();
         String ID = GetPersonalID(view);
         DatabaseReference databaseReference = database.getReference("users").child(ID);
@@ -228,31 +227,31 @@ public class ProfileFragment extends Fragment {
         }
         for(int i = 0; i < daysArray.length; i++)
         {
-            if(daysArray[i].equals("monday"))
+            if(daysArray[i].equals("Monday"))
             {
                 monday.setChecked(true);
             }
-            else if(daysArray[i].equals("tuesday"))
+            else if(daysArray[i].equals("Tuesday"))
             {
                 tuesday.setChecked(true);
             }
-            else if(daysArray[i].equals("wednesday"))
+            else if(daysArray[i].equals("Wednesday"))
             {
                 wednesday.setChecked(true);
             }
-            else if(daysArray[i].equals("thursday"))
+            else if(daysArray[i].equals("Thursday"))
             {
                 thursday.setChecked(true);
             }
-            else if(daysArray[i].equals("friday"))
+            else if(daysArray[i].equals("Friday"))
             {
                 friday.setChecked(true);
             }
-            else if(daysArray[i].equals("saturday"))
+            else if(daysArray[i].equals("Saturday"))
             {
                 saturday.setChecked(true);
             }
-            else if(daysArray[i].equals("sunday"))
+            else if(daysArray[i].equals("Sunday"))
             {
                 sunday.setChecked(true);
             }
@@ -377,31 +376,31 @@ public class ProfileFragment extends Fragment {
         ArrayList<String> daysToExercise = new ArrayList<>();
         if(monday.isChecked())
         {
-            daysToExercise.add("monday");
+            daysToExercise.add("Monday");
         }
         if(tuesday.isChecked())
         {
-            daysToExercise.add("tuesday");
+            daysToExercise.add("Tuesday");
         }
         if(wednesday.isChecked())
         {
-            daysToExercise.add("wednesday");
+            daysToExercise.add("Wednesday");
         }
         if(thursday.isChecked())
         {
-            daysToExercise.add("thursday");
+            daysToExercise.add("Thursday");
         }
         if(friday.isChecked())
         {
-            daysToExercise.add("friday");
+            daysToExercise.add("Friday");
         }
         if(saturday.isChecked())
         {
-            daysToExercise.add("saturday");
+            daysToExercise.add("Saturday");
         }
         if(sunday.isChecked())
         {
-            daysToExercise.add("sunday");
+            daysToExercise.add("Sunday");
         }
         return daysToExercise;
     }
