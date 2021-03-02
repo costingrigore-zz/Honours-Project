@@ -25,7 +25,7 @@ tools:context=".WorkoutActivity">
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:visibility="visible"
-            tools:visibility="visible">
+            tools:visibility="gone">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:weightSum="100"
@@ -912,29 +912,42 @@ tools:context=".WorkoutActivity">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="100">
+                        android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
-                            android:layout_weight="25"
                             android:text="Time:"
                             android:textAppearance="?attr/textAppearanceListItem"
                             android:textColor="@color/default_text"
+                            android:layout_marginRight="20dp"
                             android:textSize="20dp"
                             android:textStyle="bold" />
-
+                        <Button
+                            android:id="@+id/button_start_pause"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:background="@drawable/ic_start"
+                            android:textColor="@color/white"
+                            android:layout_gravity="center"/>
+                        <Button
+                            android:id="@+id/button_reset"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:background="@drawable/ic_reset"
+                            android:textColor="@color/white"
+                            android:layout_gravity="center"/>
                         <TextView
                             android:id="@+id/exercise_time"
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
-                            android:layout_weight="75"
                             android:textAppearance="?attr/textAppearanceListItem"
                             android:textColor="@color/default_text"
-                            android:textSize="20dp" />
+                            android:text="00:00"
+                            android:textSize="40dp" />
+
                     </LinearLayout>
                 </LinearLayout>
                 <Button

@@ -28,7 +28,9 @@ import com.google.firebase.database.ValueEventListener;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Random;
+import java.util.Timer;
 
 import static android.view.View.GONE;
 
@@ -36,8 +38,6 @@ public class WorkoutActivity extends AppCompatActivity {
 
     Button startWorkoutButton;
     Button nextExercise;
-    TextView countText;
-    public int counter;
     private int mColumnCount = 1;
     private String levelOfExperience = "Intermediate";
     private String goal = "Be fit";
@@ -169,6 +169,21 @@ public class WorkoutActivity extends AppCompatActivity {
     int currentExercise = 0;
     String currentComponent = "Component 2: Cardio";
     String exerciseCountString = "";
+    /**
+     * Setting up fields for the timer count down.
+     * The timer count down is used when the user selects to use time as their measure for doing their exercises
+     * I used the following sources to develop the timer count down:
+     * https://codinginflow.com/tutorials/android/countdowntimer/part-1-countdown-timer
+     * https://www.youtube.com/watch?v=MDuGwI6P-X8
+     */
+    private static final long START_TIME_IN_MILLIS = 60000;
+    private TextView mTextViewCountDown;
+    private Button mButtonStartPause;
+    private Button mButtonReset;
+    private CountDownTimer mCountDownTimer;
+    private boolean mTimerRunning;
+    private long mTimeLeftInMillis = START_TIME_IN_MILLIS;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,6 +194,26 @@ public class WorkoutActivity extends AppCompatActivity {
         workoutDifficulty = intent.getStringExtra("Difficulty");
         levelOfExperience = intent.getStringExtra("Level of experience");
         goal = intent.getStringExtra("Goal");
+        mTextViewCountDown = findViewById(R.id.exercise_time);
+        mButtonStartPause = findViewById(R.id.button_start_pause);
+        mButtonReset = findViewById(R.id.button_reset);
+        mButtonStartPause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mTimerRunning) {
+                    pauseTimer();
+                } else {
+                    startTimer();
+                }
+            }
+        });
+        mButtonReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resetTimer();
+            }
+        });
+        updateCountDownText();
 
         /** Workout Routine Creation Algorithm's fields set up
          *
@@ -470,7 +505,15 @@ public class WorkoutActivity extends AppCompatActivity {
                 {
                     exerciseTimeLayout.setVisibility(View.VISIBLE);
                     exerciseSetsAndRepetitionsLayout.setVisibility(GONE);
-                    exerciseTime.setText(String.valueOf(cardioTimeNumber));
+                    if(cardioTimeNumber<10)
+                    {
+                        exerciseTime.setText("0" + String.valueOf(cardioTimeNumber) + ":00");
+                    }
+                    if(cardioTimeNumber>=10)
+                    {
+                        exerciseTime.setText(String.valueOf(cardioTimeNumber) + ":00");
+                    }
+                    mTimeLeftInMillis = START_TIME_IN_MILLIS * cardioTimeNumber;
                 }
                 else{
                     exerciseTimeLayout.setVisibility(GONE);
@@ -486,7 +529,11 @@ public class WorkoutActivity extends AppCompatActivity {
         nextExercise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (mTimerRunning) {
+                    pauseTimer();
+                    resetTimer();
+                    updateCountDownText();
+                }
                 if(currentComponent.equals("Component 2: Cardio"))
                 {
                     componentTitle.setText(currentComponent);
@@ -505,7 +552,15 @@ public class WorkoutActivity extends AppCompatActivity {
                     {
                         exerciseTimeLayout.setVisibility(View.VISIBLE);
                         exerciseSetsAndRepetitionsLayout.setVisibility(GONE);
-                        exerciseTime.setText(String.valueOf(cardioTimeNumber));
+                        if(cardioTimeNumber<10)
+                        {
+                            exerciseTime.setText("0" + String.valueOf(cardioTimeNumber) + ":00");
+                        }
+                        if(cardioTimeNumber>=10)
+                        {
+                            exerciseTime.setText(String.valueOf(cardioTimeNumber) + ":00");
+                        }
+                        mTimeLeftInMillis = START_TIME_IN_MILLIS * cardioTimeNumber;
                     }
                     else{
                         exerciseTimeLayout.setVisibility(GONE);
@@ -532,7 +587,15 @@ public class WorkoutActivity extends AppCompatActivity {
                     {
                         exerciseTimeLayout.setVisibility(View.VISIBLE);
                         exerciseSetsAndRepetitionsLayout.setVisibility(GONE);
-                        exerciseTime.setText(String.valueOf(wtTimeNumber));
+                        if(wtTimeNumber<10)
+                        {
+                            exerciseTime.setText("0" + String.valueOf(wtTimeNumber) + ":00");
+                        }
+                        if(wtTimeNumber>=10)
+                        {
+                            exerciseTime.setText(String.valueOf(wtTimeNumber) + ":00");
+                        }
+                        mTimeLeftInMillis = START_TIME_IN_MILLIS * wtTimeNumber;
                     }
                     else{
                         exerciseTimeLayout.setVisibility(GONE);
@@ -559,7 +622,15 @@ public class WorkoutActivity extends AppCompatActivity {
                     {
                         exerciseTimeLayout.setVisibility(View.VISIBLE);
                         exerciseSetsAndRepetitionsLayout.setVisibility(GONE);
-                        exerciseTime.setText(String.valueOf(coreTimeNumber));
+                        if(coreTimeNumber<10)
+                        {
+                            exerciseTime.setText("0" + String.valueOf(coreTimeNumber) + ":00");
+                        }
+                        if(coreTimeNumber>=10)
+                        {
+                            exerciseTime.setText(String.valueOf(coreTimeNumber) + ":00");
+                        }
+                        mTimeLeftInMillis = START_TIME_IN_MILLIS * coreTimeNumber;
                     }
                     else{
                         exerciseTimeLayout.setVisibility(GONE);
@@ -586,30 +657,17 @@ public class WorkoutActivity extends AppCompatActivity {
                     exerciseTimeLayout.setVisibility(View.VISIBLE);
                     exerciseSetsAndRepetitionsLayout.setVisibility(GONE);
                     exerciseTime.setText(String.valueOf(1));
+                    exerciseTime.setText("01:00");
+                    mTimeLeftInMillis = START_TIME_IN_MILLIS * 1;
                 }
             }
         });
-
     }
 
     private void ShowExercise(Exercise exercise)
     {
         exerciseImage.setImageResource(exercise.getIcon());
         exerciseName.setText(exercise.name);
-    }
-
-    private  void StartCountDown(){
-        new CountDownTimer(50000,1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                countText.setText(String.valueOf(counter));
-                counter++;
-            }
-            @Override
-            public void onFinish() {
-                countText.setText("Finished");
-            }
-        }.start();
     }
 
     public void ProcessUserPersonalData(){
@@ -843,6 +901,58 @@ public class WorkoutActivity extends AppCompatActivity {
         return exercise;
     }
 
+    private void startTimer() {
+        mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                mTimeLeftInMillis = millisUntilFinished;
+                updateCountDownText();
+            }
+            @Override
+            public void onFinish() {
+                mTimerRunning = false;
+                mButtonStartPause.setBackgroundResource(R.drawable.ic_start);
+                mButtonStartPause.setVisibility(View.INVISIBLE);
+                mButtonReset.setVisibility(View.VISIBLE);
+            }
+        }.start();
+        mTimerRunning = true;
+        mButtonStartPause.setBackgroundResource(R.drawable.ic_pause);
+        mButtonReset.setVisibility(View.INVISIBLE);
+    }
+    private void pauseTimer() {
+        mCountDownTimer.cancel();
+        mTimerRunning = false;
+        mButtonStartPause.setBackgroundResource(R.drawable.ic_start);
+        mButtonReset.setVisibility(View.VISIBLE);
+    }
+    private void resetTimer() {
+        if(cardioUsesTime && currentComponent.equals("Component 2: Cardio"))
+        {
+            mTimeLeftInMillis = START_TIME_IN_MILLIS * cardioTimeNumber;
+        }
+        if(wtUsesTime && currentComponent.equals("Component 3: Weight Training"))
+        {
+            mTimeLeftInMillis = START_TIME_IN_MILLIS * wtTimeNumber;
+        }
+        if(coreUsesTime && currentComponent.equals("Component 4: Core"))
+        {
+            mTimeLeftInMillis = START_TIME_IN_MILLIS * coreTimeNumber;
+        }
+        if(currentComponent.equals("Component 5: Stretching"))
+        {
+            mTimeLeftInMillis = START_TIME_IN_MILLIS;
+        }
+        updateCountDownText();
+        mButtonReset.setVisibility(View.INVISIBLE);
+        mButtonStartPause.setVisibility(View.VISIBLE);
+    }
+    private void updateCountDownText() {
+        int minutes = (int) (mTimeLeftInMillis / 1000) / 60;
+        int seconds = (int) (mTimeLeftInMillis / 1000) % 60;
+        String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
+        mTextViewCountDown.setText(timeLeftFormatted);
+    }
     public static String replace(String input) {
         String spacesReplaced = replace('_', ' ', input);
         String finalName = spacesReplaced.substring(0, 1).toUpperCase() + spacesReplaced.substring(1);
