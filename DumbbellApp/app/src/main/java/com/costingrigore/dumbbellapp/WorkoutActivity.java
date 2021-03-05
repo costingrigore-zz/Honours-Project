@@ -34,31 +34,57 @@ import java.util.Timer;
 
 import static android.view.View.GONE;
 
+/**
+ * This class handles the workout routine creation algorithm functionality
+ * The class constructs a workout routine, using the user's level of experience, goal for using the application, body area target and level of difficulty selected by the user
+ */
 public class WorkoutActivity extends AppCompatActivity {
-
+    /**
+     * Initialising the buttons used to start the workout and to get new exercises
+     */
     Button startWorkoutButton;
     Button nextExercise;
+    /**
+     * Field used to set the column of the class' layout
+     */
     private int mColumnCount = 1;
-    private String levelOfExperience = "Intermediate";
+    /**
+     * Default values for the level of experience and the goal for using the application of the workout routine
+     */
+    private String levelOfExperience = "Beginner";
     private String goal = "Be fit";
+    /**
+     * Strings storing the workout's body area target and the workout's difficulty level
+     */
     private String workoutBodyArea;
     private String workoutDifficulty;
+    /**
+     * Initializing Firebase
+     */
     FirebaseDatabase database;
+    /**
+     * IDs used to identify the level of experience of the user for the workout routine
+     */
     private int beginnerID = 0;
     private int intermediateID = 1;
     private int advancedID = 2;
     private int professionalID = 3;
-
+    /**
+     * IDs used to identify the goal for using the application of the user for the workout routine
+     */
     private int beFitID = 0;
     private int loseWeightID = 1;
     private int gainStrengthID = 2;
-
-
+    /**
+     * Initializing the array lists that will store the exercises required for the workout routine
+     */
     public ArrayList<Exercise> cardioExercises = new ArrayList<>();
     public ArrayList<Exercise> weightTrainingExercises= new ArrayList<>();
     public ArrayList<Exercise> coreExercises= new ArrayList<>();
     public ArrayList<Exercise> stretchingExercises= new ArrayList<>();
-
+    /**
+     * Initializing the recycler views and the adapters needed to display the exercises in the application
+     */
     RecyclerView cardioExercisesRecyclerView = null;
     MyTrainerExerciseRecyclerViewAdapter cardioExercisesAdapter;
     RecyclerView weightTrainingExercisesRecyclerView = null;
@@ -67,47 +93,66 @@ public class WorkoutActivity extends AppCompatActivity {
     MyTrainerExerciseRecyclerViewAdapter coreExercisesAdapter;
     RecyclerView stretchingExercisesRecyclerView = null;
     MyTrainerExerciseRecyclerViewAdapter stretchingExercisesAdapter;
-
+    /**
+     * Initializing the integers used to store the number of exercises used in every component of the workout routine
+     */
     int cardioAmountOfExercises;
     int weightTrainingAmountOfExercises;
     int coreAmountOfExercises;
     int stretchingAmountOfExercises;
+    /**
+     * Used to store the current number of exercises
+     */
     int currentAmountOfExercises;
-
-    public ArrayList<Exercise> getCardioExercises() {
-        return cardioExercises;
-    }
-    public ArrayList<Exercise> getWeightTrainingExercises() {
-        return weightTrainingExercises;
-    }
-    public ArrayList<Exercise> getCoreExercises() {
-        return coreExercises;
-    }
-    public ArrayList<Exercise> getStretchingExercises() {
-        return stretchingExercises;
-    }
-
-
+    /**
+     * 2D integer array used to set the cardio time that each workout routine needs based on the level of experience of the user and the goal for using the application
+     * It follows the following structure:
+     * -                Beginner    Intermediate    Advanced    Professional
+     * Be Fit           15          20              25          30
+     * Lose Weight      20          25              30          30
+     * Gain Strength    15          15              20          25
+     */
     private int[][] cardioTimeValues =
             {
                     {15, 20, 25, 30},
                     {20, 25, 30, 30},
                     {15, 15, 20, 25}
             };
+    /**
+     * 2D integer array used to set the weight training time that each workout routine needs based on the level of experience of the user and the goal for using the application
+     * It follows the following structure:
+     * -                Beginner    Intermediate    Advanced    Professional
+     * Be Fit           10          15              15          20
+     * Lose Weight      10          10              15          20
+     * Gain Strength    20          20              25          30
+     */
     private int[][] weightTrainingTimeValues =
             {
                     {10, 15, 15, 20},
                     {10, 10, 15, 20},
                     {20, 20, 25, 30}
             };
+    /**
+     * 2D integer array used to set the core time that each workout routine needs based on the level of experience of the user and the goal for using the application
+     * It follows the following structure:
+     * -                Beginner    Intermediate    Advanced    Professional
+     * Be Fit           10          10              15          15
+     * Lose Weight      05          05              10          10
+     * Gain Strength    10          10              15          20
+     */
     private int[][] coreTimeValues =
             {
                     {10, 10, 15, 15},
                     {5, 5, 10, 10},
                     {10, 10, 15, 20}
             };
+    /**
+     * Default time assigned for stretching exercises
+     */
     private int stretchingTimeValue = 8;
-
+    /**
+     * Initializing the required fields for the cardio section of the workout application
+     */
     CheckBox cardioSetsAndRepsCB;
     LinearLayout cardioSetsAndRepsLayout;
     NumberPicker cardioSets;
@@ -115,11 +160,19 @@ public class WorkoutActivity extends AppCompatActivity {
     CheckBox cardioTimeCB;
     LinearLayout cardioTimeLayout;
     NumberPicker cardioTime;
+    /**
+     * By default, if the user does not pick between using sets and repetitions or using minutes to show the exercises, cardio exercises will use time, with one minute as the default length of each exercise
+     */
     boolean cardioUsesTime = true;
+    /**
+     * Setting the maximum amount of sets, repetitions and time in minutes that the user can pick for cardio exercises
+     */
     int maxCardioSets = 10;
     int maxCardioReps = 60;
     int maxCardioTime = 10;
-
+    /**
+     * Initializing the required fields for the weight training section of the workout application
+     */
     CheckBox wtSetsAndRepsCB;
     LinearLayout wtSetsAndRepsLayout;
     NumberPicker wtSets;
@@ -127,11 +180,19 @@ public class WorkoutActivity extends AppCompatActivity {
     CheckBox wtTimeCB;
     LinearLayout wtTimeLayout;
     NumberPicker wtTime;
+    /**
+     * By default, if the user does not pick between using sets and repetitions or using minutes to show the exercises, weight training exercises will use time, with one minute as the default length of each exercise
+     */
     boolean wtUsesTime = true;
+    /**
+     * Setting the maximum amount of sets, repetitions and time in minutes that the user can pick for weight training exercises
+     */
     int maxWtSets = 10;
     int maxWtReps = 60;
     int maxWtTime = 10;
-
+    /**
+     * By default, if the user does not pick between using sets and repetitions or using minutes to show the exercises, core exercises will use time, with one minute as the default length of each exercise
+     */
     CheckBox coreSetsAndRepsCB;
     LinearLayout coreSetsAndRepsLayout;
     NumberPicker coreSets;
@@ -139,11 +200,20 @@ public class WorkoutActivity extends AppCompatActivity {
     CheckBox coreTimeCB;
     LinearLayout coreTimeLayout;
     NumberPicker coreTime;
+    /**
+     * By default, if the user does not pick between using sets and repetitions or using minutes to show the exercises, core exercises will use time, with one minute as the default length of each exercise
+     */
     boolean coreUsesTime = true;
+    /**
+     * Setting the maximum amount of sets, repetitions and time in minutes that the user can pick for cardio exercises
+     */
+    //
     int maxCoreSets = 10;
     int maxCoreReps = 60;
     int maxCoreTime = 10;
-
+    /**
+     * Initializing the fields that will store the number of sets, repetitions and minutes for each component of the workout routine, by default they are all set to 1
+     */
     int cardioSetsNumber = 1;
     int cardioRepsNumber = 1;
     int cardioTimeNumber = 1;
@@ -153,7 +223,9 @@ public class WorkoutActivity extends AppCompatActivity {
     int coreSetsNumber = 1;
     int coreRepsNumber = 1;
     int coreTimeNumber = 1;
-
+    /**
+     * Initializing all the layouts, text views and the image view used in the workout activity
+     */
     LinearLayout initialLayout;
     LinearLayout workoutLayout;
     TextView componentTitle;
@@ -165,12 +237,17 @@ public class WorkoutActivity extends AppCompatActivity {
     TextView exerciseReps;
     LinearLayout exerciseTimeLayout;
     TextView exerciseTime;
-
+    /**
+     * Initializing the fields used for the second part of the workout activity, where the user has started the workout routine and each individual excercise displays
+     */
     int currentExercise = 0;
     String currentComponent = "Component 2: Cardio";
+    /**
+     * String used to keep track of the current exercise being displayed in the application
+     */
     String exerciseCountString = "";
     /**
-     * Setting up fields for the timer count down.
+     * Setting up fields for the timer count down
      * The timer count down is used when the user selects to use time as their measure for doing their exercises
      * I used the following sources to develop the timer count down:
      * https://codinginflow.com/tutorials/android/countdowntimer/part-1-countdown-timer
@@ -184,19 +261,31 @@ public class WorkoutActivity extends AppCompatActivity {
     private boolean mTimerRunning;
     private long mTimeLeftInMillis = START_TIME_IN_MILLIS;
 
-
+    /**
+     *Called when the activity gets created
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout);
+        /**
+         * Getting the fields needed as parameters for the workout routine creation algorithm from the intent that created the current activity
+         */
         Intent intent = getIntent();
         workoutBodyArea = intent.getStringExtra("Body Area");
         workoutDifficulty = intent.getStringExtra("Difficulty");
         levelOfExperience = intent.getStringExtra("Level of experience");
         goal = intent.getStringExtra("Goal");
+        /**
+         * Initializing the timer buttons and text view
+         */
         mTextViewCountDown = findViewById(R.id.exercise_time);
         mButtonStartPause = findViewById(R.id.button_start_pause);
         mButtonReset = findViewById(R.id.button_reset);
+        /**
+         * Setting up the onClick listener of the start button of the timer
+         */
         mButtonStartPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -207,21 +296,34 @@ public class WorkoutActivity extends AppCompatActivity {
                 }
             }
         });
+        /**
+         * Setting up the onClick listener of the reset button of the timer
+         */
         mButtonReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 resetTimer();
             }
         });
+        /**
+         * Update the count down text
+         */
         updateCountDownText();
-
-        /** Workout Routine Creation Algorithm's fields set up
+        /**
          *
-         *
-         *
-         * **/
+         */
+        //Initializing Firebase
         database = FirebaseDatabase.getInstance();
+        /**
+         * Processing the user's personal data as fields of this activity
+         */
         ProcessUserPersonalData();
+        /**
+         * Workout Routine Creation Algorithm's fields set up
+         * Setting the recycler views, adapters and linear layouts of the containers where the exercises will be displayed
+         *
+         * Setting cardio exercises recycler view, linear layout for the recycler view and the adapter for the recycler view
+         **/
         cardioExercisesRecyclerView = (RecyclerView) this.findViewById(R.id.list);
         if (mColumnCount <= 1) {
             cardioExercisesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -233,8 +335,9 @@ public class WorkoutActivity extends AppCompatActivity {
         cardioExercisesRecyclerView.setLayoutManager(horizontalLayoutManager1);
         cardioExercisesAdapter = new MyTrainerExerciseRecyclerViewAdapter(cardioExercises);
         cardioExercisesRecyclerView.setAdapter(cardioExercisesAdapter);
-
-
+        /**
+         * Setting weight training recycler view, linear layout for the recycler view and the adapter for the recycler view
+         */
         weightTrainingExercisesRecyclerView = (RecyclerView) this.findViewById(R.id.list2);
         if (mColumnCount <= 1) {
             weightTrainingExercisesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -246,8 +349,9 @@ public class WorkoutActivity extends AppCompatActivity {
         weightTrainingExercisesRecyclerView.setLayoutManager(horizontalLayoutManager2);
         weightTrainingExercisesAdapter = new MyTrainerExerciseRecyclerViewAdapter(weightTrainingExercises);
         weightTrainingExercisesRecyclerView.setAdapter(weightTrainingExercisesAdapter);
-
-
+        /**
+         * Setting core exercises recycler view, linear layout for the recycler view and the adapter for the recycler view
+         */
         coreExercisesRecyclerView = (RecyclerView) this.findViewById(R.id.list3);
         if (mColumnCount <= 1) {
             coreExercisesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -259,7 +363,9 @@ public class WorkoutActivity extends AppCompatActivity {
         coreExercisesRecyclerView.setLayoutManager(horizontalLayoutManager3);
         coreExercisesAdapter = new MyTrainerExerciseRecyclerViewAdapter(coreExercises);
         coreExercisesRecyclerView.setAdapter(coreExercisesAdapter);
-
+        /**
+         * Setting stretching exercises recycler view, linear layout for the recycler view and the adapter for the recycler view
+         */
         stretchingExercisesRecyclerView = (RecyclerView) this.findViewById(R.id.list4);
         if (mColumnCount <= 1) {
             stretchingExercisesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -271,12 +377,27 @@ public class WorkoutActivity extends AppCompatActivity {
         stretchingExercisesRecyclerView.setLayoutManager(horizontalLayoutManager4);
         stretchingExercisesAdapter = new MyTrainerExerciseRecyclerViewAdapter(stretchingExercises);
         stretchingExercisesRecyclerView.setAdapter(stretchingExercisesAdapter);
+        /**
+         * 2D arrays used to set the number of easy, medium and difficult exercises
+         * They use the following structure:
+         * -                                    No easy exercises   No medium exercises No difficult exercises
+         * amountEasyExercisesArray             2                   1                   1
+         * amountMediumExercisesArray           1                   2                   1
+         * amountDifficultExercisesArray        1                   1                   2
+         * It gets assigned based on the level of difficulty the user has selected for the workout routine
+         */
         int[] amountEasyExercisesArray = {2,1,1};
         int[] amountMediumExercisesArray = {1,2,1};
         int[] amountDifficultExercisesArray = {1,1,2};
+        /**
+         * Integers used to store the number of easy, medium and difficult exercises
+         */
         int amountEasyExercises = 0;
         int amountMediumExercises = 0;
         int amountDifficultExercises = 0;
+        /**
+         * Depending on the level of difficulty picked by the user the number of easy, medium and difficult exercises gets changed accordingly
+         */
         if(workoutDifficulty.equals("easy"))
         {
             amountEasyExercises = amountEasyExercisesArray[0];
@@ -295,16 +416,21 @@ public class WorkoutActivity extends AppCompatActivity {
             amountMediumExercises = amountMediumExercisesArray[2];
             amountDifficultExercises = amountDifficultExercisesArray[2];
         }
+        /**
+         * Getting all the necessary exercises for the workout routine, by calling GetPersonalisedExercises for the cardio, weight training, core and stretching components
+         *
+         * For the cardio component, the exercise type is set to be cardio and the body part is set to be total body, as the source of exercises only has total body cardio exercises
+         * For the weight training component, the exercise type is set to be strength and the body part is set to be the body area target selected by the user
+         * For the core component, the exercise type is set to be strength and the body part is set to be core, as core exercises are considered to be a kind of strength exercises in the source of the exercises
+         * For the stretching component, the exercise type is set to be flexibility and the body part is set to be total body, as the source of exercises only has total body stretching exercises
+         */
         GetPersonalisedExercises("cardio","total_body", amountEasyExercises, amountMediumExercises, amountDifficultExercises);
-        GetPersonalisedExercises("strength",workoutBodyArea, amountEasyExercises, amountMediumExercises, amountDifficultExercises);
+        GetPersonalisedExercises("strength", workoutBodyArea, amountEasyExercises, amountMediumExercises, amountDifficultExercises);
         GetPersonalisedExercises("strength","core", amountEasyExercises, amountMediumExercises, amountDifficultExercises);
         GetPersonalisedExercises("flexibility","total_body", amountEasyExercises, amountMediumExercises, amountDifficultExercises);
-
-        /** Setting up checkboxes and Number picker fields to retrieve repetitions, sets and time fro the user
-         *
-         *
-         *
-         **/
+        /**
+         * Setting up checkboxes and number picker fields to retrieve repetitions, sets and time for the workout routine set by the user
+         */
         cardioSetsAndRepsCB = (CheckBox) this.findViewById(R.id.cardioSetsandRepsCB);
         cardioSetsAndRepsLayout = (LinearLayout) this.findViewById(R.id.cardioSetsAndRepsLayout);
         cardioSets = (NumberPicker) this.findViewById(R.id.cardioSets);
@@ -318,7 +444,6 @@ public class WorkoutActivity extends AppCompatActivity {
         cardioTime = (NumberPicker) this.findViewById(R.id.cardioTime);
         cardioTime.setMinValue(1);
         cardioTime.setMaxValue(maxCardioTime);
-
         wtSetsAndRepsCB = (CheckBox) this.findViewById(R.id.wtSetsandRepsCB);
         wtSetsAndRepsLayout = (LinearLayout) this.findViewById(R.id.wtSetsAndRepsLayout);
         wtSets = (NumberPicker) this.findViewById(R.id.wtSets);
@@ -332,7 +457,6 @@ public class WorkoutActivity extends AppCompatActivity {
         wtTime = (NumberPicker) this.findViewById(R.id.wtTime);
         wtTime.setMinValue(1);
         wtTime.setMaxValue(maxWtTime);
-
         coreSetsAndRepsCB = (CheckBox) this.findViewById(R.id.coreSetsandRepsCB);
         coreSetsAndRepsLayout = (LinearLayout) this.findViewById(R.id.coreSetsAndRepsLayout);
         coreSets = (NumberPicker) this.findViewById(R.id.coreSets);
@@ -346,10 +470,13 @@ public class WorkoutActivity extends AppCompatActivity {
         coreTime = (NumberPicker) this.findViewById(R.id.coreTime);
         coreTime.setMinValue(1);
         coreTime.setMaxValue(maxCoreTime);
-
+        /**
+         * Setting up the onClick listeners for all the check boxes for the workout activity
+         */
         cardioSetsAndRepsCB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // If the cardio sets and repetitions check box is checked, uncheck the time check box and display the sets and repetitions selection layout.
                 if (cardioSetsAndRepsCB.isChecked()) {
                     cardioSetsAndRepsCB.setChecked(true);
                     cardioTimeCB.setChecked(false);
@@ -362,6 +489,7 @@ public class WorkoutActivity extends AppCompatActivity {
         cardioTimeCB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // If the cardio time check box is checked, uncheck the sets and repetitions check box and display the time selection layout.
                 if (cardioTimeCB.isChecked()) {
                     cardioTimeCB.setChecked(true);
                     cardioSetsAndRepsCB.setChecked(false);
@@ -375,6 +503,7 @@ public class WorkoutActivity extends AppCompatActivity {
         wtSetsAndRepsCB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // If the weight training sets and repetitions check box is checked, uncheck the time check box and display the sets and repetitions selection layout.
                 if (wtSetsAndRepsCB.isChecked()) {
                     wtSetsAndRepsCB.setChecked(true);
                     wtTimeCB.setChecked(false);
@@ -387,6 +516,7 @@ public class WorkoutActivity extends AppCompatActivity {
         wtTimeCB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // If the weight training time check box is checked, uncheck the sets and repetitions check box and display the time selection layout.
                 if (wtTimeCB.isChecked()) {
                     wtTimeCB.setChecked(true);
                     wtSetsAndRepsCB.setChecked(false);
@@ -400,6 +530,7 @@ public class WorkoutActivity extends AppCompatActivity {
         coreSetsAndRepsCB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // If the core sets and repetitions check box is checked, uncheck the time check box and display the sets and repetitions selection layout.
                 if (coreSetsAndRepsCB.isChecked()) {
                     coreSetsAndRepsCB.setChecked(true);
                     coreTimeCB.setChecked(false);
@@ -412,6 +543,7 @@ public class WorkoutActivity extends AppCompatActivity {
         coreTimeCB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // If the core time check box is checked, uncheck the sets and repetitions check box and display the time selection layout.
                 if (coreTimeCB.isChecked()) {
                     coreTimeCB.setChecked(true);
                     coreSetsAndRepsCB.setChecked(false);
@@ -421,7 +553,9 @@ public class WorkoutActivity extends AppCompatActivity {
                 }
             }
         });
-
+        /**
+         * Setting up the onValueChangedListeners for the number pickers used for sets, repetitions, time (in minutes) for the cardio, weight training and core components
+         */
         cardioSets.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
@@ -478,8 +612,9 @@ public class WorkoutActivity extends AppCompatActivity {
                 coreTimeNumber = coreTime.getValue();
             }
         });
-
-
+        /**
+         * Setting up all the layouts used in the workout activity
+         */
         initialLayout = (LinearLayout) this.findViewById(R.id.initial_layout);
         workoutLayout = (LinearLayout) this.findViewById(R.id.workout_layout);
         componentTitle = (TextView) this.findViewById(R.id.component_title);
@@ -491,20 +626,29 @@ public class WorkoutActivity extends AppCompatActivity {
         exerciseReps = (TextView) this.findViewById(R.id.exercise_reps);
         exerciseTimeLayout = (LinearLayout) this.findViewById(R.id.exercise_time_layout);
         exerciseTime = (TextView) this.findViewById(R.id.exercise_time);
-
+        /**
+         * Setting up the start workout button and the next exercise button in the workout activity
+         */
         startWorkoutButton = (Button) this.findViewById(R.id.startWorkoutButton);
         nextExercise = (Button) this.findViewById(R.id.nextButton);
+        /**
+         * Setting up onClick listener for start workout button
+         */
         startWorkoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Hide the initial layout of the workout activity and show the workout layout (where each individual exercise is displayed)
                 initialLayout.setVisibility(GONE);
                 workoutLayout.setVisibility(View.VISIBLE);
                 componentTitle.setText(currentComponent);
+                //Show the first exercise from the current component (cardio component)
                 ShowExercise(cardioExercises.get(currentExercise));
+                //If the user picked to use time in minutes for the cardio exercises
                 if(cardioUsesTime)
                 {
                     exerciseTimeLayout.setVisibility(View.VISIBLE);
                     exerciseSetsAndRepetitionsLayout.setVisibility(GONE);
+                    //Adjusting the way the minutes are displayed in the text view based on the amount of minutes picked by the user
                     if(cardioTimeNumber<10)
                     {
                         exerciseTime.setText("0" + String.valueOf(cardioTimeNumber) + ":00");
@@ -513,45 +657,58 @@ public class WorkoutActivity extends AppCompatActivity {
                     {
                         exerciseTime.setText(String.valueOf(cardioTimeNumber) + ":00");
                     }
+                    //Setting the time left in the timer
                     mTimeLeftInMillis = START_TIME_IN_MILLIS * cardioTimeNumber;
                 }
+                //If the user picked to use sets and repetitions for the cardio exercises (cardioUsesTime == false)
                 else{
                     exerciseTimeLayout.setVisibility(GONE);
                     exerciseSetsAndRepetitionsLayout.setVisibility(View.VISIBLE);
                     exerciseSets.setText(String.valueOf(cardioSetsNumber));
                     exerciseReps.setText(String.valueOf(cardioRepsNumber));
                 }
+                //Displaying the index of the cardio exercises, so the user can keep track of the current exercise
                 exerciseCountString = "Exercise: " + String.valueOf(currentExercise + 1) + "/" + String.valueOf(cardioExercises.size());
                 exerciseCount.setText(exerciseCountString);
                 currentExercise++;
             }
         });
+        /**
+         * Setting up onClick listener for next exercise button
+         */
         nextExercise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //If the timer is running from the previous exercise, reset it
                 if (mTimerRunning) {
                     pauseTimer();
                     resetTimer();
                     updateCountDownText();
                 }
+                //If the current component is cardio
                 if(currentComponent.equals("Component 2: Cardio"))
                 {
                     componentTitle.setText(currentComponent);
+                    //Displaying the index of the cardio exercises, so the user can keep track of the current exercise
                     exerciseCountString = "Exercise: " + String.valueOf(currentExercise + 1) + "/" + String.valueOf(cardioExercises.size());
                     exerciseCount.setText(exerciseCountString);
+                    //If the current exercise has not reached the end of the list of cardio exercises
                     if((currentExercise < (cardioExercises.size()))){
                         ShowExercise(cardioExercises.get(currentExercise));
                         currentExercise++;
                     }
+                    //If the current exercise has reached the end of the list of cardio exercises, change the current component to weight training
                     else if(currentExercise == (cardioExercises.size()))
                     {
                         currentComponent = "Component 3: Weight Training";
                         currentExercise = 0;
                     }
+                    //If the user picked to use time in minutes for the cardio exercises
                     if(cardioUsesTime)
                     {
                         exerciseTimeLayout.setVisibility(View.VISIBLE);
                         exerciseSetsAndRepetitionsLayout.setVisibility(GONE);
+                        //Adjusting the way the minutes are displayed in the text view based on the amount of minutes picked by the user
                         if(cardioTimeNumber<10)
                         {
                             exerciseTime.setText("0" + String.valueOf(cardioTimeNumber) + ":00");
@@ -560,8 +717,10 @@ public class WorkoutActivity extends AppCompatActivity {
                         {
                             exerciseTime.setText(String.valueOf(cardioTimeNumber) + ":00");
                         }
+                        //Setting the time left in the timer
                         mTimeLeftInMillis = START_TIME_IN_MILLIS * cardioTimeNumber;
                     }
+                    //If the user picked to use sets and repetitions for the cardio exercises (cardioUsesTime == false)
                     else{
                         exerciseTimeLayout.setVisibility(GONE);
                         exerciseSetsAndRepetitionsLayout.setVisibility(View.VISIBLE);
@@ -569,24 +728,30 @@ public class WorkoutActivity extends AppCompatActivity {
                         exerciseReps.setText(String.valueOf(cardioRepsNumber));
                     }
                 }
+                //If the current component is weight training
                 if(currentComponent.equals("Component 3: Weight Training"))
                 {
                     componentTitle.setText(currentComponent);
+                    //Displaying the index of the weight training exercises, so the user can keep track of the current exercise
                     exerciseCountString = "Exercise: " + String.valueOf(currentExercise + 1) + "/" + String.valueOf(weightTrainingExercises.size());
                     exerciseCount.setText(exerciseCountString);
+                    //If the current exercise has not reached the end of the list of weight training exercises
                     if((currentExercise < (weightTrainingExercises.size()))){
                         ShowExercise(weightTrainingExercises.get(currentExercise));
                         currentExercise++;
                     }
+                    //If the current exercise has reached the end of the list of weight training exercises, change the current component to core
                     else if(currentExercise == (weightTrainingExercises.size()))
                     {
                         currentExercise = 0;
                         currentComponent = "Component 4: Core";
                     }
+                    //If the user picked to use time in minutes for the weight training exercises
                     if(wtUsesTime)
                     {
                         exerciseTimeLayout.setVisibility(View.VISIBLE);
                         exerciseSetsAndRepetitionsLayout.setVisibility(GONE);
+                        //Adjusting the way the minutes are displayed in the text view based on the amount of minutes picked by the user
                         if(wtTimeNumber<10)
                         {
                             exerciseTime.setText("0" + String.valueOf(wtTimeNumber) + ":00");
@@ -595,8 +760,10 @@ public class WorkoutActivity extends AppCompatActivity {
                         {
                             exerciseTime.setText(String.valueOf(wtTimeNumber) + ":00");
                         }
+                        //Setting the time left in the timer
                         mTimeLeftInMillis = START_TIME_IN_MILLIS * wtTimeNumber;
                     }
+                    //If the user picked to use sets and repetitions for the weight training exercises (wtUsesTime == false)
                     else{
                         exerciseTimeLayout.setVisibility(GONE);
                         exerciseSetsAndRepetitionsLayout.setVisibility(View.VISIBLE);
@@ -604,24 +771,30 @@ public class WorkoutActivity extends AppCompatActivity {
                         exerciseReps.setText(String.valueOf(wtRepsNumber));
                     }
                 }
+                //If the current component is core
                 if(currentComponent.equals("Component 4: Core"))
                 {
                     componentTitle.setText(currentComponent);
+                    //Displaying the index of the cardio exercises, so the user can keep track of the current exercise
                     exerciseCountString = "Exercise: " + String.valueOf(currentExercise + 1) + "/" + String.valueOf(coreExercises.size());
                     exerciseCount.setText(exerciseCountString);
+                    //If the current exercise has not reached the end of the list of core exercises
                     if((currentExercise < (coreExercises.size()))){
                         ShowExercise(coreExercises.get(currentExercise));
                         currentExercise++;
                     }
+                    //If the current exercise has reached the end of the list of core exercises, change the current component to stretching
                     else if(currentExercise == (coreExercises.size()))
                     {
                         currentExercise = 0;
                         currentComponent = "Component 5: Stretching";
                     }
+                    //If the user picked to use time in minutes for the core exercises
                     if(coreUsesTime)
                     {
                         exerciseTimeLayout.setVisibility(View.VISIBLE);
                         exerciseSetsAndRepetitionsLayout.setVisibility(GONE);
+                        //Adjusting the way the minutes are displayed in the text view based on the amount of minutes picked by the user
                         if(coreTimeNumber<10)
                         {
                             exerciseTime.setText("0" + String.valueOf(coreTimeNumber) + ":00");
@@ -630,8 +803,10 @@ public class WorkoutActivity extends AppCompatActivity {
                         {
                             exerciseTime.setText(String.valueOf(coreTimeNumber) + ":00");
                         }
+                        //Setting the time left in the timer
                         mTimeLeftInMillis = START_TIME_IN_MILLIS * coreTimeNumber;
                     }
+                    //If the user picked to use sets and repetitions for the core exercises (coreUsesTime == false)
                     else{
                         exerciseTimeLayout.setVisibility(GONE);
                         exerciseSetsAndRepetitionsLayout.setVisibility(View.VISIBLE);
@@ -639,16 +814,19 @@ public class WorkoutActivity extends AppCompatActivity {
                         exerciseReps.setText(String.valueOf(coreRepsNumber));
                     }
                 }
+                //If the current component is stretching
                 if(currentComponent.equals("Component 5: Stretching"))
                 {
-
                     componentTitle.setText(currentComponent);
+                    //Displaying the index of the cardio exercises, so the user can keep track of the current exercise
                     exerciseCountString = "Exercise: " + String.valueOf(currentExercise + 1) + "/" + String.valueOf(stretchingExercises.size());
                     exerciseCount.setText(exerciseCountString);
+                    //If the current exercise has not reached the end of the list of stretching exercises
                     if((currentExercise < (stretchingExercises.size()))){
                         ShowExercise(stretchingExercises.get(currentExercise));
                         currentExercise++;
                     }
+                    //If the current exercise has reached the end of the list of stretching exercises, finish the workout
                     else if(currentExercise == (stretchingExercises.size()))
                     {
                         currentExercise = 0;
@@ -656,7 +834,6 @@ public class WorkoutActivity extends AppCompatActivity {
                     }
                     exerciseTimeLayout.setVisibility(View.VISIBLE);
                     exerciseSetsAndRepetitionsLayout.setVisibility(GONE);
-                    exerciseTime.setText(String.valueOf(1));
                     exerciseTime.setText("01:00");
                     mTimeLeftInMillis = START_TIME_IN_MILLIS * 1;
                 }
@@ -900,7 +1077,9 @@ public class WorkoutActivity extends AppCompatActivity {
         exercise.setBody_part(replace(body_part));
         return exercise;
     }
-
+    /**
+     * Starts and resumes the counter.
+     */
     private void startTimer() {
         mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
             @Override
@@ -920,12 +1099,18 @@ public class WorkoutActivity extends AppCompatActivity {
         mButtonStartPause.setBackgroundResource(R.drawable.ic_pause);
         mButtonReset.setVisibility(View.INVISIBLE);
     }
+    /**
+     * Pauses the counter.
+     */
     private void pauseTimer() {
         mCountDownTimer.cancel();
         mTimerRunning = false;
         mButtonStartPause.setBackgroundResource(R.drawable.ic_start);
         mButtonReset.setVisibility(View.VISIBLE);
     }
+    /**
+     * Resets the counter.
+     */
     private void resetTimer() {
         if(cardioUsesTime && currentComponent.equals("Component 2: Cardio"))
         {
@@ -947,18 +1132,34 @@ public class WorkoutActivity extends AppCompatActivity {
         mButtonReset.setVisibility(View.INVISIBLE);
         mButtonStartPause.setVisibility(View.VISIBLE);
     }
+    /**
+     * Updates the count down text every second
+     */
     private void updateCountDownText() {
         int minutes = (int) (mTimeLeftInMillis / 1000) / 60;
         int seconds = (int) (mTimeLeftInMillis / 1000) % 60;
         String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
         mTextViewCountDown.setText(timeLeftFormatted);
     }
+
+    /**
+     * Capitalizes the input string and replaces the under score values from the input string to space values
+     * @param input input string
+     * @return returns changed string
+     */
     public static String replace(String input) {
         String spacesReplaced = replace('_', ' ', input);
         String finalName = spacesReplaced.substring(0, 1).toUpperCase() + spacesReplaced.substring(1);
         return finalName;
     }
 
+    /**
+     * Replaces the under score values from the input string to space values
+     * @param oldDelim delimiter to be replaced
+     * @param newDelim delimiter replaced by
+     * @param input input string
+     * @return returns changed string
+     */
     public static String replace(char oldDelim, char newDelim, String input) {
         boolean wasOldDelim = false;
         int o = 0;
