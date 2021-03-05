@@ -841,18 +841,27 @@ public class WorkoutActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Displays the exercises' image and name on the workout activity workout layout
+     * @param exercise Exercise object whose image and name to be displayed
+     */
     private void ShowExercise(Exercise exercise)
     {
         exerciseImage.setImageResource(exercise.getIcon());
         exerciseName.setText(exercise.name);
     }
 
+    /**
+     * Processes all the user's personal data needed to create the workout routine
+     */
     public void ProcessUserPersonalData(){
+        //Setting up the temporal variables needed to store the user's personalised parameters
         int levelOfExperienceID = 0;
         int goalID = 0;
         int cardioTime = 0;
         int weightTrainingTime = 0;
         int coreTime = 0;
+        //Setting up the variables based on the level of experience and the goal for using the application
         if(levelOfExperience.equals("Beginner")){
             levelOfExperienceID = beginnerID;
         }
@@ -874,43 +883,58 @@ public class WorkoutActivity extends AppCompatActivity {
         else if(goal.equals("Be fit")){
             goalID = beFitID;
         }
+        //Setting up the assigned time for each component based the goal for using the application and the level of experience of the user
         cardioTime = cardioTimeValues[goalID][levelOfExperienceID];
         weightTrainingTime = weightTrainingTimeValues[goalID][levelOfExperienceID];
         coreTime = coreTimeValues[goalID][levelOfExperienceID];
-        System.out.println("User data processed: " + cardioTime +" , " + weightTrainingTime+ " , " + coreTime);
+        //Setting up the number of exercises for each component, by removing one fifth of each assigned time dedicated for resting (every two exercises, each of them lasting at least a minute, half a minute is dedicated to resting)
         cardioAmountOfExercises = cardioTime - (cardioTime / 5);
         weightTrainingAmountOfExercises = weightTrainingTime - (weightTrainingTime / 5);
         coreAmountOfExercises = coreTime - (coreTime / 5);
         stretchingAmountOfExercises = stretchingTimeValue;
     }
 
+    /**
+     * This method gets exercises from the database and stores them in the respective array list based on the following parameters:
+     * @param exercise_type The type of exercise (cardio, strength or flexibility)
+     * @param body_part The body part targeted by the exercise (total body for cardio, lower body/upper body/total body and core for strength and total body for flegibility)
+     * @param workoutAmountOfEasyExercises Number of easy exercises needed
+     * @param workoutAmountOfMediumExercises Number of medium exercises needed
+     * @param workoutAmountOfDifficultExercises Number of difficult exercises needed
+     */
     public void GetPersonalisedExercises(String exercise_type, String body_part, int workoutAmountOfEasyExercises, int workoutAmountOfMediumExercises, int workoutAmountOfDifficultExercises){
+        //Getting the reference from the database
         DatabaseReference databaseReference = database.getReference("exercises").child(exercise_type).child(body_part);
         currentAmountOfExercises = 0;
-        System.out.println("curr: " +cardioAmountOfExercises + ", "+ weightTrainingAmountOfExercises+ ", "+ coreAmountOfExercises);
+        //If the exercise type is cardio, this refers to the cardio exercises
         if(exercise_type.equals("cardio"))
         {
             currentAmountOfExercises = cardioAmountOfExercises;
         }
+        //If the exercise type is strength but the body part is not core, this refers to the weight training exercises, as they are located under the strength tag and can target upper body, lower body and total body
         else if(exercise_type.equals("strength") && !body_part.equals("core"))
         {
             currentAmountOfExercises = weightTrainingAmountOfExercises;
         }
-        else if(body_part.equals("core") && exercise_type.equals("strength"))
+        //If the exercise type is strength and the body part is core, this refers to the core exercises
+        else if(exercise_type.equals("strength") && body_part.equals("core"))
         {
             currentAmountOfExercises = coreAmountOfExercises;
         }
-        else if(body_part.equals("total_body") && exercise_type.equals("flexibility"))
+        //If the exercise type is flexibility, this refers to the stretching exercises
+        else if(exercise_type.equals("flexibility"))
         {
             currentAmountOfExercises = stretchingAmountOfExercises;
         }
         int finalCurrentAmountOfExercises = currentAmountOfExercises;
+        //Setting the number of easy, medium and difficult exercises needed for the workout routine
         int amountOfEasyExercises = workoutAmountOfEasyExercises * (finalCurrentAmountOfExercises / 4);
         int amountOfMediumExercises = workoutAmountOfMediumExercises * (finalCurrentAmountOfExercises / 4);
         int amountOfDifficultExercises = workoutAmountOfDifficultExercises * (finalCurrentAmountOfExercises / 4);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //Setting up array lists to keep track of all the different exercises in the database, so there are no repeated exercises
                 ArrayList<Integer> easyExercisesIDs = new ArrayList<Integer>();
                 easyExercisesIDs.add(1);
                 easyExercisesIDs.add(2);
@@ -929,128 +953,149 @@ public class WorkoutActivity extends AppCompatActivity {
                 difficultExercisesIDs.add(3);
                 difficultExercisesIDs.add(4);
                 difficultExercisesIDs.add(5);
-                    for(int j = 0; j < amountOfEasyExercises; j++){
-                        if(easyExercisesIDs.isEmpty())
-                        {
-                            easyExercisesIDs.add(1);
-                            easyExercisesIDs.add(2);
-                            easyExercisesIDs.add(3);
-                            easyExercisesIDs.add(4);
-                            easyExercisesIDs.add(5);
-                        }
-                        Random random1 = new Random();
-                        int randomInteger = random1.nextInt(easyExercisesIDs.size());
-                        String indexValue = easyExercisesIDs.get(randomInteger).toString();
-                        String name = dataSnapshot.child("easy").child(indexValue).child("name").getValue(String.class);
-                        //String name = dataSnapshot.child("easy").child("1").child("name").getValue(String.class);
-                        System.out.println("eazy exercise: " + name);
-                        easyExercisesIDs.remove(randomInteger);
-                        Exercise exercise = SetExerciseFields(name, "easy" ,exercise_type,body_part);
-                        if(exercise_type.equals("cardio"))
-                        {
-                            cardioExercises.add(exercise);
-                        }
-                        else if(exercise_type.equals("strength") && !body_part.equals("core"))
-                        {
-                            weightTrainingExercises.add(exercise);
-                        }
-                        else if(body_part.equals("core") && exercise_type.equals("strength"))
-                        {
-                            coreExercises.add(exercise);
-                        }
-                        else if(exercise_type.equals("flexibility"))
-                        {
-                            stretchingExercises.add(exercise);
-                        }
+                /**
+                 * Getting all the easy exercises from the database needed for the current array list of exercises
+                 */
+                for(int j = 0; j < amountOfEasyExercises; j++){
+                    //If the IDs are empty restate them, this will allow repeated easy exercises but will only happen once the first five exercises have been set
+                    if(easyExercisesIDs.isEmpty())
+                    {
+                        easyExercisesIDs.add(1);
+                        easyExercisesIDs.add(2);
+                        easyExercisesIDs.add(3);
+                        easyExercisesIDs.add(4);
+                        easyExercisesIDs.add(5);
                     }
-                    for(int p = 0; p < amountOfMediumExercises; p++){
-                        if(exercise_type.equals("strength") && body_part.equals("total_body"))
-                        {
-                            break;
-                        }
-                        if(mediumExercisesIDs.isEmpty())
-                        {
-                            mediumExercisesIDs.add(1);
-                            mediumExercisesIDs.add(2);
-                            mediumExercisesIDs.add(3);
-                            mediumExercisesIDs.add(4);
-                            mediumExercisesIDs.add(5);
-                        }
-
-                        Random random2 = new Random();
-                        int randomInteger = random2.nextInt(mediumExercisesIDs.size());
-                        String indexValue = mediumExercisesIDs.get(randomInteger).toString();
-                        String name = dataSnapshot.child("medium").child(indexValue).child("name").getValue(String.class);
-                        //String name = dataSnapshot.child("easy").child("2").child("name").getValue(String.class);
-                        mediumExercisesIDs.remove(randomInteger);
-                        System.out.println("medium exercise: " + name);
-                        Exercise exercise = SetExerciseFields(name, "medium",exercise_type,body_part);
-                        if(exercise_type.equals("cardio"))
-                        {
-                            cardioExercises.add(exercise);
-                        }
-                        else if(exercise_type.equals("strength") && !body_part.equals("core"))
-                        {
-                            weightTrainingExercises.add(exercise);
-                        }
-                        else if(body_part.equals("core") && exercise_type.equals("strength"))
-                        {
-                            coreExercises.add(exercise);
-                        }
-                        else if(exercise_type.equals("flexibility"))
-                        {
-                            stretchingExercises.add(exercise);
-                        }
+                    Random random1 = new Random();
+                    int randomInteger = random1.nextInt(easyExercisesIDs.size());
+                    String indexValue = easyExercisesIDs.get(randomInteger).toString();
+                    String name = dataSnapshot.child("easy").child(indexValue).child("name").getValue(String.class);
+                    easyExercisesIDs.remove(randomInteger);
+                    Exercise exercise = SetExerciseFields(name, "easy" ,exercise_type,body_part);
+                    //If the exercise type is cardio, add the exercise to the cardio array list
+                    if(exercise_type.equals("cardio"))
+                    {
+                        cardioExercises.add(exercise);
                     }
-                    for(int q = 0; q < amountOfDifficultExercises; q++){
-                        if(exercise_type.equals("strength") && body_part.equals("total_body"))
-                        {
-                            break;
-                        }
-                        if(difficultExercisesIDs.isEmpty())
-                        {
-                            difficultExercisesIDs.add(1);
-                            difficultExercisesIDs.add(2);
-                            difficultExercisesIDs.add(3);
-                            difficultExercisesIDs.add(4);
-                            difficultExercisesIDs.add(5);
-                        }
-                        Random random3 = new Random();
-                        //System.out.println("Index value    " + difficultExercisesIDs.size());
-                        int randomInteger = random3.nextInt(difficultExercisesIDs.size());
-                        //System.out.println("Index value    " + randomInteger);
-                        String indexValue = difficultExercisesIDs.get(randomInteger).toString();
-                        //System.out.println("Index value" + indexValue);
-                        String name = dataSnapshot.child("difficult").child(indexValue).child("name").getValue(String.class);
-                        //String name = dataSnapshot.child("easy").child("3").child("name").getValue(String.class);
-                        difficultExercisesIDs.remove(randomInteger);
-                        //System.out.println("diffy exercise: " + name);
-                        Exercise exercise = SetExerciseFields(name,"difficult",exercise_type,body_part);
-                        if(exercise_type.equals("cardio"))
-                        {
-                            cardioExercises.add(exercise);
-                        }
-                        else if(exercise_type.equals("strength") && !body_part.equals("core"))
-                        {
-                            weightTrainingExercises.add(exercise);
-                        }
-                        else if(body_part.equals("core") && exercise_type.equals("strength"))
-                        {
-                            coreExercises.add(exercise);
-                        }
-                        else if(exercise_type.equals("flexibility"))
-                        {
-                            stretchingExercises.add(exercise);
-                        }
+                    //If the exercise type is strength and the body part is not core, add the exercise to the weight training array list
+                    else if(exercise_type.equals("strength") && !body_part.equals("core"))
+                    {
+                        weightTrainingExercises.add(exercise);
                     }
-
+                    //If the exercise type is strength and the body part is core, add the exercise to the core array list
+                    else if(exercise_type.equals("strength") && body_part.equals("core"))
+                    {
+                        coreExercises.add(exercise);
+                    }
+                    //If the exercise type is flexibility, add the exercise to the weight training array list
+                    else if(exercise_type.equals("flexibility"))
+                    {
+                        stretchingExercises.add(exercise);
+                    }
+                }
+                /**
+                 * Getting all the medium difficulty exercises from the database needed for the current array list of exercises
+                 */
+                for(int p = 0; p < amountOfMediumExercises; p++){
+                    //If the exercise type is strength and the body part is total body break, this happens because the database does not contain medium difficulty exercises for total body strength exercises
+                    if(exercise_type.equals("strength") && body_part.equals("total_body"))
+                    {
+                        break;
+                    }
+                    //If the IDs are empty restate them, this will allow repeated medium exercises but will only happen once the first five exercises have been set
+                    if(mediumExercisesIDs.isEmpty())
+                    {
+                        mediumExercisesIDs.add(1);
+                        mediumExercisesIDs.add(2);
+                        mediumExercisesIDs.add(3);
+                        mediumExercisesIDs.add(4);
+                        mediumExercisesIDs.add(5);
+                    }
+                    Random random2 = new Random();
+                    int randomInteger = random2.nextInt(mediumExercisesIDs.size());
+                    String indexValue = mediumExercisesIDs.get(randomInteger).toString();
+                    String name = dataSnapshot.child("medium").child(indexValue).child("name").getValue(String.class);
+                    mediumExercisesIDs.remove(randomInteger);
+                    Exercise exercise = SetExerciseFields(name, "medium",exercise_type,body_part);
+                    //If the exercise type is cardio, add the exercise to the cardio array list
+                    if(exercise_type.equals("cardio"))
+                    {
+                        cardioExercises.add(exercise);
+                    }
+                    //If the exercise type is strength and the body part is not core, add the exercise to the weight training array list
+                    else if(exercise_type.equals("strength") && !body_part.equals("core"))
+                    {
+                        weightTrainingExercises.add(exercise);
+                    }
+                    //If the exercise type is strength and the body part is core, add the exercise to the core array list
+                    else if(exercise_type.equals("strength") && body_part.equals("core"))
+                    {
+                        coreExercises.add(exercise);
+                    }
+                    //If the exercise type is flexibility, add the exercise to the weight training array list
+                    else if(exercise_type.equals("flexibility"))
+                    {
+                        stretchingExercises.add(exercise);
+                    }
+                }
+                /**
+                 * Getting all the difficult exercises from the database needed for the current array list of exercises
+                 */
+                for(int q = 0; q < amountOfDifficultExercises; q++){
+                    //If the exercise type is strength and the body part is total body break, this happens because the database does not contain difficult exercises for total body strength exercises
+                    if(exercise_type.equals("strength") && body_part.equals("total_body"))
+                    {
+                        break;
+                    }
+                    //If the IDs are empty restate them, this will allow repeated difficult exercises but will only happen once the first five exercises have been set
+                    if(difficultExercisesIDs.isEmpty())
+                    {
+                        difficultExercisesIDs.add(1);
+                        difficultExercisesIDs.add(2);
+                        difficultExercisesIDs.add(3);
+                        difficultExercisesIDs.add(4);
+                        difficultExercisesIDs.add(5);
+                    }
+                    Random random3 = new Random();
+                    //System.out.println("Index value    " + difficultExercisesIDs.size());
+                    int randomInteger = random3.nextInt(difficultExercisesIDs.size());
+                    //System.out.println("Index value    " + randomInteger);
+                    String indexValue = difficultExercisesIDs.get(randomInteger).toString();
+                    //System.out.println("Index value" + indexValue);
+                    String name = dataSnapshot.child("difficult").child(indexValue).child("name").getValue(String.class);
+                    //String name = dataSnapshot.child("easy").child("3").child("name").getValue(String.class);
+                    difficultExercisesIDs.remove(randomInteger);
+                    //System.out.println("diffy exercise: " + name);
+                    Exercise exercise = SetExerciseFields(name,"difficult",exercise_type,body_part);
+                    //If the exercise type is cardio, add the exercise to the cardio array list
+                    if(exercise_type.equals("cardio"))
+                    {
+                        cardioExercises.add(exercise);
+                    }
+                    //If the exercise type is strength and the body part is not core, add the exercise to the weight training array list
+                    else if(exercise_type.equals("strength") && !body_part.equals("core"))
+                    {
+                        weightTrainingExercises.add(exercise);
+                    }
+                    //If the exercise type is strength and the body part is core, add the exercise to the core array list
+                    else if(exercise_type.equals("strength") && body_part.equals("core"))
+                    {
+                        coreExercises.add(exercise);
+                    }
+                    //If the exercise type is flexibility, add the exercise to the weight training array list
+                    else if(exercise_type.equals("flexibility"))
+                    {
+                        stretchingExercises.add(exercise);
+                    }
+                }
+                //Notifying adapters of the data changed based on the type of exercises added
                 if(exercise_type.equals("cardio")){
                     cardioExercisesAdapter.notifyDataSetChanged();
                 }
                 if(exercise_type.equals("strength") && !body_part.equals("core")){
                     weightTrainingExercisesAdapter.notifyDataSetChanged();
                 }
-                if(body_part.equals("core") && exercise_type.equals("strength")){
+                if(exercise_type.equals("strength") && body_part.equals("core")){
                     coreExercisesAdapter.notifyDataSetChanged();
                 }
                 if(exercise_type.equals("flexibility")){
@@ -1065,9 +1110,17 @@ public class WorkoutActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Exercise constructor, it takes as parameters all the exercise fields needed to create a new exercise and it returns the created exercise
+     * @param name Name of the exercise
+     * @param difficulty Difficulty of the exercise
+     * @param type Type of exercise (strength, cardio, flexibility)
+     * @param body_part Body part the exercise targets (upper body, lower body, total body or core)
+     * @return
+     */
     public Exercise SetExerciseFields(String name, String difficulty, String type, String body_part){
         Exercise exercise = new Exercise();
-        String imageFileName = name; //  this is image file name
+        String imageFileName = name; //This is the image file name
         String PACKAGE_NAME = this.getPackageName();
         int imgId = this.getResources().getIdentifier(PACKAGE_NAME + ":drawable/" + imageFileName, null, null);
         exercise.setIcon(imgId);
