@@ -1,30 +1,32 @@
 package com.costingrigore.dumbbellapp;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
 /**
+ * This recycler view adapter class is used to show exercises into the exercises fragment
  * TODO: Replace the implementation with code for your data type.
  */
-public class MyTrainerExerciseRecyclerViewAdapter extends RecyclerView.Adapter<MyTrainerExerciseRecyclerViewAdapter.ViewHolder> {
+public class ExercisesFragmentRecyclerViewAdapter extends RecyclerView.Adapter<ExercisesFragmentRecyclerViewAdapter.ViewHolder> {
 
     private final ArrayList<Exercise> mValues;
 
-    public MyTrainerExerciseRecyclerViewAdapter(ArrayList<Exercise> items) {
+    public ExercisesFragmentRecyclerViewAdapter(ArrayList<Exercise> items) {
         mValues = items;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_trainer_exercises, parent, false);
+                .inflate(R.layout.fragment_exercises, parent, false);
         return new ViewHolder(view);
     }
 
@@ -34,6 +36,7 @@ public class MyTrainerExerciseRecyclerViewAdapter extends RecyclerView.Adapter<M
         holder.mImageView.setImageResource(mValues.get(position).getIcon());
         holder.mNameView.setText(mValues.get(position).name);
         holder.mDifficultyView.setText(mValues.get(position).difficulty);
+        holder.mTypeView.setText(mValues.get(position).type);
         holder.mBodyPartView.setText(mValues.get(position).body_part);
     }
 
@@ -47,6 +50,7 @@ public class MyTrainerExerciseRecyclerViewAdapter extends RecyclerView.Adapter<M
         public final ImageView mImageView;
         public final TextView mNameView;
         public final TextView mDifficultyView;
+        public final TextView mTypeView;
         public final TextView mBodyPartView;
         public Exercise mItem;
 
@@ -56,6 +60,7 @@ public class MyTrainerExerciseRecyclerViewAdapter extends RecyclerView.Adapter<M
             mImageView = (ImageView) view.findViewById(R.id.exerciseID);
             mNameView = (TextView) view.findViewById(R.id.name);
             mDifficultyView = (TextView) view.findViewById(R.id.difficulty);
+            mTypeView = (TextView) view.findViewById(R.id.type);
             mBodyPartView = (TextView) view.findViewById(R.id.body_part);
         }
 

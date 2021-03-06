@@ -24,25 +24,15 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = "MainActivity" ;
     public BottomNavigationView bottomNavigationView;
-    TextView textView;
-    Button btn;
-    FirebaseDatabase database;
     boolean registered = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //btn = findViewById(R.id.btn);
-        /**btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
-        });*/
         bottomNavigationView=findViewById(R.id.bottomNav);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavmethod);
-        //bottomNavigationView.setItemIconTintList(null);
         bottomNavigationView.getMenu().findItem(R.id.trainer).setChecked(true);
         ReadData(this);
         if(!registered){

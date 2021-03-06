@@ -60,10 +60,13 @@
                     android:textSize="20dp" />
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/workout_setup_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingTop="30dp"
+                android:visibility="gone"
+                tools:visibility="visible"
                 android:paddingBottom="30dp">
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -183,17 +186,18 @@
                             />
                     </LinearLayout>
                 </LinearLayout>
-
+                <Button
+                    android:id="@+id/button"
+                    android:layout_gravity="center"
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="30dp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/round_button"
+                    android:text="Start" />
             </LinearLayout>
 
-            <Button
-                android:id="@+id/button"
-                android:layout_width="200dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/white"
-                android:background="@drawable/round_button"
-                android:text="Start" />
+
         </LinearLayout>
     </ScrollView>
     <!-- TODO: Update blank fragment layout -->
