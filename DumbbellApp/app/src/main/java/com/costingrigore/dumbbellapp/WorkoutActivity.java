@@ -9,9 +9,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.text.Layout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
@@ -219,6 +221,12 @@ public class WorkoutActivity extends AppCompatActivity {
     int coreRepsNumber = 1;
     int coreTimeNumber = 1;
     /**
+     * Integers used to store the number of easy, medium and difficult exercises
+     */
+    int amountEasyExercises = 0;
+    int amountMediumExercises = 0;
+    int amountDifficultExercises = 0;
+    /**
      * Initializing all the layouts, text views and the image view used in the workout activity
      */
     LinearLayout initialLayout;
@@ -256,6 +264,13 @@ public class WorkoutActivity extends AppCompatActivity {
     private boolean mTimerRunning;
     private long mTimeLeftInMillis = START_TIME_IN_MILLIS;
 
+    private EditText cardioEasyExercisesET, cardioMediumExercisesET, cardioDifficultExercisesET, cardioSetsET, cardioRepetitionsET, cardioMinutesET;
+    private EditText weightTrainingEasyExercisesET, weightTrainingMediumExercisesET, weightTrainingDifficultExercisesET, weightTrainingSetsET, weightTrainingRepetitionsET, weightTrainingMinutesET;
+    private EditText coreEasyExercisesET, coreMediumExercisesET, coreDifficultExercisesET, coreSetsET, coreRepetitionsET, coreMinutesET;
+    private TextView stretchingEasyExercisesTV, stretchingMediumExercisesTV, stretchingDifficultExercisesTV;
+    private EditText stretchingMinutesET;
+    private TextView feedbackLevelOfExperienceTV, feedbackWorkoutDifficultyTV, feedbackWorkoutBodyAreaTargetTV;
+    private LinearLayout workoutFeedbackLayout;
     /**
      * Called when the activity gets created
      *
@@ -385,12 +400,6 @@ public class WorkoutActivity extends AppCompatActivity {
         int[] amountEasyExercisesArray = {2, 1, 1};
         int[] amountMediumExercisesArray = {1, 2, 1};
         int[] amountDifficultExercisesArray = {1, 1, 2};
-        /**
-         * Integers used to store the number of easy, medium and difficult exercises
-         */
-        int amountEasyExercises = 0;
-        int amountMediumExercises = 0;
-        int amountDifficultExercises = 0;
         /**
          * Depending on the level of difficulty picked by the user the number of easy, medium and difficult exercises gets changed accordingly
          */
@@ -803,6 +812,9 @@ public class WorkoutActivity extends AppCompatActivity {
                     //If the current exercise has reached the end of the list of stretching exercises, finish the workout
                     else if (currentExercise == (stretchingExercises.size())) {
                         currentExercise = 0;
+                        workoutLayout.setVisibility(GONE);
+                        workoutFeedbackLayout.setVisibility(View.VISIBLE);
+                        SetFeedbackReportFields();
                         // do stuff here
                     }
                     exerciseTimeLayout.setVisibility(View.VISIBLE);
@@ -812,6 +824,33 @@ public class WorkoutActivity extends AppCompatActivity {
                 }
             }
         });
+
+        cardioEasyExercisesET = (EditText) findViewById(R.id.cardio_easy_exercises);
+        cardioMediumExercisesET = (EditText) findViewById(R.id.cardio_medium_exercises);
+        cardioDifficultExercisesET = (EditText) findViewById(R.id.cardio_difficult_exercises);
+        cardioSetsET = (EditText) findViewById(R.id.cardio_sets);
+        cardioRepetitionsET = (EditText) findViewById(R.id.cardio_repetitions);
+        cardioMinutesET = (EditText) findViewById(R.id.cardio_minutes);
+        weightTrainingEasyExercisesET = (EditText) findViewById(R.id.weight_training_easy_exercises);
+        weightTrainingMediumExercisesET = (EditText) findViewById(R.id.weight_training_medium_exercises);
+        weightTrainingDifficultExercisesET = (EditText) findViewById(R.id.weight_training_difficult_exercises);
+        weightTrainingSetsET = (EditText) findViewById(R.id.weight_training_sets);
+        weightTrainingRepetitionsET = (EditText) findViewById(R.id.weight_training_repetitions);
+        weightTrainingMinutesET = (EditText) findViewById(R.id.weight_training_minutes);
+        coreEasyExercisesET = (EditText) findViewById(R.id.core_easy_exercises);
+        coreMediumExercisesET = (EditText) findViewById(R.id.core_medium_exercises);
+        coreDifficultExercisesET = (EditText) findViewById(R.id.core_difficult_exercises);
+        coreSetsET = (EditText) findViewById(R.id.core_sets);
+        coreRepetitionsET = (EditText) findViewById(R.id.core_repetitions);
+        coreMinutesET = (EditText) findViewById(R.id.core_minutes);
+        stretchingEasyExercisesTV = (TextView) findViewById(R.id.stretching_easy_exercises);
+        stretchingMediumExercisesTV = (TextView) findViewById(R.id.stretching_medium_exercises);
+        stretchingDifficultExercisesTV = (TextView) findViewById(R.id.stretching_difficult_exercises);
+        stretchingMinutesET = (EditText) findViewById(R.id.stretching_minutes);
+        feedbackLevelOfExperienceTV = (TextView) findViewById(R.id.feedback_level_of_experience);
+        feedbackWorkoutDifficultyTV = (TextView) findViewById(R.id.feedback_workout_difficulty);
+        feedbackWorkoutBodyAreaTargetTV = (TextView) findViewById(R.id.feedback_body_area_target);
+        workoutFeedbackLayout = (LinearLayout) findViewById(R.id.workout_feedback);
     }
 
     /**
@@ -1187,5 +1226,58 @@ public class WorkoutActivity extends AppCompatActivity {
             }
         }
         return new String(buf, 0, o);
+    }
+
+    private void SetFeedbackReportFields()
+    {
+        int cardioEasyExercises = amountEasyExercises * (cardioAmountOfExercises / 4);
+        int cardioMediumExercises = amountMediumExercises * (cardioAmountOfExercises / 4);
+        int cardioDifficultExercises = amountDifficultExercises * (cardioAmountOfExercises / 4);
+        cardioEasyExercisesET.setText(String.valueOf(cardioEasyExercises));
+        cardioMediumExercisesET.setText(String.valueOf(cardioMediumExercises));
+        cardioDifficultExercisesET.setText(String.valueOf(cardioDifficultExercises));
+        if(cardioUsesTime){
+            cardioMinutesET.setText(String.valueOf(cardioTimeNumber));
+        }
+        else{
+            cardioSetsET.setText(String.valueOf(cardioSetsNumber));
+            cardioRepetitionsET.setText(String.valueOf(cardioRepsNumber));
+        }
+        int weightTrainingEasyExercises = amountEasyExercises * (weightTrainingAmountOfExercises / 4);
+        int weightTrainingMediumExercises = amountMediumExercises * (weightTrainingAmountOfExercises / 4);
+        int weightTrainingDifficultExercises = amountDifficultExercises * (weightTrainingAmountOfExercises / 4);
+        weightTrainingEasyExercisesET.setText(String.valueOf(weightTrainingEasyExercises));
+        weightTrainingMediumExercisesET.setText(String.valueOf(weightTrainingMediumExercises));
+        weightTrainingDifficultExercisesET.setText(String.valueOf(weightTrainingDifficultExercises));
+        if(wtUsesTime){
+            weightTrainingMinutesET.setText(String.valueOf(wtTimeNumber));
+        }
+        else{
+            weightTrainingSetsET.setText(String.valueOf(wtSetsNumber));
+            weightTrainingRepetitionsET.setText(String.valueOf(wtRepsNumber));
+        }
+        int coreEasyExercises = amountEasyExercises * (coreAmountOfExercises / 4);
+        int coreMediumExercises = amountMediumExercises * (coreAmountOfExercises / 4);
+        int coreDifficultExercises = amountDifficultExercises * (coreAmountOfExercises / 4);
+        coreEasyExercisesET.setText(String.valueOf(coreEasyExercises));
+        coreMediumExercisesET.setText(String.valueOf(coreMediumExercises));
+        coreDifficultExercisesET.setText(String.valueOf(coreDifficultExercises));
+        if(coreUsesTime){
+            coreMinutesET.setText(String.valueOf(coreTimeNumber));
+        }
+        else{
+            coreSetsET.setText(String.valueOf(coreSetsNumber));
+            coreRepetitionsET.setText(String.valueOf(coreRepsNumber));
+        }
+        int stretchingEasyExercises = amountEasyExercises * (stretchingAmountOfExercises / 4);
+        int stretchingMediumExercises = amountMediumExercises * (stretchingAmountOfExercises / 4);
+        int stretchingDifficultExercises = amountDifficultExercises * (stretchingAmountOfExercises / 4);
+        stretchingEasyExercisesTV.setText(String.valueOf(stretchingEasyExercises));
+        stretchingMediumExercisesTV.setText(String.valueOf(stretchingMediumExercises));
+        stretchingDifficultExercisesTV.setText(String.valueOf(stretchingDifficultExercises));
+        stretchingMinutesET.setText(String.valueOf(stretchingTimeValue));
+        feedbackLevelOfExperienceTV.setText(levelOfExperience);
+        feedbackWorkoutDifficultyTV.setText(replace(workoutDifficulty));
+        feedbackWorkoutBodyAreaTargetTV.setText(replace(workoutBodyArea));
     }
 }
