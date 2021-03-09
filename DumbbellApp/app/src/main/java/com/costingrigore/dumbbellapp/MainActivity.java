@@ -7,15 +7,8 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
@@ -57,8 +50,8 @@ public class MainActivity extends AppCompatActivity {
                         case R.id.exercises:
                             fragment = new ExercisesFragment();
                         break;
-                        case R.id.insights:
-                            fragment = new InsightsFragment();
+                        case R.id.progress:
+                            fragment = new ProgressFragment();
                             break;
                         case R.id.trainer:
                             fragment = new TrainerFragment();

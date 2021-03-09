@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link InsightsFragment#newInstance} factory method to
+ * Use the {@link ProgressFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class InsightsFragment extends Fragment {
+public class ProgressFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +24,7 @@ public class InsightsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public InsightsFragment() {
+    public ProgressFragment() {
         // Required empty public constructor
     }
 
@@ -37,8 +37,8 @@ public class InsightsFragment extends Fragment {
      * @return A new instance of fragment InsightsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static InsightsFragment newInstance(String param1, String param2) {
-        InsightsFragment fragment = new InsightsFragment();
+    public static ProgressFragment newInstance(String param1, String param2) {
+        ProgressFragment fragment = new ProgressFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -59,6 +59,6 @@ public class InsightsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_insights, container, false);
+        return inflater.inflate(R.layout.fragment_progress, container, false);
     }
 }

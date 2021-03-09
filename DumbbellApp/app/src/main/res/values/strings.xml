@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">DumbbellApp</string>
     <string name="exercises">Exercises</string>
-    <string name="insights">Insights</string>
+    <string name="progress">Progress</string>
     <string name="trainer">Trainer</string>
     <string name="goals">Goals</string>
     <string name="profile">Profile</string>

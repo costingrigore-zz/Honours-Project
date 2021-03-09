@@ -25,7 +25,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Locale;
 import java.util.Random;
 
@@ -37,10 +40,11 @@ import static android.view.View.GONE;
  */
 public class WorkoutActivity extends AppCompatActivity {
     /**
-     * Initialising the buttons used to start the workout and to get new exercises
+     * Initialising the buttons used to start the workout, finish the workout and to get new exercises
      */
     Button startWorkoutButton;
     Button nextExercise;
+    Button finishWorkout;
     /**
      * Field used to set the column of the class' layout
      */
@@ -633,6 +637,7 @@ public class WorkoutActivity extends AppCompatActivity {
          */
         startWorkoutButton = (Button) this.findViewById(R.id.startWorkoutButton);
         nextExercise = (Button) this.findViewById(R.id.nextButton);
+        finishWorkout = (Button) this.findViewById(R.id.finishWorkoutButton);
         /**
          * Setting up onClick listener for start workout button
          */
@@ -672,6 +677,13 @@ public class WorkoutActivity extends AppCompatActivity {
                 currentExercise++;
             }
         });
+        finishWorkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SaveWorkoutInformationToDatabase();
+            }
+        });
+
         /**
          * Setting up onClick listener for next exercise button
          */
@@ -1279,5 +1291,132 @@ public class WorkoutActivity extends AppCompatActivity {
         feedbackLevelOfExperienceTV.setText(levelOfExperience);
         feedbackWorkoutDifficultyTV.setText(replace(workoutDifficulty));
         feedbackWorkoutBodyAreaTargetTV.setText(replace(workoutBodyArea));
+    }
+    private void SaveWorkoutInformationToDatabase(){
+        String year = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+        String month = String.valueOf(Calendar.getInstance().get(Calendar.MONTH));
+        String day = String.valueOf(Calendar.getInstance().get(Calendar.DATE));
+        String weekOfMonth = String.valueOf(Calendar.getInstance().get(Calendar.WEEK_OF_MONTH));
+
+        database = FirebaseDatabase.getInstance();
+        //Setting database reference
+        DatabaseReference databaseReference = database.getReference("users");
+        String personalID = GetPersonalID(this);
+        String cardioEasyExercises = String.valueOf(cardioEasyExercisesET.getText());
+        String cardioMediumExercises = String.valueOf(cardioMediumExercisesET.getText());
+        String cardioDifficultExercises = String.valueOf(cardioDifficultExercisesET.getText());
+        databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("cardio_easy_exercises").setValue(cardioEasyExercises);
+        databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("cardio_medium_exercises").setValue(cardioMediumExercises);
+        databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("cardio_difficult_exercises").setValue(cardioDifficultExercises);
+        String cardioUsesTimeBooleanValue;
+        String cardioSets;
+        String cardioReps;
+        String cardioMinutes;
+        if(cardioUsesTime) {
+            cardioUsesTimeBooleanValue = "true";
+            cardioMinutes = String.valueOf(Integer.valueOf(String.valueOf(cardioMinutesET.getText())) * cardioAmountOfExercises);
+            databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("cardio_uses_time").setValue(cardioUsesTimeBooleanValue);
+            databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("cardio_minutes").setValue(cardioMinutes);
+        }else{
+            cardioUsesTimeBooleanValue = "false";
+            cardioSets = String.valueOf(Integer.valueOf(String.valueOf(cardioSetsET.getText())) * cardioAmountOfExercises);
+            cardioReps = String.valueOf(Integer.valueOf(String.valueOf(cardioRepetitionsET.getText())) * cardioAmountOfExercises);
+            databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("cardio_uses_time").setValue(cardioUsesTimeBooleanValue);
+            databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("cardio_sets").setValue(cardioSets);
+            databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("cardio_repetitions").setValue(cardioReps);
+        }
+        String weightTrainingEasyExercises = String.valueOf(weightTrainingEasyExercisesET.getText());
+        String weightTrainingMediumExercises = String.valueOf(weightTrainingMediumExercisesET.getText());
+        String weightTrainingDifficultExercises = String.valueOf(weightTrainingDifficultExercisesET.getText());
+        databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("weight_training_easy_exercises").setValue(weightTrainingEasyExercises);
+        databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("weight_training_medium_exercises").setValue(weightTrainingMediumExercises);
+        databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("weight_training_difficult_exercises").setValue(weightTrainingDifficultExercises);
+        String weightTrainingUsesTimeBooleanValue;
+        String weightTrainingSets;
+        String weightTrainingReps;
+        String weightTrainingMinutes;
+        if(wtUsesTime) {
+            weightTrainingUsesTimeBooleanValue = "true";
+            weightTrainingMinutes = String.valueOf(Integer.valueOf(String.valueOf(weightTrainingMinutesET.getText())) * weightTrainingAmountOfExercises);
+            databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("weight_training_uses_time").setValue(weightTrainingUsesTimeBooleanValue);
+            databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("weight_training_minutes").setValue(weightTrainingMinutes);
+        }else{
+            weightTrainingUsesTimeBooleanValue = "false";
+            weightTrainingSets = String.valueOf(Integer.valueOf(String.valueOf(weightTrainingSetsET.getText())) * weightTrainingAmountOfExercises);
+            weightTrainingReps = String.valueOf(Integer.valueOf(String.valueOf(weightTrainingRepetitionsET.getText())) * weightTrainingAmountOfExercises);
+            databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("weight_training_uses_time").setValue(weightTrainingUsesTimeBooleanValue);
+            databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("weight_training_sets").setValue(weightTrainingSets);
+            databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("weight_training_repetitions").setValue(weightTrainingReps);
+        }
+        String coreEasyExercises = String.valueOf(coreEasyExercisesET.getText());
+        String coreMediumExercises = String.valueOf(coreMediumExercisesET.getText());
+        String coreDifficultExercises = String.valueOf(coreDifficultExercisesET.getText());
+        databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("core_easy_exercises").setValue(coreEasyExercises);
+        databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("core_medium_exercises").setValue(coreMediumExercises);
+        databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("core_difficult_exercises").setValue(coreDifficultExercises);
+        String coreUsesTimeBooleanValue;
+        String coreSets;
+        String coreReps;
+        String coreMinutes;
+        if(coreUsesTime) {
+            coreUsesTimeBooleanValue = "true";
+            coreMinutes = String.valueOf(Integer.valueOf(String.valueOf(coreMinutesET.getText())) * coreAmountOfExercises);
+            databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("core_uses_time").setValue(coreUsesTimeBooleanValue);
+            databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("core_minutes").setValue(coreMinutes);
+        }else{
+            coreUsesTimeBooleanValue = "false";
+            coreSets = String.valueOf(Integer.valueOf(String.valueOf(coreMinutesET.getText())) * coreAmountOfExercises);
+            coreReps = String.valueOf(Integer.valueOf(String.valueOf(coreMinutesET.getText())) * coreAmountOfExercises);
+            databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("core_uses_time").setValue(coreUsesTimeBooleanValue);
+            databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("core_sets").setValue(coreSets);
+            databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("core_repetitions").setValue(coreReps);
+        }
+        String stretchingEasyExercises = String.valueOf(stretchingEasyExercisesTV.getText());
+        String stretchingMediumExercises = String.valueOf(stretchingMediumExercisesTV.getText());
+        String stretchingDifficultExercises = String.valueOf(stretchingDifficultExercisesTV.getText());
+        databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("stretching_easy_exercises").setValue(stretchingEasyExercises);
+        databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("stretching_medium_exercises").setValue(stretchingMediumExercises);
+        databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("stretching_difficult_exercises").setValue(stretchingDifficultExercises);
+        String stretchingMinutes = String.valueOf(stretchingTimeValue * stretchingAmountOfExercises);
+        databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("stretching_minutes").setValue(stretchingMinutes);
+    }
+
+    /**
+     * This method is used to retrieve the user's personal ID from the device's storage
+     *
+     * @param view The fragment's view
+     * @return It returns the user's personal ID as a String
+     */
+    public String GetPersonalID(WorkoutActivity view) {
+        //Try reading the contents of the file containing the user's personal ID
+        try {
+            //Creating a file input stream, using user_data.txt as the input file
+            FileInputStream fileIn = view.openFileInput("user_data.txt");
+            InputStreamReader InputRead = new InputStreamReader(fileIn);
+            //Setting a character array to store the first 100 characters of the input stream
+            char[] inputBuffer = new char[100];
+            //String used to store the user's personal ID
+            String userPersonalID = "";
+            //String array used to store the different parts of the input stream
+            String[] strArray = new String[100];
+            int charRead;
+            //While there is something to read from the file
+            while ((charRead = InputRead.read(inputBuffer)) > 0) {
+                // char to string conversion
+                String readstring = String.copyValueOf(inputBuffer, 0, charRead);
+                //A semicolon is used to split the read string from the input buffer
+                strArray = readstring.split(";");
+            }
+            //Close the input reader
+            InputRead.close();
+            //Set the user personal ID to the second element of the string array
+            userPersonalID = strArray[1];
+            //Return the the user's personal ID
+            return userPersonalID;
+        } catch (Exception e) {
+            e.printStackTrace();
+            //If the file could not be read, return "String not found"
+            return "String not found";
+        }
     }
 }

@@ -8,9 +8,9 @@
         android:title="@string/exercises"
         />
     <item
-        android:id="@+id/insights"
+        android:id="@+id/progress"
         android:icon="@drawable/bottom_navigation_insights_selector"
-        android:title="@string/insights"
+        android:title="@string/progress"
         />
     <item
         android:id="@+id/trainer"
