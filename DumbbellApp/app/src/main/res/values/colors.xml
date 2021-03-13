@@ -10,4 +10,8 @@
     <color name="default_text">#CDDC39</color>
     <color name="dark_transparency">#80000000</color>
     <color name="light_transparency">#33FFFFFF</color>
+    <color name="graph_red">#F44336</color>
+    <color name="graph_yellow">#FFEB3B</color>
+    <color name="graph_green">#8BC34A</color>
+    <color name="graph_orange">#FF5722</color>
 </resources>

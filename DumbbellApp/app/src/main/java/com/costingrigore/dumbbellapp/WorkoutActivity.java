@@ -1295,7 +1295,33 @@ public class WorkoutActivity extends AppCompatActivity {
     private void SaveWorkoutInformationToDatabase(){
         String year = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
         String month = String.valueOf(Calendar.getInstance().get(Calendar.MONTH));
-        String day = String.valueOf(Calendar.getInstance().get(Calendar.DATE));
+        String day = "";
+        Calendar calendar = Calendar.getInstance();
+        int currentDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+
+        switch (currentDayOfWeek) {
+            case Calendar.SUNDAY:
+                day = "Sunday";
+                break;
+            case Calendar.MONDAY:
+                day = "Monday";
+                break;
+            case Calendar.TUESDAY:
+                day = "Tuesday";
+                break;
+            case Calendar.WEDNESDAY:
+                day = "Wednesday";
+                break;
+            case Calendar.THURSDAY:
+                day = "Thursday";
+                break;
+            case Calendar.FRIDAY:
+                day = "Friday";
+                break;
+            case Calendar.SATURDAY:
+                day = "Saturday";
+                break;
+        }
         String weekOfMonth = String.valueOf(Calendar.getInstance().get(Calendar.WEEK_OF_MONTH));
 
         database = FirebaseDatabase.getInstance();
@@ -1365,8 +1391,8 @@ public class WorkoutActivity extends AppCompatActivity {
             databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("core_minutes").setValue(coreMinutes);
         }else{
             coreUsesTimeBooleanValue = "false";
-            coreSets = String.valueOf(Integer.valueOf(String.valueOf(coreMinutesET.getText())) * coreAmountOfExercises);
-            coreReps = String.valueOf(Integer.valueOf(String.valueOf(coreMinutesET.getText())) * coreAmountOfExercises);
+            coreSets = String.valueOf(Integer.valueOf(String.valueOf(coreSetsET.getText())) * coreAmountOfExercises);
+            coreReps = String.valueOf(Integer.valueOf(String.valueOf(coreRepetitionsET.getText())) * coreAmountOfExercises);
             databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("core_uses_time").setValue(coreUsesTimeBooleanValue);
             databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("core_sets").setValue(coreSets);
             databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("core_repetitions").setValue(coreReps);
@@ -1379,6 +1405,8 @@ public class WorkoutActivity extends AppCompatActivity {
         databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("stretching_difficult_exercises").setValue(stretchingDifficultExercises);
         String stretchingMinutes = String.valueOf(stretchingTimeValue * stretchingAmountOfExercises);
         databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("stretching_minutes").setValue(stretchingMinutes);
+        databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("body_area_target").setValue(workoutBodyArea);
+        databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("workout_difficulty").setValue(workoutDifficulty);
     }
 
     /**
