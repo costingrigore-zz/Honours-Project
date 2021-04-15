@@ -681,7 +681,7 @@ public class WorkoutActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SaveWorkoutInformationToDatabase();
-            }
+                finish();            }
         });
 
         /**
@@ -1294,7 +1294,7 @@ public class WorkoutActivity extends AppCompatActivity {
     }
     private void SaveWorkoutInformationToDatabase(){
         String year = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
-        String month = String.valueOf(Calendar.getInstance().get(Calendar.MONTH));
+        String month = String.valueOf(Calendar.getInstance().get(Calendar.MONTH) + 1);
         String day = "";
         Calendar calendar = Calendar.getInstance();
         int currentDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
@@ -1322,6 +1322,7 @@ public class WorkoutActivity extends AppCompatActivity {
                 day = "Saturday";
                 break;
         }
+        day = "Thursday";
         String weekOfMonth = String.valueOf(Calendar.getInstance().get(Calendar.WEEK_OF_MONTH));
 
         database = FirebaseDatabase.getInstance();

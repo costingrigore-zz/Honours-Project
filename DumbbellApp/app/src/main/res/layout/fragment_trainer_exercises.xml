@@ -45,7 +45,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:text="Name:"
-                android:textColor="@color/default_text"
+                android:textColor="@color/light_blue"
                 android:textStyle="bold"
                 android:textAppearance="?attr/textAppearanceListItem" />
             <TextView
@@ -56,7 +56,7 @@
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:textColor="@color/default_text"
+                android:textColor="@color/white"
                 android:textAppearance="?attr/textAppearanceListItem" />
             <LinearLayout
                 android:layout_width="match_parent"
@@ -72,7 +72,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="5dp"
                     android:text="Difficulty:"
-                    android:textColor="@color/default_text"
+                    android:textColor="@color/light_blue"
                     android:textStyle="bold"
                     android:textAppearance="?attr/textAppearanceListItem" />
                 <TextView
@@ -84,7 +84,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="10dp"
                     android:text="Focus: "
-                    android:textColor="@color/default_text"
+                    android:textColor="@color/light_blue"
                     android:textStyle="bold"
                     android:textAppearance="?attr/textAppearanceListItem" />
             </LinearLayout>
@@ -102,7 +102,7 @@
                     android:layout_marginBottom="5dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="5dp"
-                    android:textColor="@color/default_text"
+                    android:textColor="@color/white"
                     android:textAppearance="?attr/textAppearanceListItem" />
 
                 <TextView
@@ -114,7 +114,7 @@
                     android:layout_marginBottom="5dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="10dp"
-                    android:textColor="@color/default_text"
+                    android:textColor="@color/white"
                     android:textAppearance="?attr/textAppearanceListItem" />
             </LinearLayout>
 

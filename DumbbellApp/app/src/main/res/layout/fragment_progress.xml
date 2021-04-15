@@ -3,9 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_marginBottom="50dp"
-    android:background="@drawable/gradient"
+    android:background="@drawable/gradient_cold"
     tools:context=".ProgressFragment">
     <LinearLayout
         android:id="@+id/title"
@@ -20,16 +21,15 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="80"
-            android:background="@drawable/left_light_round_shape"
-            android:backgroundTint="@color/white"
+            android:layout_weight="60"
+            android:background="@drawable/left_dark_round_shape"
             android:paddingLeft="20dp"
             android:layout_marginTop="40dp"
             android:paddingTop="10dp"
             android:paddingRight="10dp"
             android:paddingBottom="10dp"
             android:text="Progress"
-            android:textColor="#CBFFFFFF"
+            android:textColor="@color/light_blue"
             android:textSize="20dp" />
 
     </LinearLayout>
@@ -60,6 +60,7 @@
                     android:text="Cardio"
                     android:layout_margin="2dp"
                     android:background="@drawable/round_button"
+                    app:backgroundTint="@color/light_transparency"
                     android:layout_height="wrap_content"/>
                 <Button
                     android:id="@+id/stretchingButton"
@@ -70,6 +71,7 @@
                     android:text="Stretching"
                     android:layout_margin="2dp"
                     android:background="@drawable/round_button"
+                    app:backgroundTint="@color/light_transparency"
                     android:layout_height="wrap_content"/>
                 <Button
                     android:id="@+id/weightTrainingButton"
@@ -80,6 +82,7 @@
                     android:text="Weight Training"
                     android:layout_margin="2dp"
                     android:background="@drawable/round_button"
+                    app:backgroundTint="@color/light_transparency"
                     android:layout_height="wrap_content"/>
                 <Button
                     android:id="@+id/coreButton"
@@ -90,6 +93,7 @@
                     android:text="Core"
                     android:layout_margin="2dp"
                     android:background="@drawable/round_button"
+                    app:backgroundTint="@color/light_transparency"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
             <com.jjoe64.graphview.GraphView
@@ -103,6 +107,137 @@
                 android:layout_width="match_parent"
                 android:layout_margin="10dp"
                 android:layout_height="300dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="30dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="294dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/bmi_legend" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="50dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:layout_gravity="left"
+                    android:weightSum="100">
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/round_button"
+                        android:backgroundTint="@color/graph_red"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:layout_marginLeft="20dp"
+                        android:text="Obese (>30)"
+                        android:textSize="35dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="50dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:layout_gravity="left"
+                    android:weightSum="100">
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/round_button"
+                        android:backgroundTint="@color/graph_yellow"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:layout_marginLeft="20dp"
+                        android:text="Overweight (25-30)"
+                        android:textSize="35dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="50dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:layout_gravity="left"
+                    android:weightSum="100">
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/round_button"
+                        android:backgroundTint="@color/graph_green"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:layout_marginLeft="20dp"
+                        android:text="Normal (18.5-25)"
+                        android:textSize="35dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="50dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:layout_gravity="left"
+                    android:weightSum="100">
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/round_button"
+                        android:backgroundTint="@color/graph_orange"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:layout_marginLeft="20dp"
+                        android:text="Underweight (below 18.5)"
+                        android:textSize="35dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="50dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:layout_gravity="left"
+                    android:weightSum="100">
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/round_button"
+                        android:backgroundTint="@color/light_blue"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:layout_marginLeft="20dp"
+                        android:text="Your current BMI"
+                        android:textSize="35dp"/>
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

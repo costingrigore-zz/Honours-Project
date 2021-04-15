@@ -5,7 +5,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-android:background="@drawable/gradient"
+android:background="@drawable/gradient_cold"
 android:orientation="vertical"
 tools:context=".WorkoutActivity">
 
@@ -35,7 +35,7 @@ tools:context=".WorkoutActivity">
                     android:layout_width="0dp"
                     android:layout_weight="80"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/left_light_round_shape"
+                    android:background="@drawable/left_dark_round_shape"
                     android:paddingLeft="20dp"
                     android:paddingTop="10dp"
                     android:paddingRight="10dp"
@@ -79,7 +79,7 @@ tools:context=".WorkoutActivity">
                     android:layout_weight="80"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:background="@drawable/left_light_round_shape"
+                    android:background="@drawable/left_dark_round_shape"
                     android:paddingLeft="20dp"
                     android:paddingTop="10dp"
                     android:paddingRight="10dp"
@@ -90,34 +90,40 @@ tools:context=".WorkoutActivity">
                     android:textColor="@color/white"
                     android:textSize="20dp" />
             </LinearLayout>
-
-            <CheckBox
-                android:id="@+id/cardioSetsandRepsCB"
-                android:layout_width="300dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:button="@drawable/checkbox"
-                android:buttonTint="@color/white"
-                android:padding="20dp"
-                android:text="Use sets and repetitions"
-                android:textColor="@color/white"
-                android:textSize="20dp" />
-            <CheckBox
-                android:id="@+id/cardioTimeCB"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:button="@drawable/checkbox"
-                android:buttonTint="@color/white"
-                android:padding="20dp"
-                android:text="Use minutes."
-                android:textColor="@color/white"
-                android:textSize="20dp" />
-
+                android:orientation="vertical"
+                android:background="@drawable/round_button"
+                android:backgroundTint="@color/light_transparency"
+                android:layout_margin="15dp">
+                <CheckBox
+                    android:id="@+id/cardioSetsandRepsCB"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:button="@drawable/checkbox"
+                    android:buttonTint="@color/grey"
+                    android:padding="20dp"
+                    android:text="Use sets and repetitions"
+                    android:textColor="@color/grey"
+                    android:textSize="20dp" />
+                <CheckBox
+                    android:id="@+id/cardioTimeCB"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:button="@drawable/checkbox"
+                    android:buttonTint="@color/grey"
+                    android:padding="20dp"
+                    android:text="Use minutes."
+                    android:textColor="@color/grey"
+                    android:textSize="20dp" />
+            </LinearLayout>
             <LinearLayout
                 android:id="@+id/cardioSetsAndRepsLayout"
                 android:layout_width="match_parent"
@@ -143,7 +149,7 @@ tools:context=".WorkoutActivity">
                         android:paddingRight="10dp"
                         android:paddingBottom="10dp"
                         android:text="Sets"
-                        android:textColor="@color/white"
+                        android:textColor="@color/grey"
                         android:textSize="20dp" />
 
                     <LinearLayout
@@ -160,8 +166,8 @@ tools:context=".WorkoutActivity">
                             android:id="@+id/cardioSets"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:outlineSpotShadowColor="@color/white"
-                            android:textColor="@color/white" />
+                            android:outlineSpotShadowColor="@color/grey"
+                            android:textColor="@color/grey" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -178,8 +184,8 @@ tools:context=".WorkoutActivity">
                             android:id="@+id/cardioReps"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:outlineSpotShadowColor="@color/white"
-                            android:textColor="@color/white" />
+                            android:outlineSpotShadowColor="@color/grey"
+                            android:textColor="@color/grey" />
                     </LinearLayout>
 
                     <TextView
@@ -193,7 +199,7 @@ tools:context=".WorkoutActivity">
                         android:paddingRight="10dp"
                         android:paddingBottom="10dp"
                         android:text="Repetitions"
-                        android:textColor="@color/white"
+                        android:textColor="@color/grey"
                         android:textSize="20dp" />
                 </LinearLayout>
             </LinearLayout>
@@ -225,7 +231,7 @@ tools:context=".WorkoutActivity">
                         android:paddingRight="10dp"
                         android:paddingBottom="10dp"
                         android:text="Minutes"
-                        android:textColor="@color/white"
+                        android:textColor="@color/grey"
                         android:textSize="20dp" />
 
                     <LinearLayout
@@ -242,8 +248,8 @@ tools:context=".WorkoutActivity">
                             android:id="@+id/cardioTime"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:outlineSpotShadowColor="@color/white"
-                            android:textColor="@color/white" />
+                            android:outlineSpotShadowColor="@color/grey"
+                            android:textColor="@color/grey" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -295,10 +301,16 @@ tools:context=".WorkoutActivity">
                     android:text="Component 3: Weight Training
         \n
         \nHow would you like to measure your weight training exercises?"
-                    android:textColor="@color/white"
+                    android:textColor="@color/grey"
                     android:textSize="20dp" />
             </LinearLayout>
-
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/round_button"
+                android:backgroundTint="@color/light_transparency"
+                android:layout_margin="15dp">
             <CheckBox
                 android:id="@+id/wtSetsandRepsCB"
                 android:layout_width="300dp"
@@ -307,10 +319,10 @@ tools:context=".WorkoutActivity">
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:button="@drawable/checkbox"
-                android:buttonTint="@color/white"
+                android:buttonTint="@color/grey"
                 android:padding="20dp"
                 android:text="Use sets and repetitions"
-                android:textColor="@color/white"
+                android:textColor="@color/grey"
                 android:textSize="20dp" />
             <CheckBox
                 android:id="@+id/wtTimeCB"
@@ -320,11 +332,12 @@ tools:context=".WorkoutActivity">
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:button="@drawable/checkbox"
-                android:buttonTint="@color/white"
+                android:buttonTint="@color/grey"
                 android:padding="20dp"
                 android:text="Use minutes."
-                android:textColor="@color/white"
+                android:textColor="@color/grey"
                 android:textSize="20dp" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/wtSetsAndRepsLayout"
@@ -351,7 +364,7 @@ tools:context=".WorkoutActivity">
                         android:paddingRight="10dp"
                         android:paddingBottom="10dp"
                         android:text="Sets"
-                        android:textColor="@color/white"
+                        android:textColor="@color/grey"
                         android:textSize="20dp" />
 
                     <LinearLayout
@@ -368,8 +381,8 @@ tools:context=".WorkoutActivity">
                             android:id="@+id/wtSets"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:outlineSpotShadowColor="@color/white"
-                            android:textColor="@color/white" />
+                            android:outlineSpotShadowColor="@color/grey"
+                            android:textColor="@color/grey" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -386,8 +399,8 @@ tools:context=".WorkoutActivity">
                             android:id="@+id/wtReps"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:outlineSpotShadowColor="@color/white"
-                            android:textColor="@color/white" />
+                            android:outlineSpotShadowColor="@color/grey"
+                            android:textColor="@color/grey" />
                     </LinearLayout>
 
                     <TextView
@@ -401,7 +414,7 @@ tools:context=".WorkoutActivity">
                         android:paddingRight="10dp"
                         android:paddingBottom="10dp"
                         android:text="Repetitions"
-                        android:textColor="@color/white"
+                        android:textColor="@color/grey"
                         android:textSize="20dp" />
                 </LinearLayout>
             </LinearLayout>
@@ -433,7 +446,7 @@ tools:context=".WorkoutActivity">
                         android:paddingRight="10dp"
                         android:paddingBottom="10dp"
                         android:text="Minutes"
-                        android:textColor="@color/white"
+                        android:textColor="@color/grey"
                         android:textSize="20dp" />
 
                     <LinearLayout
@@ -450,8 +463,8 @@ tools:context=".WorkoutActivity">
                             android:id="@+id/wtTime"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:outlineSpotShadowColor="@color/white"
-                            android:textColor="@color/white" />
+                            android:outlineSpotShadowColor="@color/grey"
+                            android:textColor="@color/grey" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -502,10 +515,16 @@ tools:context=".WorkoutActivity">
                     android:text="Component 4: Core
         \n
         \nHow would you like to measure your core exercises?"
-                    android:textColor="@color/white"
+                    android:textColor="@color/grey"
                     android:textSize="20dp" />
             </LinearLayout>
-
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/round_button"
+                android:backgroundTint="@color/light_transparency"
+                android:layout_margin="15dp">
             <CheckBox
                 android:id="@+id/coreSetsandRepsCB"
                 android:layout_width="300dp"
@@ -514,10 +533,10 @@ tools:context=".WorkoutActivity">
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:button="@drawable/checkbox"
-                android:buttonTint="@color/white"
+                android:buttonTint="@color/grey"
                 android:padding="20dp"
                 android:text="Use sets and repetitions"
-                android:textColor="@color/white"
+                android:textColor="@color/grey"
                 android:textSize="20dp" />
             <CheckBox
                 android:id="@+id/coreTimeCB"
@@ -527,11 +546,12 @@ tools:context=".WorkoutActivity">
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:button="@drawable/checkbox"
-                android:buttonTint="@color/white"
+                android:buttonTint="@color/grey"
                 android:padding="20dp"
                 android:text="Use minutes."
-                android:textColor="@color/white"
+                android:textColor="@color/grey"
                 android:textSize="20dp" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/coreSetsAndRepsLayout"
@@ -558,7 +578,7 @@ tools:context=".WorkoutActivity">
                         android:paddingRight="10dp"
                         android:paddingBottom="10dp"
                         android:text="Sets"
-                        android:textColor="@color/white"
+                        android:textColor="@color/grey"
                         android:textSize="20dp" />
 
                     <LinearLayout
@@ -575,8 +595,8 @@ tools:context=".WorkoutActivity">
                             android:id="@+id/coreSets"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:outlineSpotShadowColor="@color/white"
-                            android:textColor="@color/white" />
+                            android:outlineSpotShadowColor="@color/grey"
+                            android:textColor="@color/grey" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -593,8 +613,8 @@ tools:context=".WorkoutActivity">
                             android:id="@+id/coreReps"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:outlineSpotShadowColor="@color/white"
-                            android:textColor="@color/white" />
+                            android:outlineSpotShadowColor="@color/grey"
+                            android:textColor="@color/grey" />
                     </LinearLayout>
 
                     <TextView
@@ -608,7 +628,7 @@ tools:context=".WorkoutActivity">
                         android:paddingRight="10dp"
                         android:paddingBottom="10dp"
                         android:text="Repetitions"
-                        android:textColor="@color/white"
+                        android:textColor="@color/grey"
                         android:textSize="20dp" />
                 </LinearLayout>
             </LinearLayout>
@@ -640,7 +660,7 @@ tools:context=".WorkoutActivity">
                         android:paddingRight="10dp"
                         android:paddingBottom="10dp"
                         android:text="Minutes"
-                        android:textColor="@color/white"
+                        android:textColor="@color/grey"
                         android:textSize="20dp" />
 
                     <LinearLayout
@@ -657,8 +677,8 @@ tools:context=".WorkoutActivity">
                             android:id="@+id/coreTime"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:outlineSpotShadowColor="@color/white"
-                            android:textColor="@color/white" />
+                            android:outlineSpotShadowColor="@color/grey"
+                            android:textColor="@color/grey" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -706,7 +726,7 @@ tools:context=".WorkoutActivity">
                     android:paddingRight="10dp"
                     android:paddingBottom="10dp"
                     android:text="Component 5: Stretching"
-                    android:textColor="@color/white"
+                    android:textColor="@color/grey"
                     android:textSize="20dp" />
             </LinearLayout>
             <LinearLayout
@@ -747,7 +767,7 @@ tools:context=".WorkoutActivity">
                 android:textColor="@color/white"
                 android:textSize="20dp"
                 android:layout_gravity="center"
-                app:backgroundTint="#FFFFFF"/>
+                app:backgroundTint="@color/dark_transparency"/>
         </LinearLayout>
 
 
@@ -759,7 +779,7 @@ tools:context=".WorkoutActivity">
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:visibility="gone"
-            tools:visibility="gone">
+            tools:visibility="visible">
             <TextView
                 android:id="@+id/component_title"
                 android:layout_width="316dp"
@@ -770,7 +790,7 @@ tools:context=".WorkoutActivity">
                 android:paddingRight="10dp"
                 android:paddingBottom="10dp"
                 android:text=""
-                android:textColor="@color/white"
+                android:textColor="@color/light_blue"
                 android:textSize="20dp" />
             <TextView
                 android:id="@+id/exercise_count"
@@ -809,8 +829,10 @@ tools:context=".WorkoutActivity">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/dark_transparency"
-                android:layout_marginTop="20dp"
+                android:background="@drawable/round_button"
+                android:backgroundTint="@color/light_transparency"
+                android:layout_margin="10dp"
+                android:padding="10dp"
                 android:orientation="vertical">
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -824,7 +846,7 @@ tools:context=".WorkoutActivity">
                         android:layout_margin="10dp"
                         android:text="Name:"
                         android:textAppearance="?attr/textAppearanceListItem"
-                        android:textColor="@color/default_text"
+                        android:textColor="@color/grey"
                         android:textSize="20dp"
                         android:textStyle="bold" />
                     <TextView
@@ -833,7 +855,7 @@ tools:context=".WorkoutActivity">
                         android:layout_weight="75"
                         android:layout_height="50dp"
                         android:layout_margin="10dp"
-                        android:textColor="@color/default_text"
+                        android:textColor="@color/grey"
                         android:textSize="20dp"
                         android:textAppearance="?attr/textAppearanceListItem" />
                 </LinearLayout>
@@ -857,7 +879,7 @@ tools:context=".WorkoutActivity">
                             android:layout_weight="40"
                             android:text="Sets:"
                             android:textAppearance="?attr/textAppearanceListItem"
-                            android:textColor="@color/default_text"
+                            android:textColor="@color/grey"
                             android:textSize="20dp"
                             android:textStyle="bold" />
 
@@ -868,7 +890,7 @@ tools:context=".WorkoutActivity">
                             android:layout_margin="10dp"
                             android:layout_weight="60"
                             android:textAppearance="?attr/textAppearanceListItem"
-                            android:textColor="@color/default_text"
+                            android:textColor="@color/grey"
                             android:textSize="20dp" />
                     </LinearLayout>
 
@@ -885,7 +907,7 @@ tools:context=".WorkoutActivity">
                             android:layout_weight="40"
                             android:text="Repetitions:"
                             android:textAppearance="?attr/textAppearanceListItem"
-                            android:textColor="@color/default_text"
+                            android:textColor="@color/grey"
                             android:textSize="20dp"
                             android:textStyle="bold" />
 
@@ -896,7 +918,7 @@ tools:context=".WorkoutActivity">
                             android:layout_margin="10dp"
                             android:layout_weight="60"
                             android:textAppearance="?attr/textAppearanceListItem"
-                            android:textColor="@color/default_text"
+                            android:textColor="@color/grey"
                             android:textSize="20dp" />
                     </LinearLayout>
                 </LinearLayout>
@@ -920,23 +942,28 @@ tools:context=".WorkoutActivity">
                             android:layout_margin="10dp"
                             android:text="Time:"
                             android:textAppearance="?attr/textAppearanceListItem"
-                            android:textColor="@color/default_text"
+                            android:textColor="@color/grey"
                             android:layout_marginRight="20dp"
                             android:textSize="20dp"
                             android:textStyle="bold" />
+
                         <Button
                             android:id="@+id/button_start_pause"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="20dp"
                             android:background="@drawable/ic_start"
-                            android:textColor="@color/white"
-                            android:layout_gravity="center"/>
+                            android:textColor="@color/grey"
+                            app:backgroundTint="@color/grey" />
                         <Button
                             android:id="@+id/button_reset"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:background="@drawable/ic_reset"
-                            android:textColor="@color/white"
+                            android:textColor="@color/grey"
+                            android:layout_marginLeft="20dp"
+                            app:backgroundTint="@color/grey"
                             android:layout_gravity="center"/>
                         <TextView
                             android:id="@+id/exercise_time"
@@ -944,25 +971,27 @@ tools:context=".WorkoutActivity">
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
                             android:textAppearance="?attr/textAppearanceListItem"
-                            android:textColor="@color/default_text"
+                            android:textColor="@color/grey"
+                            android:layout_marginLeft="20dp"
                             android:text="00:00"
                             android:textSize="40dp" />
 
                     </LinearLayout>
                 </LinearLayout>
+
                 <Button
                     android:id="@+id/nextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/round_button"
-                    android:padding="10dp"
+                    android:layout_gravity="center"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="10dp"
+                    android:background="@drawable/round_button"
+                    android:padding="10dp"
                     android:text="Next\nExercise"
                     android:textColor="@color/white"
                     android:textSize="20dp"
-                    android:layout_gravity="center"
-                    app:backgroundTint="#FFFFFF"/>
+                    app:backgroundTint="@color/dark_transparency" />
             </LinearLayout>
         </LinearLayout>
 
@@ -985,21 +1014,24 @@ tools:context=".WorkoutActivity">
                         android:layout_width="0dp"
                         android:layout_weight="80"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/left_light_round_shape"
+                        android:background="@drawable/left_dark_round_shape"
                         android:paddingLeft="20dp"
                         android:paddingTop="10dp"
                         android:paddingRight="10dp"
                         android:paddingBottom="10dp"
                         android:layout_marginBottom="20dp"
                         android:text="Workout routine feedback"
-                        android:textColor="@color/white"
+                        android:textColor="@color/light_blue"
                         android:textSize="20dp" />
             </LinearLayout>
 
                 <TableLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/dark_transparency">
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:background="@drawable/round_button"
+                    android:backgroundTint="@color/dark_transparency">
                     <TableRow
                         android:padding="10dp">
                         <TextView
@@ -1008,7 +1040,8 @@ tools:context=".WorkoutActivity">
                             android:layout_weight="1"
                             android:padding="10dp"
                             android:text="Cardio\nComponent"
-                            android:background="@color/dark_transparency"
+                            android:background="@drawable/round_button"
+                            android:backgroundTint="@color/dark_transparency"
                             android:textColor="@android:color/white"
                             android:gravity="center_horizontal"/>
                     </TableRow>
@@ -1045,7 +1078,11 @@ tools:context=".WorkoutActivity">
                             android:layout_weight="1"
                             android:text="1"
                             android:inputType="numberDecimal"
-                            android:textColor="@android:color/white"
+                            android:textColorHighlight="@color/white"
+                            android:textColorLink="@color/white"
+                            android:textCursorDrawable="@color/white"
+                            android:textColorHint="@color/white"
+                            android:textColor="@color/white"
                             android:gravity="center_horizontal" />
                         <EditText
                             android:id="@+id/cardio_medium_exercises"
@@ -1054,7 +1091,11 @@ tools:context=".WorkoutActivity">
                             android:layout_weight="1"
                             android:text="1"
                             android:inputType="numberDecimal"
-                            android:textColor="@android:color/white"
+                            android:textColorHighlight="@color/white"
+                            android:textColorLink="@color/white"
+                            android:textCursorDrawable="@color/white"
+                            android:textColorHint="@color/white"
+                            android:textColor="@color/white"
                             android:gravity="center_horizontal"/>
                         <EditText
                             android:id="@+id/cardio_difficult_exercises"
@@ -1063,7 +1104,11 @@ tools:context=".WorkoutActivity">
                             android:layout_weight="1"
                             android:text="1"
                             android:inputType="numberDecimal"
-                            android:textColor="@android:color/white"
+                            android:textColorHighlight="@color/white"
+                            android:textColorLink="@color/white"
+                            android:textCursorDrawable="@color/white"
+                            android:textColorHint="@color/white"
+                            android:textColor="@color/white"
                             android:gravity="center_horizontal"/>
                     </TableRow>
                     <TableRow
@@ -1099,7 +1144,11 @@ tools:context=".WorkoutActivity">
                             android:layout_weight="1"
                             android:text="-"
                             android:inputType="numberDecimal"
-                            android:textColor="@android:color/white"
+                            android:textColorHighlight="@color/white"
+                            android:textColorLink="@color/white"
+                            android:textCursorDrawable="@color/white"
+                            android:textColorHint="@color/white"
+                            android:textColor="@color/white"
                             android:gravity="center_horizontal" />
                         <EditText
                             android:id="@+id/cardio_repetitions"
@@ -1108,7 +1157,11 @@ tools:context=".WorkoutActivity">
                             android:layout_weight="1"
                             android:text="-"
                             android:inputType="numberDecimal"
-                            android:textColor="@android:color/white"
+                            android:textColorHighlight="@color/white"
+                            android:textColorLink="@color/white"
+                            android:textCursorDrawable="@color/white"
+                            android:textColorHint="@color/white"
+                            android:textColor="@color/white"
                             android:gravity="center_horizontal"/>
                         <EditText
                             android:id="@+id/cardio_minutes"
@@ -1117,7 +1170,11 @@ tools:context=".WorkoutActivity">
                             android:layout_weight="1"
                             android:text="-"
                             android:inputType="numberDecimal"
-                            android:textColor="@android:color/white"
+                            android:textColorHighlight="@color/white"
+                            android:textColorLink="@color/white"
+                            android:textCursorDrawable="@color/white"
+                            android:textColorHint="@color/white"
+                            android:textColor="@color/white"
                             android:gravity="center_horizontal"/>
                     </TableRow>
                     <TableRow
@@ -1129,7 +1186,8 @@ tools:context=".WorkoutActivity">
                             android:padding="10dp"
                             android:text="Weight Training\nComponent"
                             android:textColor="@android:color/white"
-                            android:background="@color/dark_transparency"
+                            android:background="@drawable/round_button"
+                            android:backgroundTint="@color/dark_transparency"
                             android:gravity="center_horizontal"/>
                     </TableRow>
                     <TableRow
@@ -1165,7 +1223,11 @@ tools:context=".WorkoutActivity">
                             android:layout_weight="1"
                             android:text="1"
                             android:inputType="numberDecimal"
-                            android:textColor="@android:color/white"
+                            android:textColorHighlight="@color/white"
+                            android:textColorLink="@color/white"
+                            android:textCursorDrawable="@color/white"
+                            android:textColorHint="@color/white"
+                            android:textColor="@color/white"
                             android:gravity="center_horizontal"/>
                         <EditText
                             android:id="@+id/weight_training_medium_exercises"
@@ -1174,7 +1236,11 @@ tools:context=".WorkoutActivity">
                             android:layout_weight="1"
                             android:text="1"
                             android:inputType="numberDecimal"
-                            android:textColor="@android:color/white"
+                            android:textColorHighlight="@color/white"
+                            android:textColorLink="@color/white"
+                            android:textCursorDrawable="@color/white"
+                            android:textColorHint="@color/white"
+                            android:textColor="@color/white"
                             android:gravity="center_horizontal"/>
                         <EditText
                             android:id="@+id/weight_training_difficult_exercises"
@@ -1183,7 +1249,11 @@ tools:context=".WorkoutActivity">
                             android:layout_weight="1"
                             android:text="1"
                             android:inputType="numberDecimal"
-                            android:textColor="@android:color/white"
+                            android:textColorHighlight="@color/white"
+                            android:textColorLink="@color/white"
+                            android:textCursorDrawable="@color/white"
+                            android:textColorHint="@color/white"
+                            android:textColor="@color/white"
                             android:gravity="center_horizontal"/>
                     </TableRow>
                     <TableRow
@@ -1219,7 +1289,11 @@ tools:context=".WorkoutActivity">
                             android:layout_weight="1"
                             android:text="-"
                             android:inputType="numberDecimal"
-                            android:textColor="@android:color/white"
+                            android:textColorHighlight="@color/white"
+                            android:textColorLink="@color/white"
+                            android:textCursorDrawable="@color/white"
+                            android:textColorHint="@color/white"
+                            android:textColor="@color/white"
                             android:gravity="center_horizontal" />
                         <EditText
                             android:id="@+id/weight_training_repetitions"
@@ -1228,7 +1302,11 @@ tools:context=".WorkoutActivity">
                             android:layout_weight="1"
                             android:text="-"
                             android:inputType="numberDecimal"
-                            android:textColor="@android:color/white"
+                            android:textColorHighlight="@color/white"
+                            android:textColorLink="@color/white"
+                            android:textCursorDrawable="@color/white"
+                            android:textColorHint="@color/white"
+                            android:textColor="@color/white"
                             android:gravity="center_horizontal"/>
                         <EditText
                             android:id="@+id/weight_training_minutes"
@@ -1237,7 +1315,11 @@ tools:context=".WorkoutActivity">
                             android:layout_weight="1"
                             android:text="-"
                             android:inputType="numberDecimal"
-                            android:textColor="@android:color/white"
+                            android:textColorHighlight="@color/white"
+                            android:textColorLink="@color/white"
+                            android:textCursorDrawable="@color/white"
+                            android:textColorHint="@color/white"
+                            android:textColor="@color/white"
                             android:gravity="center_horizontal"/>
                     </TableRow>
                     <TableRow
@@ -1249,7 +1331,8 @@ tools:context=".WorkoutActivity">
                             android:padding="10dp"
                             android:text="Core\nComponent"
                             android:textColor="@android:color/white"
-                            android:background="@color/dark_transparency"
+                            android:background="@drawable/round_button"
+                            android:backgroundTint="@color/dark_transparency"
                             android:gravity="center_horizontal"/>
                     </TableRow>
                     <TableRow
@@ -1285,7 +1368,11 @@ tools:context=".WorkoutActivity">
                             android:layout_weight="1"
                             android:text="1"
                             android:inputType="numberDecimal"
-                            android:textColor="@android:color/white"
+                            android:textColorHighlight="@color/white"
+                            android:textColorLink="@color/white"
+                            android:textCursorDrawable="@color/white"
+                            android:textColorHint="@color/white"
+                            android:textColor="@color/white"
                             android:gravity="center_horizontal"/>
                         <EditText
                             android:id="@+id/core_medium_exercises"
@@ -1294,7 +1381,11 @@ tools:context=".WorkoutActivity">
                             android:layout_weight="1"
                             android:text="1"
                             android:inputType="numberDecimal"
-                            android:textColor="@android:color/white"
+                            android:textColorHighlight="@color/white"
+                            android:textColorLink="@color/white"
+                            android:textCursorDrawable="@color/white"
+                            android:textColorHint="@color/white"
+                            android:textColor="@color/white"
                             android:gravity="center_horizontal"/>
                         <EditText
                             android:id="@+id/core_difficult_exercises"
@@ -1303,7 +1394,11 @@ tools:context=".WorkoutActivity">
                             android:layout_weight="1"
                             android:text="1"
                             android:inputType="numberDecimal"
-                            android:textColor="@android:color/white"
+                            android:textColorHighlight="@color/white"
+                            android:textColorLink="@color/white"
+                            android:textCursorDrawable="@color/white"
+                            android:textColorHint="@color/white"
+                            android:textColor="@color/white"
                             android:gravity="center_horizontal"/>
                     </TableRow>
                     <TableRow
@@ -1339,7 +1434,11 @@ tools:context=".WorkoutActivity">
                             android:layout_weight="1"
                             android:text="-"
                             android:inputType="numberDecimal"
-                            android:textColor="@android:color/white"
+                            android:textColorHighlight="@color/white"
+                            android:textColorLink="@color/white"
+                            android:textCursorDrawable="@color/white"
+                            android:textColorHint="@color/white"
+                            android:textColor="@color/white"
                             android:gravity="center_horizontal" />
                         <EditText
                             android:id="@+id/core_repetitions"
@@ -1348,7 +1447,11 @@ tools:context=".WorkoutActivity">
                             android:layout_weight="1"
                             android:text="-"
                             android:inputType="numberDecimal"
-                            android:textColor="@android:color/white"
+                            android:textColorHighlight="@color/white"
+                            android:textColorLink="@color/white"
+                            android:textCursorDrawable="@color/white"
+                            android:textColorHint="@color/white"
+                            android:textColor="@color/white"
                             android:gravity="center_horizontal"/>
                         <EditText
                             android:id="@+id/core_minutes"
@@ -1357,7 +1460,11 @@ tools:context=".WorkoutActivity">
                             android:layout_weight="1"
                             android:text="-"
                             android:inputType="numberDecimal"
-                            android:textColor="@android:color/white"
+                            android:textColorHighlight="@color/white"
+                            android:textColorLink="@color/white"
+                            android:textCursorDrawable="@color/white"
+                            android:textColorHint="@color/white"
+                            android:textColor="@color/white"
                             android:gravity="center_horizontal"/>
                     </TableRow>
                     <TableRow
@@ -1369,7 +1476,8 @@ tools:context=".WorkoutActivity">
                             android:padding="10dp"
                             android:text="Stretching\nComponent"
                             android:textColor="@android:color/white"
-                            android:background="@color/dark_transparency"
+                            android:background="@drawable/round_button"
+                            android:backgroundTint="@color/dark_transparency"
                             android:gravity="center_horizontal"/>
                     </TableRow>
                     <TableRow
@@ -1467,7 +1575,8 @@ tools:context=".WorkoutActivity">
                             android:padding="10dp"
                             android:text="Personal\nParameters"
                             android:textColor="@android:color/white"
-                            android:background="@color/dark_transparency"
+                            android:background="@drawable/round_button"
+                            android:backgroundTint="@color/dark_transparency"
                             android:gravity="center_horizontal"/>
                     </TableRow>
                     <TableRow
@@ -1527,14 +1636,14 @@ tools:context=".WorkoutActivity">
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/round_button"
-                android:padding="10dp"
+                android:padding="15dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="10dp"
                 android:text="Finish\nWorkout"
                 android:textColor="@color/white"
                 android:textSize="20dp"
                 android:layout_gravity="center"
-                app:backgroundTint="#FFFFFF"/>
+                app:backgroundTint="@color/dark_transparency"/>
 
         </LinearLayout>
     </LinearLayout>

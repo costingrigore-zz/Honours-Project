@@ -139,7 +139,7 @@ public class ProgressFragment extends Fragment {
         public void onDataChange(@NonNull DataSnapshot snapshot) {
         String weekOfMonth = String.valueOf(Calendar.getInstance().get(Calendar.WEEK_OF_MONTH));
         String year = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
-        String month = String.valueOf(Calendar.getInstance().get(Calendar.MONTH));
+        String month = String.valueOf(Calendar.getInstance().get(Calendar.MONTH) + 1);
         String[] days = {"Monday", "Tuesday", "Wednesday","Thursday","Friday","Saturday","Sunday"};
         for(int i=0; i<days.length; i++)
         {
@@ -157,18 +157,43 @@ public class ProgressFragment extends Fragment {
                 String stretchingEasyExercisesString = snapshot.child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("stretching_easy_exercises").getValue(String.class);
                 String stretchingMediumExercisesString = snapshot.child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("stretching_medium_exercises").getValue(String.class);
                 String stretchingDifficultExercisesString = snapshot.child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("stretching_difficult_exercises").getValue(String.class);
-                cardioEasyExercises[i] = Integer.parseInt(cardioEasyExercisesString);
-                cardioMediumExercises[i] = Integer.parseInt(cardioMediumExercisesString);
-                cardioDifficultExercises[i] = Integer.parseInt(cardioDifficultExercisesString);
-                weightTrainingEasyExercises[i] = Integer.parseInt(weightTrainingEasyExercisesString);
-                weightTrainingMediumExercises[i] = Integer.parseInt(weightTrainingMediumExercisesString);
-                weightTrainingDifficultExercises[i] = Integer.parseInt(weightTrainingDifficultExercisesString);
-                coreEasyExercises[i] = Integer.parseInt(coreEasyExercisesString);
-                coreMediumExercises[i] = Integer.parseInt(coreMediumExercisesString);
-                coreDifficultExercises[i] = Integer.parseInt(coreDifficultExercisesString);
-                stretchingEasyExercises[i] = Integer.parseInt(stretchingEasyExercisesString);
-                stretchingMediumExercises[i] = Integer.parseInt(stretchingMediumExercisesString);
-                stretchingDifficultExercises[i] = Integer.parseInt(stretchingDifficultExercisesString);
+                if(cardioEasyExercisesString!=null){
+                    cardioEasyExercises[i] = Integer.parseInt(cardioEasyExercisesString);
+                }
+                if(cardioMediumExercisesString!=null) {
+                    cardioMediumExercises[i] = Integer.parseInt(cardioMediumExercisesString);
+                }
+                if(cardioDifficultExercisesString!=null) {
+                    cardioDifficultExercises[i] = Integer.parseInt(cardioDifficultExercisesString);
+                }
+                if(weightTrainingEasyExercisesString!=null) {
+                    weightTrainingEasyExercises[i] = Integer.parseInt(weightTrainingEasyExercisesString);
+                }
+                if(weightTrainingMediumExercisesString!=null) {
+
+                    weightTrainingMediumExercises[i] = Integer.parseInt(weightTrainingMediumExercisesString);
+                }
+                if(weightTrainingDifficultExercisesString!=null) {
+                    weightTrainingDifficultExercises[i] = Integer.parseInt(weightTrainingDifficultExercisesString);
+                }
+                if(coreEasyExercisesString!=null) {
+                    coreEasyExercises[i] = Integer.parseInt(coreEasyExercisesString);
+                }
+                if(coreMediumExercisesString!=null) {
+                    coreMediumExercises[i] = Integer.parseInt(coreMediumExercisesString);
+                }
+                if(coreDifficultExercisesString!=null) {
+                    coreDifficultExercises[i] = Integer.parseInt(coreDifficultExercisesString);
+                }
+                if(stretchingEasyExercisesString!=null) {
+                    stretchingEasyExercises[i] = Integer.parseInt(stretchingEasyExercisesString);
+                }
+                if(stretchingMediumExercisesString!=null) {
+                    stretchingMediumExercises[i] = Integer.parseInt(stretchingMediumExercisesString);
+                }
+                if(stretchingDifficultExercisesString!=null) {
+                    stretchingDifficultExercises[i] = Integer.parseInt(stretchingDifficultExercisesString);
+                }
                 }
             }
                 GetExercisesForThisWeek(cardioEasyExercises,cardioMediumExercises,cardioDifficultExercises);

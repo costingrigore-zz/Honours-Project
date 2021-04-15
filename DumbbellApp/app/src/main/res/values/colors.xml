@@ -14,4 +14,6 @@
     <color name="graph_yellow">#FFEB3B</color>
     <color name="graph_green">#8BC34A</color>
     <color name="graph_orange">#FF5722</color>
+    <color name="grey">#1F2833</color>
+    <color name="light_blue">#66FCF1</color>
 </resources>
