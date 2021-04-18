@@ -54,7 +54,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ft"
+                    android:text="cm"
                     android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
                     android:textColor="@color/white"

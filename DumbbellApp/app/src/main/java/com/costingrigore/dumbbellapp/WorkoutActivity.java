@@ -1322,7 +1322,7 @@ public class WorkoutActivity extends AppCompatActivity {
                 day = "Saturday";
                 break;
         }
-        day = "Thursday";
+        //day = "Thursday";
         String weekOfMonth = String.valueOf(Calendar.getInstance().get(Calendar.WEEK_OF_MONTH));
 
         database = FirebaseDatabase.getInstance();

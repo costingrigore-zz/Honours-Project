@@ -59,6 +59,8 @@ public class ProgressFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    int weight = 0;
+    int height = 0;
 
     public ProgressFragment() {
         // Required empty public constructor
@@ -134,6 +136,7 @@ public class ProgressFragment extends Fragment {
         String ID = GetPersonalID(view);
         //Getting the database's reference, using the user's personal ID
         DatabaseReference databaseReference = database.getReference("users").child(ID);
+
          databaseReference.addValueEventListener(new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -141,6 +144,8 @@ public class ProgressFragment extends Fragment {
         String year = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
         String month = String.valueOf(Calendar.getInstance().get(Calendar.MONTH) + 1);
         String[] days = {"Monday", "Tuesday", "Wednesday","Thursday","Friday","Saturday","Sunday"};
+        weight = Integer.parseInt(snapshot.child("weight").getValue(String.class));
+        height = Integer.parseInt(snapshot.child("height").getValue(String.class));
         for(int i=0; i<days.length; i++)
         {
             String day = days[i];
@@ -277,7 +282,7 @@ public class ProgressFragment extends Fragment {
         //graph.setBackgroundColor(Color.RED);
         graph.addSeries(series3);
         PointsGraphSeries<DataPoint> series4 = new PointsGraphSeries<>(new DataPoint[] {
-                new DataPoint(178, 70),
+                new DataPoint(height, weight),
         });
         series4.setColor(Color.BLUE);
         graph.addSeries(series4);
@@ -344,6 +349,8 @@ public class ProgressFragment extends Fragment {
         graph.addSeries(difficultExercisesSeries);
 
         StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
+        graph.getGridLabelRenderer().setVerticalAxisTitle("Number of exercises");
+        graph.getGridLabelRenderer().setVerticalAxisTitleColor(Color.WHITE);
         staticLabelsFormatter.setHorizontalLabels(new String[]{"M", "T", "W", "Th", "F", "S", "Su"});
         graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
         graph.getGridLabelRenderer().setVerticalLabelsColor(Color.WHITE);
