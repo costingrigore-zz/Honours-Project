@@ -8,6 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link GoalsFragment#newInstance} factory method to
@@ -23,6 +27,7 @@ public class GoalsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    View view;
 
     public GoalsFragment() {
         // Required empty public constructor
@@ -59,6 +64,7 @@ public class GoalsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_goals, container, false);
+        view = inflater.inflate(R.layout.fragment_goals, container, false);
+        return view;
     }
 }

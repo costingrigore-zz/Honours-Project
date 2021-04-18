@@ -7,8 +7,9 @@
     android:minHeight="1000dp"
     android:weightSum="100"
     android:orientation="vertical"
+    android:layout_margin="10dp"
     android:background="@drawable/card_exercise"
-    android:backgroundTint="#FF9800"
+    android:backgroundTint="#2E2E2E"
     tools:context=".StepOne">
 
     <!-- TODO: Update blank fragment layout -->
@@ -53,7 +54,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ft"
+                    android:text="cm"
                     android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
                     android:textColor="@color/white"
@@ -368,6 +369,7 @@
             android:id="@+id/submit_button"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:layout_marginRight="20dp"
             android:background="@drawable/save_button"
             android:textSize="20dp"
             />
@@ -375,6 +377,7 @@
             android:id="@+id/close_button"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
             android:background="@drawable/close_button"
             android:textSize="20dp"
             />
