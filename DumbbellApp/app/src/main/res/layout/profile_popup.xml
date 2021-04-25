@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:minHeight="1000dp"
-    android:weightSum="100"
-    android:orientation="vertical"
     android:layout_margin="10dp"
     android:background="@drawable/card_exercise"
     android:backgroundTint="#2E2E2E"
+    android:minHeight="1000dp"
+    android:orientation="vertical"
+    android:weightSum="100"
     tools:context=".StepOne">
 
     <!-- TODO: Update blank fragment layout -->
@@ -18,8 +18,8 @@
         android:layout_height="0dp"
         android:layout_weight="90"
         android:fillViewport="true"
-        android:overScrollMode="never"
-        android:isScrollContainer="false">
+        android:isScrollContainer="false"
+        android:overScrollMode="never">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,12 +32,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:text="Height"
                     android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
+                    android:text="Height"
                     android:textColor="@color/white"
                     android:textSize="20dp" />
 
@@ -45,32 +46,35 @@
                     android:id="@+id/height_popup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="50dp"
                     android:ems="5"
                     android:inputType="textPersonName"
                     android:text=""
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="50dp"
                     android:textColor="@color/white" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="cm"
                     android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
-                    android:textColor="@color/white"
                     android:paddingLeft="10dp"
+                    android:text="cm"
+                    android:textColor="@color/white"
                     android:textSize="20dp" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:text="Weight"
                     android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
+                    android:text="Weight"
                     android:textColor="@color/white"
                     android:textSize="20dp" />
 
@@ -78,33 +82,36 @@
                     android:id="@+id/weight_popup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="50dp"
                     android:ems="5"
                     android:inputType="textPersonName"
                     android:text=""
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="50dp"
                     android:textColor="@color/white" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="kg"
                     android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
-                    android:textColor="@color/white"
                     android:paddingLeft="10dp"
+                    android:text="kg"
+                    android:textColor="@color/white"
                     android:textSize="20dp" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:orientation="horizontal"
                 android:paddingBottom="40dp">
+
                 <TextView
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:text="Age"
                     android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
+                    android:text="Age"
                     android:textColor="@color/white"
                     android:textSize="20dp" />
 
@@ -112,63 +119,67 @@
                     android:id="@+id/age_popup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="50dp"
                     android:ems="5"
                     android:inputType="textPersonName"
                     android:text=""
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="50dp"
                     android:textColor="@color/white" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="years"
                     android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
-                    android:textColor="@color/white"
                     android:paddingLeft="10dp"
+                    android:text="years"
+                    android:textColor="@color/white"
                     android:textSize="20dp" />
             </LinearLayout>
+
             <TextView
                 android:layout_width="316dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/left_light_round_shape"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
                 android:paddingLeft="20dp"
+                android:paddingTop="10dp"
                 android:paddingRight="10dp"
+                android:paddingBottom="10dp"
                 android:text="Level of experience with fitness:"
                 android:textColor="@color/white"
                 android:textSize="20dp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingTop="40dp"
                 android:paddingBottom="40dp">
+
                 <CheckBox
                     android:id="@+id/beginner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Beginner"
                     android:layout_marginLeft="100dp"
                     android:button="@drawable/checkbox"
                     android:buttonTint="@color/white"
                     android:padding="20dp"
+                    android:text="Beginner"
                     android:textColor="@color/white"
-                    android:textSize="20dp"
-                    />
+                    android:textSize="20dp" />
+
                 <CheckBox
                     android:id="@+id/intermediate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Intermediate"
                     android:layout_marginLeft="100dp"
                     android:button="@drawable/checkbox"
                     android:buttonTint="@color/white"
                     android:padding="20dp"
+                    android:text="Intermediate"
                     android:textColor="@color/white"
-                    android:textSize="20dp"
-                    />
+                    android:textSize="20dp" />
+
                 <CheckBox
                     android:id="@+id/advanced"
                     android:layout_width="wrap_content"
@@ -179,8 +190,8 @@
                     android:padding="20dp"
                     android:text="Advanced"
                     android:textColor="@color/white"
-                    android:textSize="20dp"
-                    />
+                    android:textSize="20dp" />
+
                 <CheckBox
                     android:id="@+id/professional"
                     android:layout_width="wrap_content"
@@ -193,48 +204,50 @@
                     android:textColor="@color/white"
                     android:textSize="20dp" />
             </LinearLayout>
+
             <TextView
                 android:layout_width="316dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/left_light_round_shape"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
                 android:paddingLeft="20dp"
+                android:paddingTop="10dp"
                 android:paddingRight="10dp"
+                android:paddingBottom="10dp"
                 android:text="Goal:"
                 android:textColor="@color/white"
-                android:textSize="20dp"
-                />
+                android:textSize="20dp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingTop="40dp"
                 android:paddingBottom="40dp">
+
                 <CheckBox
                     android:id="@+id/gain_strength"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Gain strength"
                     android:layout_marginLeft="100dp"
                     android:button="@drawable/checkbox"
                     android:buttonTint="@color/white"
                     android:padding="20dp"
+                    android:text="Gain strength"
                     android:textColor="@color/white"
-                    android:textSize="20dp"
-                    />
+                    android:textSize="20dp" />
+
                 <CheckBox
                     android:id="@+id/lose_weight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Lose weight"
                     android:layout_marginLeft="100dp"
                     android:button="@drawable/checkbox"
                     android:buttonTint="@color/white"
                     android:padding="20dp"
+                    android:text="Lose weight"
                     android:textColor="@color/white"
-                    android:textSize="20dp"
-                    />
+                    android:textSize="20dp" />
+
                 <CheckBox
                     android:id="@+id/be_fit"
                     android:layout_width="wrap_content"
@@ -245,51 +258,52 @@
                     android:padding="20dp"
                     android:text="Be fit"
                     android:textColor="@color/white"
-                    android:textSize="20dp"
-                    />
+                    android:textSize="20dp" />
             </LinearLayout>
+
             <TextView
                 android:layout_width="316dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/left_light_round_shape"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
                 android:paddingLeft="20dp"
+                android:paddingTop="10dp"
                 android:paddingRight="10dp"
+                android:paddingBottom="10dp"
                 android:text="Days to exercise:"
                 android:textColor="@color/white"
-                android:textSize="20dp"
-                />
+                android:textSize="20dp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingTop="40dp"
                 android:paddingBottom="40dp">
+
                 <CheckBox
                     android:id="@+id/monday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Monday"
                     android:layout_marginLeft="100dp"
                     android:button="@drawable/checkbox"
                     android:buttonTint="@color/white"
                     android:padding="20dp"
+                    android:text="Monday"
                     android:textColor="@color/white"
-                    android:textSize="20dp"
-                    />
+                    android:textSize="20dp" />
+
                 <CheckBox
                     android:id="@+id/tuesday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tuesday"
                     android:layout_marginLeft="100dp"
                     android:button="@drawable/checkbox"
                     android:buttonTint="@color/white"
                     android:padding="20dp"
+                    android:text="Tuesday"
                     android:textColor="@color/white"
-                    android:textSize="20dp"
-                    />
+                    android:textSize="20dp" />
+
                 <CheckBox
                     android:id="@+id/wednesday"
                     android:layout_width="wrap_content"
@@ -300,32 +314,32 @@
                     android:padding="20dp"
                     android:text="Wednesday"
                     android:textColor="@color/white"
-                    android:textSize="20dp"
-                    />
+                    android:textSize="20dp" />
+
                 <CheckBox
                     android:id="@+id/thursday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Thursday"
                     android:layout_marginLeft="100dp"
                     android:button="@drawable/checkbox"
                     android:buttonTint="@color/white"
                     android:padding="20dp"
+                    android:text="Thursday"
                     android:textColor="@color/white"
-                    android:textSize="20dp"
-                    />
+                    android:textSize="20dp" />
+
                 <CheckBox
                     android:id="@+id/friday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Friday"
                     android:layout_marginLeft="100dp"
                     android:button="@drawable/checkbox"
                     android:buttonTint="@color/white"
                     android:padding="20dp"
+                    android:text="Friday"
                     android:textColor="@color/white"
-                    android:textSize="20dp"
-                    />
+                    android:textSize="20dp" />
+
                 <CheckBox
                     android:id="@+id/saturday"
                     android:layout_width="wrap_content"
@@ -336,8 +350,8 @@
                     android:padding="20dp"
                     android:text="Saturday"
                     android:textColor="@color/white"
-                    android:textSize="20dp"
-                    />
+                    android:textSize="20dp" />
+
                 <CheckBox
                     android:id="@+id/sunday"
                     android:layout_width="wrap_content"
@@ -348,39 +362,41 @@
                     android:padding="20dp"
                     android:text="Sunday"
                     android:textColor="@color/white"
-                    android:textSize="20dp"
-                    />
+                    android:textSize="20dp" />
             </LinearLayout>
+
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="20dp"/>
+                android:layout_height="20dp" />
+
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="20dp"/>
+                android:layout_height="20dp" />
         </LinearLayout>
     </ScrollView>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="10"
         android:layout_marginBottom="10dp"
+        android:layout_weight="10"
         android:gravity="center">
+
         <Button
             android:id="@+id/submit_button"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginRight="20dp"
             android:background="@drawable/save_button"
-            android:textSize="20dp"
-            />
+            android:textSize="20dp" />
+
         <Button
             android:id="@+id/close_button"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginLeft="20dp"
             android:background="@drawable/close_button"
-            android:textSize="20dp"
-            />
+            android:textSize="20dp" />
     </LinearLayout>
 
 </LinearLayout>

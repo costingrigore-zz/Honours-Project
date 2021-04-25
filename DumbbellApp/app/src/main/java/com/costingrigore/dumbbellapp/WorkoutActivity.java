@@ -37,6 +37,7 @@ import static android.view.View.GONE;
 /**
  * This class handles the workout routine creation algorithm functionality
  * The class constructs a workout routine, using the user's level of experience, goal for using the application, body area target and level of difficulty selected by the user
+ * The activity_workout.xml file that corresponds with this script, contains the workout set up page, the workout routine pages and the feedback form pages
  */
 public class WorkoutActivity extends AppCompatActivity {
     /**
@@ -267,7 +268,9 @@ public class WorkoutActivity extends AppCompatActivity {
     private CountDownTimer mCountDownTimer;
     private boolean mTimerRunning;
     private long mTimeLeftInMillis = START_TIME_IN_MILLIS;
-
+    /**
+     * Setting the EditText objects and TextView objects used for the feedback form algorithm
+     */
     private EditText cardioEasyExercisesET, cardioMediumExercisesET, cardioDifficultExercisesET, cardioSetsET, cardioRepetitionsET, cardioMinutesET;
     private EditText weightTrainingEasyExercisesET, weightTrainingMediumExercisesET, weightTrainingDifficultExercisesET, weightTrainingSetsET, weightTrainingRepetitionsET, weightTrainingMinutesET;
     private EditText coreEasyExercisesET, coreMediumExercisesET, coreDifficultExercisesET, coreSetsET, coreRepetitionsET, coreMinutesET;
@@ -275,6 +278,7 @@ public class WorkoutActivity extends AppCompatActivity {
     private EditText stretchingMinutesET;
     private TextView feedbackLevelOfExperienceTV, feedbackWorkoutDifficultyTV, feedbackWorkoutBodyAreaTargetTV;
     private LinearLayout workoutFeedbackLayout;
+
     /**
      * Called when the activity gets created
      *
@@ -436,6 +440,7 @@ public class WorkoutActivity extends AppCompatActivity {
         GetPersonalisedExercises("flexibility", "total_body", amountEasyExercises, amountMediumExercises, amountDifficultExercises);
         /**
          * Setting up checkboxes and number picker fields to retrieve repetitions, sets and time for the workout routine set by the user
+         * The minimum values of the components' number of sets, repetitions, and minutes are set to one
          */
         cardioSetsAndRepsCB = (CheckBox) this.findViewById(R.id.cardioSetsandRepsCB);
         cardioSetsAndRepsLayout = (LinearLayout) this.findViewById(R.id.cardioSetsAndRepsLayout);
@@ -681,7 +686,8 @@ public class WorkoutActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SaveWorkoutInformationToDatabase();
-                finish();            }
+                finish();
+            }
         });
 
         /**
@@ -1240,50 +1246,57 @@ public class WorkoutActivity extends AppCompatActivity {
         return new String(buf, 0, o);
     }
 
-    private void SetFeedbackReportFields()
-    {
+    /**
+     * This method sets the default values of the feedback form fields to be the values set by the user at the beginning of the workout routine
+     */
+    private void SetFeedbackReportFields() {
+        //Setting parameters that will store the default values of the cardio exercises
         int cardioEasyExercises = amountEasyExercises * (cardioAmountOfExercises / 4);
         int cardioMediumExercises = amountMediumExercises * (cardioAmountOfExercises / 4);
         int cardioDifficultExercises = amountDifficultExercises * (cardioAmountOfExercises / 4);
+        //Setting the text of the feedback form cardio fields to the parameters
         cardioEasyExercisesET.setText(String.valueOf(cardioEasyExercises));
         cardioMediumExercisesET.setText(String.valueOf(cardioMediumExercises));
         cardioDifficultExercisesET.setText(String.valueOf(cardioDifficultExercises));
-        if(cardioUsesTime){
+        if (cardioUsesTime) {
             cardioMinutesET.setText(String.valueOf(cardioTimeNumber));
-        }
-        else{
+        } else {
             cardioSetsET.setText(String.valueOf(cardioSetsNumber));
             cardioRepetitionsET.setText(String.valueOf(cardioRepsNumber));
         }
+        //Setting parameters that will store the default values of the weight training exercises
         int weightTrainingEasyExercises = amountEasyExercises * (weightTrainingAmountOfExercises / 4);
         int weightTrainingMediumExercises = amountMediumExercises * (weightTrainingAmountOfExercises / 4);
         int weightTrainingDifficultExercises = amountDifficultExercises * (weightTrainingAmountOfExercises / 4);
+        //Setting the text of the feedback form weight training fields to the parameters
         weightTrainingEasyExercisesET.setText(String.valueOf(weightTrainingEasyExercises));
         weightTrainingMediumExercisesET.setText(String.valueOf(weightTrainingMediumExercises));
         weightTrainingDifficultExercisesET.setText(String.valueOf(weightTrainingDifficultExercises));
-        if(wtUsesTime){
+        if (wtUsesTime) {
             weightTrainingMinutesET.setText(String.valueOf(wtTimeNumber));
-        }
-        else{
+        } else {
             weightTrainingSetsET.setText(String.valueOf(wtSetsNumber));
             weightTrainingRepetitionsET.setText(String.valueOf(wtRepsNumber));
         }
+        //Setting parameters that will store the default values of the core exercises
         int coreEasyExercises = amountEasyExercises * (coreAmountOfExercises / 4);
         int coreMediumExercises = amountMediumExercises * (coreAmountOfExercises / 4);
         int coreDifficultExercises = amountDifficultExercises * (coreAmountOfExercises / 4);
+        //Setting the text of the feedback form core fields to the parameters
         coreEasyExercisesET.setText(String.valueOf(coreEasyExercises));
         coreMediumExercisesET.setText(String.valueOf(coreMediumExercises));
         coreDifficultExercisesET.setText(String.valueOf(coreDifficultExercises));
-        if(coreUsesTime){
+        if (coreUsesTime) {
             coreMinutesET.setText(String.valueOf(coreTimeNumber));
-        }
-        else{
+        } else {
             coreSetsET.setText(String.valueOf(coreSetsNumber));
             coreRepetitionsET.setText(String.valueOf(coreRepsNumber));
         }
+        //Setting parameters that will store the default values of the stretching exercises
         int stretchingEasyExercises = amountEasyExercises * (stretchingAmountOfExercises / 4);
         int stretchingMediumExercises = amountMediumExercises * (stretchingAmountOfExercises / 4);
         int stretchingDifficultExercises = amountDifficultExercises * (stretchingAmountOfExercises / 4);
+        //Setting the text of the feedback form stretching fields to the parameters
         stretchingEasyExercisesTV.setText(String.valueOf(stretchingEasyExercises));
         stretchingMediumExercisesTV.setText(String.valueOf(stretchingMediumExercises));
         stretchingDifficultExercisesTV.setText(String.valueOf(stretchingDifficultExercises));
@@ -1292,13 +1305,22 @@ public class WorkoutActivity extends AppCompatActivity {
         feedbackWorkoutDifficultyTV.setText(replace(workoutDifficulty));
         feedbackWorkoutBodyAreaTargetTV.setText(replace(workoutBodyArea));
     }
-    private void SaveWorkoutInformationToDatabase(){
-        String year = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
-        String month = String.valueOf(Calendar.getInstance().get(Calendar.MONTH) + 1);
-        String day = "";
-        Calendar calendar = Calendar.getInstance();
-        int currentDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
 
+    /**
+     * This method saves the changed values of the feedback form to the database
+     */
+    private void SaveWorkoutInformationToDatabase() {
+        //Getting the current year
+        String year = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+        //Getting the current month, as the month list starts with 0 for January, to get the current month one is added to the instance
+        String month = String.valueOf(Calendar.getInstance().get(Calendar.MONTH) + 1);
+        //String to contain the current day
+        String day = "";
+        //Getting a calendar instance
+        Calendar calendar = Calendar.getInstance();
+        //Getting the  current day of the week
+        int currentDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        //Switch case used to set the current day based on the current day of the week obtained from the calendar
         switch (currentDayOfWeek) {
             case Calendar.SUNDAY:
                 day = "Sunday";
@@ -1322,13 +1344,15 @@ public class WorkoutActivity extends AppCompatActivity {
                 day = "Saturday";
                 break;
         }
-        //day = "Thursday";
+        //Getting the current week of the month
         String weekOfMonth = String.valueOf(Calendar.getInstance().get(Calendar.WEEK_OF_MONTH));
-
+        //Getting Firebase instance
         database = FirebaseDatabase.getInstance();
         //Setting database reference
         DatabaseReference databaseReference = database.getReference("users");
+        //Getting the user's personal ID
         String personalID = GetPersonalID(this);
+        //Getting the data from the cardio exercises input fields from the feedback form and storing them into the database
         String cardioEasyExercises = String.valueOf(cardioEasyExercisesET.getText());
         String cardioMediumExercises = String.valueOf(cardioMediumExercisesET.getText());
         String cardioDifficultExercises = String.valueOf(cardioDifficultExercisesET.getText());
@@ -1339,12 +1363,13 @@ public class WorkoutActivity extends AppCompatActivity {
         String cardioSets;
         String cardioReps;
         String cardioMinutes;
-        if(cardioUsesTime) {
+        //If the cardio component uses time, save the minutes in the database, if not save the number of sets and repetitions in the database
+        if (cardioUsesTime) {
             cardioUsesTimeBooleanValue = "true";
             cardioMinutes = String.valueOf(Integer.valueOf(String.valueOf(cardioMinutesET.getText())) * cardioAmountOfExercises);
             databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("cardio_uses_time").setValue(cardioUsesTimeBooleanValue);
             databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("cardio_minutes").setValue(cardioMinutes);
-        }else{
+        } else {
             cardioUsesTimeBooleanValue = "false";
             cardioSets = String.valueOf(Integer.valueOf(String.valueOf(cardioSetsET.getText())) * cardioAmountOfExercises);
             cardioReps = String.valueOf(Integer.valueOf(String.valueOf(cardioRepetitionsET.getText())) * cardioAmountOfExercises);
@@ -1352,6 +1377,7 @@ public class WorkoutActivity extends AppCompatActivity {
             databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("cardio_sets").setValue(cardioSets);
             databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("cardio_repetitions").setValue(cardioReps);
         }
+        //Getting the data from the weight training exercises input fields from the feedback form and storing them into the database
         String weightTrainingEasyExercises = String.valueOf(weightTrainingEasyExercisesET.getText());
         String weightTrainingMediumExercises = String.valueOf(weightTrainingMediumExercisesET.getText());
         String weightTrainingDifficultExercises = String.valueOf(weightTrainingDifficultExercisesET.getText());
@@ -1362,12 +1388,13 @@ public class WorkoutActivity extends AppCompatActivity {
         String weightTrainingSets;
         String weightTrainingReps;
         String weightTrainingMinutes;
-        if(wtUsesTime) {
+        //If the weight training component uses time, save the minutes in the database, if not save the number of sets and repetitions in the database
+        if (wtUsesTime) {
             weightTrainingUsesTimeBooleanValue = "true";
             weightTrainingMinutes = String.valueOf(Integer.valueOf(String.valueOf(weightTrainingMinutesET.getText())) * weightTrainingAmountOfExercises);
             databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("weight_training_uses_time").setValue(weightTrainingUsesTimeBooleanValue);
             databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("weight_training_minutes").setValue(weightTrainingMinutes);
-        }else{
+        } else {
             weightTrainingUsesTimeBooleanValue = "false";
             weightTrainingSets = String.valueOf(Integer.valueOf(String.valueOf(weightTrainingSetsET.getText())) * weightTrainingAmountOfExercises);
             weightTrainingReps = String.valueOf(Integer.valueOf(String.valueOf(weightTrainingRepetitionsET.getText())) * weightTrainingAmountOfExercises);
@@ -1375,6 +1402,7 @@ public class WorkoutActivity extends AppCompatActivity {
             databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("weight_training_sets").setValue(weightTrainingSets);
             databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("weight_training_repetitions").setValue(weightTrainingReps);
         }
+        //Getting the data from the core exercises input fields from the feedback form and storing them into the database
         String coreEasyExercises = String.valueOf(coreEasyExercisesET.getText());
         String coreMediumExercises = String.valueOf(coreMediumExercisesET.getText());
         String coreDifficultExercises = String.valueOf(coreDifficultExercisesET.getText());
@@ -1385,12 +1413,13 @@ public class WorkoutActivity extends AppCompatActivity {
         String coreSets;
         String coreReps;
         String coreMinutes;
-        if(coreUsesTime) {
+        //If the core component uses time, save the minutes in the database, if not save the number of sets and repetitions in the database
+        if (coreUsesTime) {
             coreUsesTimeBooleanValue = "true";
             coreMinutes = String.valueOf(Integer.valueOf(String.valueOf(coreMinutesET.getText())) * coreAmountOfExercises);
             databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("core_uses_time").setValue(coreUsesTimeBooleanValue);
             databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("core_minutes").setValue(coreMinutes);
-        }else{
+        } else {
             coreUsesTimeBooleanValue = "false";
             coreSets = String.valueOf(Integer.valueOf(String.valueOf(coreSetsET.getText())) * coreAmountOfExercises);
             coreReps = String.valueOf(Integer.valueOf(String.valueOf(coreRepetitionsET.getText())) * coreAmountOfExercises);
@@ -1406,6 +1435,7 @@ public class WorkoutActivity extends AppCompatActivity {
         databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("stretching_difficult_exercises").setValue(stretchingDifficultExercises);
         String stretchingMinutes = String.valueOf(stretchingTimeValue * stretchingAmountOfExercises);
         databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("stretching_minutes").setValue(stretchingMinutes);
+        //Saving the workout body area target and workout difficulty to the database
         databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("body_area_target").setValue(workoutBodyArea);
         databaseReference.child(personalID).child("workouts").child(year).child(month).child(weekOfMonth).child(day).child("workout_difficulty").setValue(workoutDifficulty);
     }

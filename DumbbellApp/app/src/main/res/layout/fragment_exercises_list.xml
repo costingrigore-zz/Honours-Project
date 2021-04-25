@@ -2,12 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:name="com.costingrigore.dumbbellapp.ExercisesFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_cold"
-    android:paddingBottom="55dp"
     android:orientation="vertical"
-    android:name="com.costingrigore.dumbbellapp.ExercisesFragment"
+    android:paddingBottom="55dp"
     tools:context=".ExercisesFragment">
 
     <LinearLayout
@@ -17,17 +17,17 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:paddingBottom="10dp"
         android:orientation="horizontal"
+        android:paddingBottom="10dp"
         android:weightSum="100">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
             android:layout_weight="60"
             android:background="@drawable/left_dark_round_shape"
             android:paddingLeft="20dp"
-            android:layout_marginTop="40dp"
             android:paddingTop="10dp"
             android:paddingRight="10dp"
             android:paddingBottom="10dp"

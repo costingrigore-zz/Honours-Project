@@ -50,7 +50,11 @@ public class GoalsFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
+    /**
+     * Called when the fragment gets created
+     *
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +63,14 @@ public class GoalsFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
+    /**
+     * Called when the fragment's view is created
+     *
+     * @param inflater           Fragment's inflater
+     * @param container          Fragment's ViewGroup
+     * @param savedInstanceState Fragment's instance
+     * @return It returns the fragments' view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
